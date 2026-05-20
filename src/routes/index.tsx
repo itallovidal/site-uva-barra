@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
-import HomePage from '@/pages/HomePage'
-import NotFoundPage from '@/pages/NotFoundPage'
+import { HomePage } from '@/pages/home-page'
+import { NotFoundPage } from '@/pages/not-found-page'
 
 const router = createBrowserRouter([
   {
@@ -13,4 +13,4 @@ const router = createBrowserRouter([
   },
 ])
 
-export default router
+export { router }
