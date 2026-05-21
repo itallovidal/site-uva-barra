@@ -4,7 +4,7 @@ function HomePage() {
       <h1>Home Page</h1>
       <p>Welcome to the application.</p>
     </div>
-  )
+  );
 }
 
-export { HomePage }
+export { HomePage };

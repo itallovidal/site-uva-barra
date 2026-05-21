@@ -1,6 +1,6 @@
-import { createBrowserRouter } from 'react-router-dom'
-import { HomePage } from '@/pages/home-page'
-import { NotFoundPage } from '@/pages/not-found-page'
+import { createBrowserRouter } from 'react-router-dom';
+import { HomePage } from '@/pages/home-page';
+import { NotFoundPage } from '@/pages/not-found-page';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +11,6 @@ const router = createBrowserRouter([
     path: '*',
     element: <NotFoundPage />,
   },
-])
+]);
 
-export { router }
+export { router };
