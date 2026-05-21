@@ -1,20 +1,35 @@
 schema: spec-driven
 
-# Project context (optional)
+# Project context
 # This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Tech stack: React 19, TypeScript 6, Vite 8, Tailwind CSS 4, Radix UI
+  Routing: React Router DOM 7
+  Component library: shadcn/ui patterns (class-variance-authority, tailwind-merge, lucide-react)
+  Build tool: Vite with @vitejs/plugin-react
+  Linting: ESLint 10 with typescript-eslint, eslint-plugin-react-hooks, eslint-plugin-react-refresh
+  Formatting: Prettier 3 (see .prettierrc)
+
+  Coding conventions:
+  - Named functions instead of arrow functions for components and utilities
+  - File names in kebab-case (lowercase with hyphens)
+  - Named exports only, no export default
+  - See CODING-RULES.md for complete developer guidelines
+  - See openspec/specs/coding-conventions/spec.md for formal spec
+
+  Project structure:
+  - src/ - Application source code
+  - src/components/ - Reusable UI components
+  - src/pages/ - Route page components
+  - public/ - Static assets
+
+  Commit style: Conventional commits preferred
 
 # Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+rules:
+  proposal:
+    - Keep proposals focused on why, not how
+    - Always include Capabilities section with new/modified specs
+  tasks:
+    - Break tasks into small, verifiable steps
+    - Each task should be completable in one session

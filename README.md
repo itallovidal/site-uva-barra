@@ -36,7 +36,7 @@ npm run dev
 
 ## Como Contribuir
 
-Muito importante que leia as convencões adotadas em `openspec/changes/add-general-coding-rules/` para que seu PR seja aprovado.
+Muito importante que leia as convencões adotadas em `CODING-RULES.MD` para que seu PR seja aprovado.
 
 1. Crie uma branch: `git checkout -b feat/minha-feature`
 3. Commit suas mudanças: `git commit -m "feat: descrição da feature"`
