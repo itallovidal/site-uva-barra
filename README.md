@@ -1,81 +1,52 @@
-# React + TypeScript + Vite
+# Agência UVA Barra
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Migração do site da Agência Experimental de Notícias UVA Barra de WordPress para uma stack moderna, com foco em performance, manutenibilidade e documentação consistente.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Sobre o Projeto
 
-## Coding Conventions
+A **Agência UVA Barra** é uma agência experimental de notícias da Universidade Veiga de Almeida, campus Barra da Tijuca (RJ). Fundada em **16 de novembro de 2016**, atende aos cursos de **Jornalismo** e **Publicidade**, funcionando como laboratório de prática profissional para os alunos.
 
-This project follows strict coding conventions documented in `openspec/changes/add-general-coding-rules/`:
+Este repositório contém o **replatforming completo** do site agenciauvabarra.com, saindo do WordPress e adotando tecnologias modernas com melhor performance, experiência de desenvolvimento e escalabilidade.
 
-- **Named functions only**: Use `function ComponentName() {}` instead of arrow functions for components and utilities
-- **kebab-case file names**: All files use kebab-case with lowercase letters and hyphens (e.g., `user-profile.tsx`)
-- **Named exports only**: Use `export function` or `export const` — `export default` is not allowed
+---
 
-## React Compiler
+## Como Rodar Localmente
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Pré-requisitos
 
-## Expanding the ESLint configuration
+- Node.js `>= 20`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Instalação
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/agencia-uva-barra.git
+cd site-uva-barra
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Instale as dependências
+npm install  # ou pnpm / yarn
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Inicie o ambiente de desenvolvimento
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Como Contribuir
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Muito importante que leia as convencões adotadas em `openspec/changes/add-general-coding-rules/` para que seu PR seja aprovado.
+
+1. Crie uma branch: `git checkout -b feat/minha-feature`
+3. Commit suas mudanças: `git commit -m "feat: descrição da feature"`
+4. Abra um **Pull Request** descrevendo o que foi feito
+
+Siga o padrão Conventional Commits. Iremos verificar as mudanças e em breve ela estará no ar!
+
+---
+
+## Links
+
+- Site atual: agenciauvabarra.com
+- Universidade Veiga de Almeida: uva.br
