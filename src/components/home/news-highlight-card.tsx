@@ -7,7 +7,11 @@ interface NewsHighlightCardProps {
   isCompact?: boolean;
 }
 
-function NewsHighlightCard({ highlight, isFeatured = false, isCompact = false }: NewsHighlightCardProps) {
+function NewsHighlightCard({
+  highlight,
+  isFeatured = false,
+  isCompact = false,
+}: NewsHighlightCardProps) {
   const { imageUrl, category, title, summary } = highlight;
 
   return (
@@ -34,9 +38,11 @@ function NewsHighlightCard({ highlight, isFeatured = false, isCompact = false }:
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
       <div className={`absolute bottom-0 left-0 right-0 ${isCompact ? 'p-3' : 'p-4 md:p-6'}`}>
-        <span className={`inline-block rounded-full bg-red-600 px-3 py-0.5 font-semibold uppercase tracking-wider text-white ${
-          isCompact ? 'mb-1 text-[10px]' : 'mb-2 text-xs'
-        }`}>
+        <span
+          className={`inline-block rounded-full bg-red-600 px-3 py-0.5 font-semibold uppercase tracking-wider text-white ${
+            isCompact ? 'mb-1 text-[10px]' : 'mb-2 text-xs'
+          }`}
+        >
           {category}
         </span>
         <h2
@@ -46,9 +52,7 @@ function NewsHighlightCard({ highlight, isFeatured = false, isCompact = false }:
         >
           {title}
         </h2>
-        {!isCompact && (
-          <p className="mt-1 text-sm text-neutral-300 line-clamp-2">{summary}</p>
-        )}
+        {!isCompact && <p className="mt-1 text-sm text-neutral-300 line-clamp-2">{summary}</p>}
       </div>
     </Link>
   );

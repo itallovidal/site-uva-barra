@@ -32,7 +32,7 @@ function useNewsByCategory(category: string, limit = 3): UseNewsByCategoryResult
 
       doFetch();
     },
-    [category, limit],
+    [category, limit]
   );
 
   return { articles, isLoading, error };

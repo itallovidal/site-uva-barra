@@ -48,10 +48,7 @@ function NewsletterSection() {
           Inscreva-se na nossa newsletter para receber todas as novidades direto no seu email!
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          className="mx-auto mt-6 flex flex-col gap-3 sm:flex-row"
-        >
+        <form onSubmit={handleSubmit} className="mx-auto mt-6 flex flex-col gap-3 sm:flex-row">
           <input
             type="email"
             placeholder="Seu melhor e-mail"
@@ -77,9 +74,7 @@ function NewsletterSection() {
         </form>
 
         {message && (
-          <p
-            className={`mt-3 text-sm ${status === 'success' ? 'text-green-200' : 'text-red-200'}`}
-          >
+          <p className={`mt-3 text-sm ${status === 'success' ? 'text-green-200' : 'text-red-200'}`}>
             {message}
           </p>
         )}

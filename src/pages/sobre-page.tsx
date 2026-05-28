@@ -24,42 +24,34 @@ function SobrePage() {
       <main className="mx-auto max-w-7xl space-y-8 px-4 py-8">
         <section className="space-y-4 text-justify leading-relaxed text-zinc-700">
           <p>
-            A Agência UVA Barra é uma agência experimental de notícias da
-            Universidade Veiga de Almeida, campus Barra, surgiu em 16 de
-            novembro de 2016, que atende aos cursos de Jornalismo e Publicidade.
-            A agência é um laboratório que prepara os estudantes para a prática
-            profissional e para o mercado de trabalho. Mantém atividades que
-            fomentam a prática jornalística, permitindo um espaço de criação
-            para os alunos. A agência tem como segmento a cobertura de notícias
-            do cotidiano, eventos culturais pela cidade, além de cobrir
-            institucionalmente a Universidade Veiga de Almeida.
+            A Agência UVA Barra é uma agência experimental de notícias da Universidade Veiga de
+            Almeida, campus Barra, surgiu em 16 de novembro de 2016, que atende aos cursos de
+            Jornalismo e Publicidade. A agência é um laboratório que prepara os estudantes para a
+            prática profissional e para o mercado de trabalho. Mantém atividades que fomentam a
+            prática jornalística, permitindo um espaço de criação para os alunos. A agência tem como
+            segmento a cobertura de notícias do cotidiano, eventos culturais pela cidade, além de
+            cobrir institucionalmente a Universidade Veiga de Almeida.
           </p>
           <p>
-            Na agência UVA, os alunos aprendem técnicas para elaboração de
-            pautas, apuração, redação de impressos e mídia web. Dessa forma,
-            estudantes estabelecem contato com a prática jornalística, ela
-            atende aos alunos que se matriculam na disciplina de Estágio
-            Supervisionado I, II e III, e ainda recebe alunos como colaboradores
-            desde o primeiro período. A Agência UVA Barra funciona em sede
-            própria. A partir de março de 2018, passou a receber alunos de
-            Publicidade que atuam na função de mídias sociais e fotografia.
+            Na agência UVA, os alunos aprendem técnicas para elaboração de pautas, apuração, redação
+            de impressos e mídia web. Dessa forma, estudantes estabelecem contato com a prática
+            jornalística, ela atende aos alunos que se matriculam na disciplina de Estágio
+            Supervisionado I, II e III, e ainda recebe alunos como colaboradores desde o primeiro
+            período. A Agência UVA Barra funciona em sede própria. A partir de março de 2018, passou
+            a receber alunos de Publicidade que atuam na função de mídias sociais e fotografia.
           </p>
           <p>
-            Em 2025, a Agência UVA Barra conta com a supervisão da estagiária
-            Duda Nicolich e com a coordenação geral da Prof. Dra. Renata Feital.
+            Em 2025, a Agência UVA Barra conta com a supervisão da estagiária Duda Nicolich e com a
+            coordenação geral da Prof. Dra. Renata Feital.
           </p>
         </section>
 
         <section className="space-y-8">
           <h1 className="text-3xl font-bold text-zinc-900">Colaboradores</h1>
 
-          {isLoading && (
-            <p className="text-neutral-500">Carregando colaboradores...</p>
-          )}
+          {isLoading && <p className="text-neutral-500">Carregando colaboradores...</p>}
 
-          {error && (
-            <p className="text-red-400">Erro ao carregar colaboradores: {error}</p>
-          )}
+          {error && <p className="text-red-400">Erro ao carregar colaboradores: {error}</p>}
 
           {!isLoading && !error && (
             <div className="space-y-8">

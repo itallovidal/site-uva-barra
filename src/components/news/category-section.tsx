@@ -33,9 +33,7 @@ function CategorySection({ category, limit = 3 }: CategorySectionProps) {
         </div>
       )}
 
-      {error && (
-        <p className="text-red-400">Erro ao carregar notícias: {error}</p>
-      )}
+      {error && <p className="text-red-400">Erro ao carregar notícias: {error}</p>}
 
       {!isLoading && !error && articles.length === 0 && (
         <p className="text-neutral-400">Nenhuma notícia encontrada.</p>

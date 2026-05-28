@@ -16,7 +16,8 @@ const newsCategoryMocks: NewsHighlight[] = [
     imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
     category: 'Tecnologia',
     title: 'Startups brasileiras se destacam em feira internacional de inovação',
-    summary: 'Empresas nacionais apresentam soluções criativas em inteligência artificial e sustentabilidade.',
+    summary:
+      'Empresas nacionais apresentam soluções criativas em inteligência artificial e sustentabilidade.',
     author: 'Ana Oliveira',
     publishedAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
   },
@@ -25,7 +26,8 @@ const newsCategoryMocks: NewsHighlight[] = [
     imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80',
     category: 'Tecnologia',
     title: '5G chega a mais capitais brasileiras neste mês',
-    summary: 'Tecnologia de quinta geração promete internet mais rápida e estável para milhões de usuários.',
+    summary:
+      'Tecnologia de quinta geração promete internet mais rápida e estável para milhões de usuários.',
     author: 'Rafael Souza',
     publishedAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
   },
