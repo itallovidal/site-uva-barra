@@ -92,14 +92,65 @@ src/
 │   ├── [pagina]/   # Componentes específicos de uma página (ex: home/, contact/)
 │   ├── [componente-global]/  # Componentes usados em múltiplas páginas (ex: nav-bar/)
 │   └── root-layout/          # Layout raiz da aplicação
-├── pages/          # Componentes de rota
-├── hooks/          # Custom hooks
+├── pages/          # Componentes de rota (ex: home-page.tsx, contact-page.tsx)
+├── hooks/          # Custom hooks (ex: useAuth.ts, useForm.ts) — todos os hooks vão aqui
+│   ├── auth/       # Hooks relacionados a autenticação
+│   ├── form/       # Hooks de formulário
+│   ├── data/       # Hooks de dados e cache
+│   └── nav/        # Hooks de navegação
 ├── utils/          # Funções utilitárias
 ├── types/          # Tipos TypeScript
-├── routes/         # Configuração de rotas
+├── routes/         # Configuração de rotas (createBrowserRouter)
 ├── app.tsx         # Componente raiz
 └── main.tsx        # Entry point
 ```
+├── utils/          # Funções utilitárias
+├── types/          # Tipos TypeScript
+├── routes/         # Configuração de rotas (createBrowserRouter)
+├── app.tsx         # Componente raiz
+└── main.tsx        # Entry point
+```
+
+---
+
+## 5. Routing & Navigation RULES
+
+### React Router Link REQUIREMENTS (BREAKING)
+
+**REQUIREMENT**: Todosos links de navegação interna DEVEM usar `Link` do React Router DOM.
+
+- **NÃO USE** `<a>` soltos para navegação entre páginas do mesmo site
+- **USE** apenas `<a>` para links externos (href começa com `http` ou tem `target="_blank"`)
+- **NÃO USE** `<a>` sem prefixo `http/` e sem `target="_blank"` — use `Link` com `route` prop
+
+```tsx
+// CORRETO - navegação interna
+<Link to="/about">Sobre</Link>
+<Link route="/about">Sobre</Link>
+
+// CORRETO - link externo
+<a href="https://google.com" target="_blank">Google</a>
+
+// INCORRETO - navegação interna com <a>
+<a href="/about">Sobre</a>  // ❌ nunca mais
+```
+
+### Typography in Navigation
+
+Links de navegação usam tipografia específica:
+- **Font-size**: menor que o texto do corpo (`text-sm`)
+- **Underline**: removido por padrão (`underline-offset-2` para hover)
+- **Color**: slate-600 por padrão com hover no slate-800
+
+```tsx
+<Link to="/about" className="text-sm font-medium text-slate-600 hover:text-slate-800">
+  Sobre
+</Link>
+```
+
+---
+
+## 6. References
 
 ### Component Directory Rules
 - `src/components/lib/` — APENAS componentes shadcn/ui primitives. Não modificar.

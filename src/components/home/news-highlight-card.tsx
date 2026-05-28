@@ -4,16 +4,21 @@ import type { NewsHighlight } from '../../types/news-highlight-types';
 interface NewsHighlightCardProps {
   highlight: NewsHighlight;
   isFeatured?: boolean;
+  isCompact?: boolean;
 }
 
-function NewsHighlightCard({ highlight, isFeatured = false }: NewsHighlightCardProps) {
+function NewsHighlightCard({ highlight, isFeatured = false, isCompact = false }: NewsHighlightCardProps) {
   const { imageUrl, category, title, summary } = highlight;
 
   return (
     <Link
       to={`/noticia/${highlight.id}`}
       className={`group relative block overflow-hidden rounded-lg bg-neutral-800 ${
-        isFeatured ? 'aspect-[16/9] lg:aspect-auto lg:h-full' : 'aspect-[16/9]'
+        isCompact
+          ? 'aspect-[4/3]'
+          : isFeatured
+            ? 'aspect-[16/9] lg:aspect-auto lg:h-full'
+            : 'aspect-[16/9]'
       }`}
     >
       {imageUrl ? (
@@ -28,16 +33,22 @@ function NewsHighlightCard({ highlight, isFeatured = false }: NewsHighlightCardP
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
-      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-        <span className="mb-2 inline-block rounded-full bg-red-600 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-white">
+      <div className={`absolute bottom-0 left-0 right-0 ${isCompact ? 'p-3' : 'p-4 md:p-6'}`}>
+        <span className={`inline-block rounded-full bg-red-600 px-3 py-0.5 font-semibold uppercase tracking-wider text-white ${
+          isCompact ? 'mb-1 text-[10px]' : 'mb-2 text-xs'
+        }`}>
           {category}
         </span>
         <h2
-          className={`mt-1 text-white line-clamp-2 ${isFeatured ? 'text-xl md:text-2xl' : 'text-base md:text-lg'}`}
+          className={`mt-1 text-white line-clamp-2 ${
+            isCompact ? 'text-sm' : isFeatured ? 'text-xl md:text-2xl' : 'text-base md:text-lg'
+          }`}
         >
           {title}
         </h2>
-        <p className="mt-1 text-sm text-neutral-300 line-clamp-2">{summary}</p>
+        {!isCompact && (
+          <p className="mt-1 text-sm text-neutral-300 line-clamp-2">{summary}</p>
+        )}
       </div>
     </Link>
   );
