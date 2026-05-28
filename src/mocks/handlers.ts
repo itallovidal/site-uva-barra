@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { newsHighlightMocks } from './news-highlight-mocks';
 import { newsCategoryMocks } from './news-category-mocks';
+import { teamMemberMocks } from './team-members-mocks';
 
 function handleHealthCheck() {
   return HttpResponse.json({ status: 'ok' });
@@ -28,4 +29,5 @@ export const handlers = [
   http.get('/api/health', handleHealthCheck),
   http.get('/api/news/latest', handleNewsLatest),
   http.get('/api/news', handleNewsByCategory),
+  http.get('/api/collaborators', () => HttpResponse.json(teamMemberMocks)),
 ];
