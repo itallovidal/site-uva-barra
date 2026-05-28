@@ -4,6 +4,8 @@ interface NewsHighlight {
   category: string;
   title: string;
   summary: string;
+  author?: string;
+  publishedAt?: string;
 }
 
 export type { NewsHighlight };

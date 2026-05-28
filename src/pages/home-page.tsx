@@ -1,5 +1,6 @@
 import { useNewsHighlights } from '../hooks/use-news-highlights';
 import { NewsHighlightGrid } from '../components/home/news-highlight-grid';
+import { CategorySection } from '../components/news/category-section';
 
 function HomePage() {
   const { highlights, isLoading, error } = useNewsHighlights();
@@ -21,8 +22,11 @@ function HomePage() {
   }
 
   return (
-    <main className="lg:max-w-7xl mx-auto px-4 py-6">
+    <main className="lg:max-w-7xl mx-auto px-4 py-6 space-y-10">
       <NewsHighlightGrid highlights={highlights} />
+      <CategorySection category="Tecnologia" limit={3} />
+      <CategorySection category="Saúde" limit={3} />
+      <CategorySection category="Educação" limit={3} />
     </main>
   );
 }

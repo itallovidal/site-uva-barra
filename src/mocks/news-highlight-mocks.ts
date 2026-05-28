@@ -38,6 +38,13 @@ const newsHighlightMocks: NewsHighlight[] = [
     title: 'Startup brasileira vence competição internacional de tecnologia sustentável',
     summary: 'Empresa desenvolveu solução inovadora para reciclagem de resíduos eletrônicos.',
   },
+  {
+    id: '6',
+    imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80',
+    category: 'Cultura',
+    title: 'Festival de música reúne artistas de todo o país na cidade universitária',
+    summary: 'Evento gratuito promete movimentar o cenário cultural local com mais de 50 atrações.',
+  },
 ];
 
 export { newsHighlightMocks };
