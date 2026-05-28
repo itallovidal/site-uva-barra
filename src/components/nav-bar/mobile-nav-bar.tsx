@@ -57,9 +57,11 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
             </nav>
 
             <DrawerFooter className="border-t">
-              <Button variant="ghost" size="default" className="w-full justify-start gap-2">
-                <SignIn size={18} />
-                Login
+              <Button variant="ghost" size="default" className="w-full justify-start gap-2" asChild>
+                <Link to="/entrar">
+                  <SignIn size={18} />
+                  Login
+                </Link>
               </Button>
             </DrawerFooter>
           </DrawerContent>

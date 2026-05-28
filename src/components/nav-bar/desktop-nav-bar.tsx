@@ -46,9 +46,11 @@ function DesktopNavBar({ brand, navItems }: DesktopNavBarProps) {
               className="h-8 w-48 pl-8 text-sm text-black bg-white placeholder:text-gray-800"
             />
           </div>
-          <Button variant="secondary" size="sm" className="gap-1.5 bg-white">
-            <SignIn size={16} />
-            Login
+          <Button variant="secondary" size="sm" className="gap-1.5 bg-white" asChild>
+            <Link to="/entrar">
+              <SignIn size={16} />
+              Login
+            </Link>
           </Button>
         </div>
       </div>

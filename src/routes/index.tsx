@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { RootLayout } from '@/components/root-layout/root-layout';
 import { HomePage } from '@/pages/home-page';
+import { LoginPage } from '@/pages/login-page';
+import { SignupPage } from '@/pages/signup-page';
 import { NewsCategoryPage } from '@/pages/news-category-page';
 import { NotFoundPage } from '@/pages/not-found-page';
 import { SobrePage } from '@/pages/sobre-page';
@@ -12,6 +14,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage />,
+      },
+      {
+        path: '/entrar',
+        element: <LoginPage />,
+      },
+      {
+        path: '/cadastro',
+        element: <SignupPage />,
       },
       {
         path: '/news/category/:category',
