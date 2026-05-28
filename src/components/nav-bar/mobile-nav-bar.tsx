@@ -19,11 +19,11 @@ interface MobileNavBarProps {
 
 function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
   return (
-    <div className="lg:hidden">
+    <div className="lg:hidden  bg-red-600">
       <div className="flex h-14 items-center justify-between px-4 border-b gap-3">
         <Drawer direction="left">
           <DrawerTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Abrir menu">
+            <Button className="bg-white" variant="ghost" size="icon" aria-label="Abrir menu">
               <List size={22} />
             </Button>
           </DrawerTrigger>
@@ -70,7 +70,12 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
             size={16}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
           />
-          <Input type="search" placeholder="Pesquisar..." className="h-8 w-full pl-8 text-sm" />
+          <Input
+            style={{ background: 'white' }}
+            type="search"
+            placeholder="Pesquisar..."
+            className="h-8 w-full pl-8 text-sm"
+          />
         </div>
       </div>
     </div>

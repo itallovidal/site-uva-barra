@@ -3,7 +3,7 @@ import { NavBar } from '@/components/nav-bar';
 import { Footer } from './footer';
 import { Newspaper, Envelope, Info } from '@phosphor-icons/react';
 
-const BRAND = 'agência uva barra';
+const BRAND = 'Agência UVA Barra';
 
 const NAV_ITEMS = [
   { link: '/novidades', text: 'Novidades', icon: Newspaper },

@@ -15,7 +15,7 @@ function Footer() {
         <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-2">
           <div>
             <h3 className="mb-2 text-lg font-semibold">Agência UVA</h3>
-            <p className="text-white text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed max-w-sm">
               Laboratório de Jornalismo e Publicidade da Universidade Veiga de Almeida - Unidade
               Barra da Tijuca.
             </p>
