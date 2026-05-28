@@ -47,3 +47,15 @@ The system SHALL provide mock data for 3 highlight articles during development.
 - **WHEN** the mock data fixture is imported
 - **THEN** it SHALL return an array of 3 `NewsHighlight` objects
 - **AND** each object SHALL have realistic placeholder values for all fields
+
+## MODIFIED Requirements
+
+### Requirement: NewsHighlight type definition
+
+The system SHALL define a `NewsHighlight` TypeScript type for article data.
+
+#### Scenario: Shape validation
+
+- **WHEN** a `NewsHighlight` object is created
+- **THEN** it SHALL have fields: `id`, `imageUrl`, `category`, `title`, `summary`, and optionally `author` and `publishedAt`
+- **AND** all fields SHALL be strings
