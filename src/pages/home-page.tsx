@@ -19,12 +19,12 @@ function HomePage() {
   }, []);
 
   return (
-    <div>
+    <main className="lg:max-w-7xl mx-auto">
       <h1>Home Page</h1>
       <p>Welcome to the application.</p>
       {healthStatus && <p>API: {healthStatus}</p>}
       {healthError && <p style={{ color: 'red' }}>{healthError}</p>}
-    </div>
+    </main>
   );
 }
 
