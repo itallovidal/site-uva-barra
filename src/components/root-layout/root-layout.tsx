@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { NavBar } from '@/components/nav-bar';
+import { Footer } from './footer';
 import { Newspaper, Envelope, Info } from '@phosphor-icons/react';
 
 const BRAND = 'agência uva barra';
@@ -15,6 +16,7 @@ function RootLayout() {
     <>
       <NavBar brand={BRAND} navItems={NAV_ITEMS} />
       <Outlet />
+      <Footer />
     </>
   );
 }
