@@ -1,29 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useNewsHighlights } from '../hooks/use-news-highlights';
+import { NewsHighlightGrid } from '../components/home/news-highlight-grid';
 
 function HomePage() {
-  const [healthStatus, setHealthStatus] = useState<string | null>(null);
-  const [healthError, setHealthError] = useState<string | null>(null);
+  const { highlights, isLoading, error } = useNewsHighlights();
 
-  useEffect(function fetchHealth() {
-    async function doFetch() {
-      try {
-        const response = await fetch('/api/health');
-        const data = await response.json();
-        setHealthStatus(data.status);
-      } catch {
-        setHealthError('Failed to reach API');
-      }
-    }
+  if (isLoading) {
+    return (
+      <main className="lg:max-w-7xl mx-auto px-4 py-6">
+        <p className="text-neutral-500">Carregando notícias...</p>
+      </main>
+    );
+  }
 
-    doFetch();
-  }, []);
+  if (error) {
+    return (
+      <main className="lg:max-w-7xl mx-auto px-4 py-6">
+        <p className="text-red-500">{error}</p>
+      </main>
+    );
+  }
 
   return (
-    <main className="lg:max-w-7xl mx-auto">
-      <h1>Home Page</h1>
-      <p>Welcome to the application.</p>
-      {healthStatus && <p>API: {healthStatus}</p>}
-      {healthError && <p style={{ color: 'red' }}>{healthError}</p>}
+    <main className="lg:max-w-7xl mx-auto px-4 py-6">
+      <NewsHighlightGrid highlights={highlights} />
     </main>
   );
 }
