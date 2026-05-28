@@ -6,6 +6,9 @@ import { SignupPage } from '@/pages/signup-page';
 import { NewsCategoryPage } from '@/pages/news-category-page';
 import { NotFoundPage } from '@/pages/not-found-page';
 import { SobrePage } from '@/pages/sobre-page';
+import { AdminLayout } from '@/pages/admin/admin-layout';
+import { AdminDashboard } from '@/pages/admin/admin-dashboard';
+import { PlaceholderPage } from '@/pages/admin/placeholder-page';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +37,51 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: <NotFoundPage />,
+      },
+    ],
+  },
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: '/admin',
+        element: <AdminDashboard />,
+      },
+      {
+        path: '/admin/collaborators',
+        element: <PlaceholderPage title="Lista de Colaboradores" />,
+      },
+      {
+        path: '/admin/collaborators/register',
+        element: <PlaceholderPage title="Registro de Colaborador" />,
+      },
+      {
+        path: '/admin/collaborators/requests',
+        element: <PlaceholderPage title="Solicitações" />,
+      },
+      {
+        path: '/admin/articles',
+        element: <PlaceholderPage title="Listagem de Artigos" />,
+      },
+      {
+        path: '/admin/articles/create',
+        element: <PlaceholderPage title="Criação de Artigos" />,
+      },
+      {
+        path: '/admin/articles/approve',
+        element: <PlaceholderPage title="Aprovação de Artigos" />,
+      },
+      {
+        path: '/admin/newsletter',
+        element: <PlaceholderPage title="Listagem de Newsletter" />,
+      },
+      {
+        path: '/admin/newsletter/create',
+        element: <PlaceholderPage title="Criação de Newsletter" />,
+      },
+      {
+        path: '/admin/logout',
+        element: <PlaceholderPage title="Logout" />,
       },
     ],
   },

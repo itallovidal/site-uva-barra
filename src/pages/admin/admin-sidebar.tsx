@@ -1,0 +1,107 @@
+import { Link } from 'react-router-dom';
+import {
+  Users,
+  UserPlus,
+  ClipboardText,
+  FilePlus,
+  FileText,
+  CheckCircle,
+  EnvelopeSimple,
+  Envelope,
+  SignOut,
+} from '@phosphor-icons/react';
+import { cn } from '@/components/lib/utils';
+import type { Icon } from '@phosphor-icons/react';
+
+interface SidebarItem {
+  link: string;
+  text: string;
+  icon: Icon;
+}
+
+interface SidebarGroup {
+  label: string;
+  items: SidebarItem[];
+}
+
+const SIDEBAR_GROUPS: SidebarGroup[] = [
+  {
+    label: 'Colaboradores',
+    items: [
+      { link: '/admin/collaborators/register', text: 'Registro de Colaborador', icon: UserPlus },
+      { link: '/admin/collaborators/requests', text: 'Solicitações', icon: ClipboardText },
+      { link: '/admin/collaborators', text: 'Lista de Colaboradores', icon: Users },
+    ],
+  },
+  {
+    label: 'Artigos',
+    items: [
+      { link: '/admin/articles/create', text: 'Criação de Artigos', icon: FilePlus },
+      { link: '/admin/articles', text: 'Listagem de Artigos', icon: FileText },
+      { link: '/admin/articles/approve', text: 'Aprovação de Artigos', icon: CheckCircle },
+    ],
+  },
+  {
+    label: 'Newsletter',
+    items: [
+      { link: '/admin/newsletter/create', text: 'Criação de Newsletter', icon: EnvelopeSimple },
+      { link: '/admin/newsletter', text: 'Listagem de Newsletter', icon: Envelope },
+    ],
+  },
+];
+
+interface AdminSidebarProps {
+  className?: string;
+  onItemClick?: () => void;
+}
+
+function AdminSidebar({ className, onItemClick }: AdminSidebarProps) {
+  return (
+    <aside className={cn('flex flex-col h-full bg-white', className)}>
+      <div className="px-6 py-5 border-b">
+        <Link to="/admin" className="text-base font-bold">
+          Agência UVA Barra
+        </Link>
+      </div>
+
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+        {SIDEBAR_GROUPS.map((group) => (
+          <div key={group.label}>
+            <p className="px-3 text-xs font-semibold uppercase tracking-wider text-red-600 mb-1">
+              {group.label}
+            </p>
+            <div className="space-y-0.5">
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.link}
+                    to={item.link}
+                    onClick={onItemClick}
+                    className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                  >
+                    <Icon size={18} />
+                    {item.text}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      <div className="border-t px-3 py-3">
+        <Link
+          to="/admin/logout"
+          onClick={onItemClick}
+          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors"
+        >
+          <SignOut size={18} />
+          Logout
+        </Link>
+      </div>
+    </aside>
+  );
+}
+
+export { AdminSidebar };
