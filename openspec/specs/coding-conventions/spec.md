@@ -44,3 +44,11 @@ All modules SHALL use named exports exclusively. The `export default` syntax SHA
 #### Scenario: Import usage
 - **WHEN** a developer imports from a module
 - **THEN** the import SHALL use named import syntax `import { ComponentName } from './componentFile'` and NOT `import ComponentName from './componentFile'`
+
+### Requirement: Component directory structure
+
+The system SHALL organize components under `src/components/` into three categories: library primitives, page-scoped components, and global components.
+
+#### Scenario: Developer consults CODING-RULES.md
+- **WHEN** a developer reads the File Structure section of `CODING-RULES.md`
+- **THEN** the section SHALL describe the three-category component structure with examples for each category

@@ -88,8 +88,10 @@ export function Counter() {
 ```
 src/
 ├── components/     # Componentes reutilizáveis
-│   ├── lib/        # Componentes base (UI primitives)
-│   └── ...         # Componentes de feature
+│   ├── lib/        # shadcn/ui primitives — NÃO MEXER
+│   ├── [pagina]/   # Componentes específicos de uma página (ex: home/, contact/)
+│   ├── [componente-global]/  # Componentes usados em múltiplas páginas (ex: nav-bar/)
+│   └── root-layout/          # Layout raiz da aplicação
 ├── pages/          # Componentes de rota
 ├── hooks/          # Custom hooks
 ├── utils/          # Funções utilitárias
@@ -98,6 +100,12 @@ src/
 ├── app.tsx         # Componente raiz
 └── main.tsx        # Entry point
 ```
+
+### Component Directory Rules
+- `src/components/lib/` — APENAS componentes shadcn/ui primitives. Não modificar.
+- `src/components/[page-name]/` — Componentes usados por exatamente uma página. O nome da pasta corresponde ao segmento da página (ex: `home/` para `home-page.tsx`).
+- `src/components/[component-name]/` — Componentes compartilhados entre múltiplas páginas (ex: `nav-bar/`).
+- `src/components/root-layout/` — Layout raiz e seus sub-componentes.
 
 ### Component Files
 - Um componente principal por arquivo
