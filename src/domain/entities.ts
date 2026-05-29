@@ -84,6 +84,22 @@ export interface NewsPreviewDTO {
   authorName: string;
 }
 
+export interface NewsModerationItemDTO {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  coverImageUrl: string | null;
+  categoryName: string;
+  authorName: string;
+  status: NewsStatusType;
+  updatedAt: Date;
+}
+
+export interface NewsReviewRequestDTO {
+  comment: string;
+}
+
 export interface UserProfileDTO {
   id: string;
   name: string;

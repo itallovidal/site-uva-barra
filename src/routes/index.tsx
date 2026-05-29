@@ -13,6 +13,7 @@ import { CollaboratorRegisterPage } from '@/pages/admin/collaborator-register-pa
 import { CollaboratorsRequestsPage } from '@/pages/admin/collaborators-requests-page';
 import { CollaboratorsListPage } from '@/pages/admin/collaborators-list-page';
 import { NewsCreatePage } from '@/pages/admin/news-create-page';
+import { NewsPublicationReviewPage } from '@/pages/admin/news-publication-review-page';
 
 const router = createBrowserRouter([
   {
@@ -73,7 +74,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin/articles/approve',
-        element: <PlaceholderPage title="Aprovação de Artigos" />,
+        element: <NewsPublicationReviewPage />,
       },
       {
         path: '/admin/newsletter',

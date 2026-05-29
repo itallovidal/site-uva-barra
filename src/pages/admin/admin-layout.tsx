@@ -53,7 +53,7 @@ function AdminLayout() {
 
       {/* Main content */}
       <main className="flex-1 lg:pl-0 pt-14 lg:pt-0">
-        <div className="lg:max-w-7xl mx-auto px-4 py-6">
+        <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
           <Outlet />
         </div>
       </main>

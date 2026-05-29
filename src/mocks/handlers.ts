@@ -1,12 +1,15 @@
 import { http, HttpResponse } from 'msw';
+import type { PathParams } from 'msw';
 import { newsHighlightMocks } from './news-highlight-mocks';
 import { newsCategoryMocks } from './news-category-mocks';
+import { newsModerationMocks } from './news-moderation-mocks';
 import { teamMemberMocks } from './team-members-mocks';
 import { collaboratorRequestMocks } from './collaborator-requests-mocks';
 import { categoriesMock } from './news-categories-mocks';
 import { tagsMock } from './news-tags-mocks';
 
 const pendingRequests = [...collaboratorRequestMocks];
+const pendingNews = [...newsModerationMocks];
 
 function handleHealthCheck() {
   return HttpResponse.json({ status: 'ok' });
@@ -44,9 +47,9 @@ function handleApproveCollaborator({ params }: { params: Record<string, string> 
   teamMemberMocks.push({
     id: approved.id,
     name: approved.name,
-    avatarUrl: approved.avatarUrl,
+    avatarUrl: approved.avatarUrl ?? null,
     profession: approved.profession,
-    bio: approved.bio,
+    bio: approved.bio ?? null,
   });
 
   return HttpResponse.json({ success: true });
@@ -72,14 +75,51 @@ function handleTags() {
   return HttpResponse.json(tagsMock);
 }
 
-function handleCreateNews({ request }: { request: Request }) {
+function handleCreateNews() {
   return HttpResponse.json({ success: true, id: crypto.randomUUID() }, { status: 201 });
+}
+
+function handlePendingNews() {
+  return HttpResponse.json(pendingNews);
+}
+
+function handleApproveNews({ params }: { params: PathParams }) {
+  const id = typeof params.id === 'string' ? params.id : '';
+  const index = pendingNews.findIndex((news) => news.id === id);
+
+  if (index === -1) {
+    return HttpResponse.json({ error: 'Notícia não encontrada' }, { status: 404 });
+  }
+
+  pendingNews.splice(index, 1);
+  return HttpResponse.json({ success: true });
+}
+
+function handleRequestNewsReview({ params, request }: { params: PathParams; request: Request }) {
+  const id = typeof params.id === 'string' ? params.id : '';
+  const index = pendingNews.findIndex((news) => news.id === id);
+
+  if (index === -1) {
+    return HttpResponse.json({ error: 'Notícia não encontrada' }, { status: 404 });
+  }
+
+  return request
+    .json()
+    .then((body: { comment?: string }) => {
+      if (!body.comment || !body.comment.trim()) {
+        return HttpResponse.json({ error: 'Comentário obrigatório' }, { status: 400 });
+      }
+
+      pendingNews.splice(index, 1);
+      return HttpResponse.json({ success: true });
+    });
 }
 
 export const handlers = [
   http.get('/api/health', handleHealthCheck),
   http.get('/api/news/latest', handleNewsLatest),
   http.get('/api/news', handleNewsByCategory),
+  http.get('/api/news/pending', handlePendingNews),
   http.get('/api/collaborators', () => HttpResponse.json(teamMemberMocks)),
   http.get('/api/collaborators/requests', handleCollaboratorsRequests),
   http.post('/api/collaborators/:id/approve', handleApproveCollaborator),
@@ -87,4 +127,6 @@ export const handlers = [
   http.get('/api/categories', handleCategories),
   http.get('/api/tags', handleTags),
   http.post('/api/news', handleCreateNews),
+  http.post('/api/news/:id/publish', handleApproveNews),
+  http.post('/api/news/:id/request-review', handleRequestNewsReview),
 ];
