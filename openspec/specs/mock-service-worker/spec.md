@@ -1,5 +1,7 @@
-## ADDED Requirements
+## Purpose
 
+Mock service worker setup and mock API handlers for development.
+## Requirements
 ### Requirement: Mock Service Worker initialized
 The application SHALL initialize the MSW service worker in development mode before rendering the React tree. The worker MUST intercept HTTP requests made by the application.
 
@@ -28,3 +30,30 @@ The home page SHALL display the health check result to confirm MSW is working.
 #### Scenario: Health status visible
 - **WHEN** the home page loads and the health check succeeds
 - **THEN** the page SHALL display a message indicating the API is responding, such as "API: ok"
+
+### Requirement: GET /api/news/latest mock handler
+
+The system SHALL return an array of `NewsPreviewDTO` objects instead of `NewsHighlight` objects from the `/api/news/latest` endpoint.
+
+#### Scenario: Returns NewsPreviewDTO array
+- **WHEN** a `GET /api/news/latest` request is made
+- **THEN** the system SHALL respond with HTTP 200 and a JSON array of `NewsPreviewDTO` objects
+- **AND** each object SHALL contain fields: `id`, `title`, `summary`, `coverImageUrl`, `categoryName`, `tags`, `featured`, `readingTime`, `publishedAt`, `authorName`
+
+### Requirement: GET /api/news mock handler
+
+The system SHALL return an array of `NewsPreviewDTO` objects instead of `NewsHighlight` objects from the `/api/news` endpoint.
+
+#### Scenario: Returns filtered NewsPreviewDTO array
+- **WHEN** a `GET /api/news?category=Tecnologia` request is made
+- **THEN** the system SHALL respond with HTTP 200 and a JSON array of `NewsPreviewDTO` objects filtered by category
+
+### Requirement: GET /api/collaborators mock handler
+
+The system SHALL return an array of `UserProfileDTO` objects instead of `TeamMember` objects from the `/api/collaborators` endpoint.
+
+#### Scenario: Returns UserProfileDTO array
+- **WHEN** a `GET /api/collaborators` request is made
+- **THEN** the system SHALL respond with HTTP 200 and a JSON array of `UserProfileDTO` objects
+- **AND** each object SHALL contain fields: `id`, `name`, `avatarUrl`, `profession`, `bio`
+

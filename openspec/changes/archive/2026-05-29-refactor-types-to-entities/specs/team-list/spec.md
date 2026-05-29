@@ -1,7 +1,5 @@
-## Purpose
+## MODIFIED Requirements
 
-Team member cards and sections for the about page.
-## Requirements
 ### Requirement: TeamMemberCard component
 
 The `TeamMemberCard` component SHALL accept `UserProfileDTO` instead of `TeamMember`.
@@ -33,4 +31,3 @@ The system SHALL use `UserProfileDTO` from `src/domain/entities.ts` instead of a
 - **WHEN** the data file is imported
 - **THEN** it SHALL export a typed array of `UserProfileDTO` objects
 - **AND** each object SHALL have fields: `id`, `name`, `avatarUrl` (string | null), `profession`, `bio` (string | null)
-

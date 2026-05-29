@@ -1,3 +1,7 @@
+## Purpose
+
+Authentication pages for user login and signup.
+## Requirements
 ### Requirement: Login form
 
 The system SHALL provide a login page at `/entrar` with a form that collects email and password.
@@ -20,43 +24,23 @@ The system SHALL provide a login page at `/entrar` with a form that collects ema
 
 ### Requirement: Signup form
 
-The system SHALL provide a collaborator signup page at `/cadastro` with a form that collects email, name, password, password confirmation, and role.
+The system SHALL provide a collaborator signup page at `/cadastro` with a form that collects email, name, password, password confirmation, and profession.
 
 #### Scenario: Successful form render
 - **WHEN** user navigates to `/cadastro`
-- **THEN** the system displays a signup form with email, name, password, confirm password, role dropdown, and submit button
+- **THEN** the system displays a signup form with email, name, password, confirm password, profession dropdown, and submit button
 
-#### Scenario: Hero text display
-- **WHEN** user navigates to `/cadastro`
-- **THEN** the system SHALL display the heading "Ajude-nos a Crescer" with subtitle "Seja um colaborador e ajude o portal da UVA Barra crescer da forma que puder ajudar"
+#### Scenario: Profession selection uses UserProfession values
+- **WHEN** user opens the profession dropdown
+- **THEN** the system SHALL display options: designer, redator, desenvolvedor, social_media, editor_chefe, outro
 
-#### Scenario: Email validation
-- **WHEN** user submits the form with an invalid email
-- **THEN** the system SHALL display a validation error message "Email inválido"
-
-#### Scenario: Name required
-- **WHEN** user submits the form with an empty name
-- **THEN** the system SHALL display a validation error message "Nome é obrigatório"
-
-#### Scenario: Password matching
-- **WHEN** user submits the form with non-matching password and confirmation
-- **THEN** the system SHALL display a validation error message "Senhas não conferem"
-
-#### Scenario: Password minimum length
-- **WHEN** user submits the form with a password shorter than 6 characters
-- **THEN** the system SHALL display a validation error message "Senha deve ter no mínimo 6 caracteres"
-
-#### Scenario: Role selection
-- **WHEN** user opens the role dropdown
-- **THEN** the system SHALL display options: desenvolvedor, design, redator, pesquisador
-
-#### Scenario: Role required
-- **WHEN** user submits the form without selecting a role
+#### Scenario: Profession required
+- **WHEN** user submits the form without selecting a profession
 - **THEN** the system SHALL display a validation error message "Selecione uma função"
 
 #### Scenario: Successful submit
 - **WHEN** user fills all fields correctly and clicks "Solicitar Cadastro"
-- **THEN** the system SHALL submit a `RequestSignupDTO` with email, name, password, and role
+- **THEN** the system SHALL submit a `UserRequestDTO` with email, name, password, and profession
 
 ### Requirement: Navigation between auth pages
 
@@ -84,16 +68,17 @@ The login buttons in the nav-bar SHALL navigate to the login page.
 
 ### Requirement: RequestLoginDTO
 
-The system SHALL define a `RequestLoginDTO` type with email and password fields.
+The system SHALL define a `RequestLoginDTO` type in `src/domain/entities.ts` with email and password fields.
 
 #### Scenario: Type definition
-- **WHEN** `RequestLoginDTO` is imported
+- **WHEN** `RequestLoginDTO` is imported from domain entities
 - **THEN** it SHALL contain `email: string` and `password: string`
 
-### Requirement: RequestSignupDTO
+### Requirement: UserRequestDTO
 
-The system SHALL define a `RequestSignupDTO` type with email, name, password, and role fields.
+The system SHALL define a `UserRequestDTO` type in `src/domain/entities.ts` for signup form submission with name, email, password, profession, and optional role and bio fields.
 
 #### Scenario: Type definition
-- **WHEN** `RequestSignupDTO` is imported
-- **THEN** it SHALL contain `email: string`, `name: string`, `password: string`, and `role: string`
+- **WHEN** `UserRequestDTO` is imported from domain entities
+- **THEN** it SHALL contain `name: string`, `email: string`, `password: string`, `profession: UserProfessionType`, `role?: UserRoleType`, `bio?: string | null`
+

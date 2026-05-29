@@ -28,9 +28,11 @@ The system SHALL define a `RequestLoginDTO` type in `src/domain/entities.ts` wit
 - **WHEN** `RequestLoginDTO` is imported from domain entities
 - **THEN** it SHALL contain `email: string` and `password: string`
 
-### Requirement: UserRequestDTO replaces RequestSignupDTO
+## ADDED Requirements
 
-The system SHALL use `UserRequestDTO` from `src/domain/entities.ts` instead of the previous `RequestSignupDTO` for signup form submission.
+### Requirement: UserRequestDTO
+
+The system SHALL define a `UserRequestDTO` type in `src/domain/entities.ts` for signup form submission with name, email, password, profession, and optional role and bio fields.
 
 #### Scenario: Type definition
 - **WHEN** `UserRequestDTO` is imported from domain entities
@@ -43,9 +45,3 @@ The system SHALL use `UserRequestDTO` from `src/domain/entities.ts` instead of t
 **Reason**: Replaced by `UserRequestDTO` in `src/domain/entities.ts` with updated field set (profession replaces role string).
 
 **Migration**: Import `UserRequestDTO` from `@/domain/entities` instead of `RequestSignupDTO` from `@/types/auth-types`.
-
-### Requirement: Role selection with ROLES constant
-
-**Reason**: ROLES constant in `auth-types.ts` is removed. The profession dropdown now uses `UserProfession` from domain constants with values: designer, redator, desenvolvedor, social_media, editor_chefe, outro.
-
-**Migration**: Replace `ROLES` import with `UserProfession` from `@/domain/constants`.
