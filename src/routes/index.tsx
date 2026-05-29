@@ -9,6 +9,8 @@ import { SobrePage } from '@/pages/sobre-page';
 import { AdminLayout } from '@/pages/admin/admin-layout';
 import { AdminDashboard } from '@/pages/admin/admin-dashboard';
 import { PlaceholderPage } from '@/pages/admin/placeholder-page';
+import { CollaboratorRegisterPage } from '@/pages/admin/collaborator-register-page';
+import { CollaboratorsRequestsPage } from '@/pages/admin/collaborators-requests-page';
 
 const router = createBrowserRouter([
   {
@@ -53,11 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin/collaborators/register',
-        element: <PlaceholderPage title="Registro de Colaborador" />,
+        element: <CollaboratorRegisterPage />,
       },
       {
         path: '/admin/collaborators/requests',
-        element: <PlaceholderPage title="Solicitações" />,
+        element: <CollaboratorsRequestsPage />,
       },
       {
         path: '/admin/articles',
