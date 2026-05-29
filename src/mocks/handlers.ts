@@ -3,6 +3,8 @@ import { newsHighlightMocks } from './news-highlight-mocks';
 import { newsCategoryMocks } from './news-category-mocks';
 import { teamMemberMocks } from './team-members-mocks';
 import { collaboratorRequestMocks } from './collaborator-requests-mocks';
+import { categoriesMock } from './news-categories-mocks';
+import { tagsMock } from './news-tags-mocks';
 
 const pendingRequests = [...collaboratorRequestMocks];
 
@@ -62,6 +64,18 @@ function handleDeleteCollaborator({ params }: { params: Record<string, string> }
   return HttpResponse.json({ success: true });
 }
 
+function handleCategories() {
+  return HttpResponse.json(categoriesMock);
+}
+
+function handleTags() {
+  return HttpResponse.json(tagsMock);
+}
+
+function handleCreateNews({ request }: { request: Request }) {
+  return HttpResponse.json({ success: true, id: crypto.randomUUID() }, { status: 201 });
+}
+
 export const handlers = [
   http.get('/api/health', handleHealthCheck),
   http.get('/api/news/latest', handleNewsLatest),
@@ -70,4 +84,7 @@ export const handlers = [
   http.get('/api/collaborators/requests', handleCollaboratorsRequests),
   http.post('/api/collaborators/:id/approve', handleApproveCollaborator),
   http.delete('/api/collaborators/:id', handleDeleteCollaborator),
+  http.get('/api/categories', handleCategories),
+  http.get('/api/tags', handleTags),
+  http.post('/api/news', handleCreateNews),
 ];

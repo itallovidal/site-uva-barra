@@ -15,4 +15,6 @@ const newsSchema = z.object({
   readingTime: z.number().nullable().optional(),
 });
 
-export { newsSchema };
+type NewsFormData = z.infer<typeof newsSchema>;
+
+export { newsSchema, type NewsFormData };
