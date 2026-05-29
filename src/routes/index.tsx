@@ -11,6 +11,8 @@ import { AdminDashboard } from '@/pages/admin/admin-dashboard';
 import { PlaceholderPage } from '@/pages/admin/placeholder-page';
 import { CollaboratorRegisterPage } from '@/pages/admin/collaborator-register-page';
 import { CollaboratorsRequestsPage } from '@/pages/admin/collaborators-requests-page';
+import { CollaboratorsListPage } from '@/pages/admin/collaborators-list-page';
+import { NewsCreatePage } from '@/pages/admin/news-create-page';
 
 const router = createBrowserRouter([
   {
@@ -51,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin/collaborators',
-        element: <PlaceholderPage title="Lista de Colaboradores" />,
+        element: <CollaboratorsListPage />,
       },
       {
         path: '/admin/collaborators/register',
@@ -67,7 +69,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin/articles/create',
-        element: <PlaceholderPage title="Criação de Artigos" />,
+        element: <NewsCreatePage />,
       },
       {
         path: '/admin/articles/approve',
