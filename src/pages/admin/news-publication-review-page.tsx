@@ -3,8 +3,6 @@ import type { FormEvent } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/lib/card';
-import { Button } from '@/components/lib/button';
 import {
   Dialog,
   DialogContent,
@@ -13,6 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/lib/dialog';
+import { AdminNewsCard } from '@/components/admin-news-card';
+import { Button } from '@/components/lib/button';
 import { Textarea } from '@/components/lib/textarea';
 import type { NewsModerationItemDTO, NewsReviewRequestDTO } from '@/domain/entities';
 
@@ -22,13 +22,6 @@ interface UsePendingNewsModerationResult {
   error: string | null;
   approve: (id: string) => Promise<void>;
   requestReview: (id: string, comment: string) => Promise<void>;
-}
-
-function formatDate(value: Date): string {
-  return new Intl.DateTimeFormat('pt-BR', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  }).format(new Date(value));
 }
 
 function usePendingNewsModeration(): UsePendingNewsModerationResult {
@@ -215,68 +208,34 @@ function NewsPublicationReviewPage() {
       <div className="grid gap-5">
         {pendingNews.map(function renderNews(news) {
           return (
-            <Card key={news.id} className="py-0">
-              <CardHeader className="border-b px-6 pb-5 pt-6">
-                <CardTitle className="text-lg leading-snug">{news.title}</CardTitle>
-                <CardDescription>
-                  {news.categoryName} · Atualizada em {formatDate(news.updatedAt)}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-5 px-6 py-6">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-                  <div className="h-28 w-full overflow-hidden rounded-md bg-zinc-100 sm:h-24 sm:w-36 sm:flex-shrink-0">
-                    {news.coverImageUrl ? (
-                      <img
-                        src={news.coverImageUrl}
-                        alt={news.title}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
-                        Sem imagem
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="min-w-0 flex-1 space-y-2">
-                    <p className="text-sm text-zinc-700">{news.summary}</p>
-                    <p className="text-xs text-muted-foreground">Autor: {news.authorName}</p>
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                      Status: {news.status === 'review' ? 'Em revisão' : 'Rascunho'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-3 pt-1">
-                  <Button
-                    variant="secondary"
-                    onClick={function onClickPreview() {
-                      openPreviewModal(news);
-                    }}
-                  >
-                    Pré-Visualizar
-                  </Button>
-
-                  <Button
-                    onClick={function onClickApprove() {
-                      void handleApprove(news.id);
-                    }}
-                    disabled={isApprovingId === news.id}
-                  >
-                    {isApprovingId === news.id ? 'Aprovando...' : 'Publicar'}
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    onClick={function onClickReview() {
-                      openReviewModal(news);
-                    }}
-                  >
-                    Precisa de revisão
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <AdminNewsCard
+              key={news.id}
+              article={news}
+              actions={[
+                {
+                  label: 'Pré-Visualizar',
+                  variant: 'secondary',
+                  onClick: function onClickPreview() {
+                    openPreviewModal(news);
+                  },
+                },
+                {
+                  label: 'Publicar',
+                  onClick: function onClickApprove() {
+                    void handleApprove(news.id);
+                  },
+                  isLoading: isApprovingId === news.id,
+                  loadingLabel: 'Publicando',
+                },
+                {
+                  label: 'Precisa de revisão',
+                  variant: 'outline',
+                  onClick: function onClickReview() {
+                    openReviewModal(news);
+                  },
+                },
+              ]}
+            />
           );
         })}
       </div>

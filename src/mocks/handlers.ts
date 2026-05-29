@@ -3,13 +3,16 @@ import type { PathParams } from 'msw';
 import { newsHighlightMocks } from './news-highlight-mocks';
 import { newsCategoryMocks } from './news-category-mocks';
 import { newsModerationMocks } from './news-moderation-mocks';
+import { newsPublishedMocks } from './news-published-mocks';
 import { teamMemberMocks } from './team-members-mocks';
 import { collaboratorRequestMocks } from './collaborator-requests-mocks';
 import { categoriesMock } from './news-categories-mocks';
 import { tagsMock } from './news-tags-mocks';
+import { NewsStatus } from '@/domain/constants';
 
 const pendingRequests = [...collaboratorRequestMocks];
 const pendingNews = [...newsModerationMocks];
+const publishedNews = [...newsPublishedMocks];
 
 function handleHealthCheck() {
   return HttpResponse.json({ status: 'ok' });
@@ -91,7 +94,28 @@ function handleApproveNews({ params }: { params: PathParams }) {
     return HttpResponse.json({ error: 'Notícia não encontrada' }, { status: 404 });
   }
 
-  pendingNews.splice(index, 1);
+  const [approved] = pendingNews.splice(index, 1);
+  publishedNews.unshift({
+    ...approved,
+    status: NewsStatus.PUBLISHED,
+    publishedAt: new Date(),
+  });
+  return HttpResponse.json({ success: true });
+}
+
+function handlePublishedNews() {
+  return HttpResponse.json(publishedNews);
+}
+
+function handleUnpublishNews({ params }: { params: PathParams }) {
+  const id = typeof params.id === 'string' ? params.id : '';
+  const index = publishedNews.findIndex((news) => news.id === id);
+
+  if (index === -1) {
+    return HttpResponse.json({ error: 'Artigo não encontrado' }, { status: 404 });
+  }
+
+  publishedNews.splice(index, 1);
   return HttpResponse.json({ success: true });
 }
 
@@ -120,6 +144,7 @@ export const handlers = [
   http.get('/api/news/latest', handleNewsLatest),
   http.get('/api/news', handleNewsByCategory),
   http.get('/api/news/pending', handlePendingNews),
+  http.get('/api/news/published', handlePublishedNews),
   http.get('/api/collaborators', () => HttpResponse.json(teamMemberMocks)),
   http.get('/api/collaborators/requests', handleCollaboratorsRequests),
   http.post('/api/collaborators/:id/approve', handleApproveCollaborator),
@@ -128,5 +153,6 @@ export const handlers = [
   http.get('/api/tags', handleTags),
   http.post('/api/news', handleCreateNews),
   http.post('/api/news/:id/publish', handleApproveNews),
+  http.post('/api/news/:id/unpublish', handleUnpublishNews),
   http.post('/api/news/:id/request-review', handleRequestNewsReview),
 ];

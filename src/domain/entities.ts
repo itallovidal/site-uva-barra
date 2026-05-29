@@ -96,6 +96,19 @@ export interface NewsModerationItemDTO {
   updatedAt: Date;
 }
 
+export interface AdminNewsCardDTO {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  coverImageUrl: string | null;
+  categoryName: string;
+  authorName: string;
+  status: NewsStatusType;
+  updatedAt: Date;
+  publishedAt?: Date | null;
+}
+
 export interface NewsReviewRequestDTO {
   comment: string;
 }

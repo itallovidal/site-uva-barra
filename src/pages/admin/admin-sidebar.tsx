@@ -37,7 +37,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     label: 'Artigos',
     items: [
       { link: '/admin/articles/create', text: 'Criação de Artigos', icon: FilePlusIcon },
-      { link: '/admin/articles', text: 'Listagem de Artigos', icon: FileTextIcon },
+      { link: '/admin/articles/published', text: 'Artigos Publicados', icon: FileTextIcon },
       { link: '/admin/articles/approve', text: 'Aprovação de Artigos', icon: CheckCircleIcon },
     ],
   },

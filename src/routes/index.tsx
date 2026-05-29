@@ -14,6 +14,7 @@ import { CollaboratorsRequestsPage } from '@/pages/admin/collaborators-requests-
 import { CollaboratorsListPage } from '@/pages/admin/collaborators-list-page';
 import { NewsCreatePage } from '@/pages/admin/news-create-page';
 import { NewsPublicationReviewPage } from '@/pages/admin/news-publication-review-page';
+import { NewsPublishedPage } from '@/pages/admin/news-published-page';
 
 const router = createBrowserRouter([
   {
@@ -65,8 +66,8 @@ const router = createBrowserRouter([
         element: <CollaboratorsRequestsPage />,
       },
       {
-        path: '/admin/articles',
-        element: <PlaceholderPage title="Listagem de Artigos" />,
+        path: '/admin/articles/published',
+        element: <NewsPublishedPage />,
       },
       {
         path: '/admin/articles/create',
