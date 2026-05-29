@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import type { NewsHighlight } from '../types/news-highlight-types';
+import type { NewsPreviewDTO } from '@/domain/entities';
 
 interface UseNewsHighlightsResult {
-  highlights: NewsHighlight[];
+  highlights: NewsPreviewDTO[];
   isLoading: boolean;
   error: string | null;
 }
 
 function useNewsHighlights(): UseNewsHighlightsResult {
-  const [highlights, setHighlights] = useState<NewsHighlight[]>([]);
+  const [highlights, setHighlights] = useState<NewsPreviewDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,7 +17,7 @@ function useNewsHighlights(): UseNewsHighlightsResult {
       try {
         const response = await fetch('/api/news/latest');
         if (!response.ok) throw new Error('Failed to fetch news');
-        const data = (await response.json()) as NewsHighlight[];
+        const data = (await response.json()) as NewsPreviewDTO[];
         setHighlights(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');

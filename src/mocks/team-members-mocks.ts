@@ -1,53 +1,62 @@
-import type { TeamMember } from '../types/team-member-types';
+import { UserProfession } from '@/domain/constants';
+import type { UserProfileDTO } from '@/domain/entities';
 
-const teamMemberMocks: TeamMember[] = [
+const teamMemberMocks: UserProfileDTO[] = [
   {
     id: '1',
     name: 'Duda Nicolich',
-    role: 'Supervisão de Estágio',
-    category: 'Redação',
+    avatarUrl: null,
+    profession: UserProfession.EDITOR_CHEFE,
+    bio: 'Supervisão de Estágio',
   },
   {
     id: '2',
     name: 'Prof. Dra. Renata Feital',
-    role: 'Coordenação Geral',
-    category: 'Redação',
+    avatarUrl: null,
+    profession: UserProfession.EDITOR_CHEFE,
+    bio: 'Coordenação Geral',
   },
   {
     id: '3',
     name: 'Ana Clara Costa',
-    role: 'Redatora',
-    category: 'Redação',
+    avatarUrl: null,
+    profession: UserProfession.REDATOR,
+    bio: 'Redatora',
   },
   {
     id: '4',
     name: 'Lucas Mendes',
-    role: 'Redator',
-    category: 'Redação',
+    avatarUrl: null,
+    profession: UserProfession.REDATOR,
+    bio: 'Redator',
   },
   {
     id: '5',
     name: 'Gabriel Oliveira',
-    role: 'Designer Gráfico',
-    category: 'Criação',
+    avatarUrl: null,
+    profession: UserProfession.DESIGNER,
+    bio: 'Designer Gráfico',
   },
   {
     id: '6',
     name: 'Marina Santos',
-    role: 'Social Media',
-    category: 'Criação',
+    avatarUrl: null,
+    profession: UserProfession.SOCIAL_MEDIA,
+    bio: 'Social Media',
   },
   {
     id: '7',
     name: 'Felipe Rocha',
-    role: 'Fotógrafo',
-    category: 'Criação',
+    avatarUrl: null,
+    profession: UserProfession.OUTRO,
+    bio: 'Fotógrafo',
   },
   {
     id: '8',
     name: 'Itallo Ferrari',
-    role: 'Desenvolvedor',
-    category: 'Desenvolvimento',
+    avatarUrl: null,
+    profession: UserProfession.DESENVOLVEDOR,
+    bio: 'Desenvolvedor',
   },
 ];
 

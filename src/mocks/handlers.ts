@@ -17,7 +17,7 @@ function handleNewsByCategory({ request }: { request: Request }) {
   const limit = Number(url.searchParams.get('limit')) || 3;
 
   const filtered = category
-    ? newsCategoryMocks.filter((item) => item.category.toLowerCase() === category.toLowerCase())
+    ? newsCategoryMocks.filter((item) => item.categoryName.toLowerCase() === category.toLowerCase())
     : newsCategoryMocks;
 
   return HttpResponse.json(filtered.slice(0, limit));

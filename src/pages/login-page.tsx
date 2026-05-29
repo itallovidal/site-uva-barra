@@ -6,8 +6,8 @@ import { EnvelopeSimple, Lock } from '@phosphor-icons/react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/lib/card';
 import { Input } from '@/components/lib/input';
 import { Button } from '@/components/lib/button';
-import { loginSchema } from '@/schemas/auth-schemas';
-import type { RequestLoginDTO } from '@/types/auth-types';
+import { loginSchema } from '@/schemas/user-schemas';
+import type { RequestLoginDTO } from '@/domain/entities';
 
 function LoginPage() {
   const {

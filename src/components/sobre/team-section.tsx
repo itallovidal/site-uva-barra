@@ -1,9 +1,9 @@
-import type { TeamMember } from '@/types/team-member-types';
+import type { UserProfileDTO } from '@/domain/entities';
 import { TeamMemberCard } from './team-member-card';
 
 interface TeamSectionProps {
   category: string;
-  members: TeamMember[];
+  members: UserProfileDTO[];
 }
 
 function TeamSection({ category, members }: TeamSectionProps) {

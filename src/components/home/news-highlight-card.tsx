@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import type { NewsHighlight } from '../../types/news-highlight-types';
+import type { NewsPreviewDTO } from '../../domain/entities';
 
 interface NewsHighlightCardProps {
-  highlight: NewsHighlight;
+  highlight: NewsPreviewDTO;
   isFeatured?: boolean;
   isCompact?: boolean;
 }
@@ -12,7 +12,7 @@ function NewsHighlightCard({
   isFeatured = false,
   isCompact = false,
 }: NewsHighlightCardProps) {
-  const { imageUrl, category, title, summary } = highlight;
+  const { coverImageUrl, categoryName, title, summary } = highlight;
 
   return (
     <Link
@@ -25,9 +25,9 @@ function NewsHighlightCard({
             : 'aspect-[16/9]'
       }`}
     >
-      {imageUrl ? (
+      {coverImageUrl ? (
         <img
-          src={imageUrl}
+          src={coverImageUrl}
           alt={title}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
@@ -43,7 +43,7 @@ function NewsHighlightCard({
             isCompact ? 'mb-1 text-[10px]' : 'mb-2 text-xs'
           }`}
         >
-          {category}
+          {categoryName}
         </span>
         <h2
           className={`mt-1 text-white line-clamp-2 ${

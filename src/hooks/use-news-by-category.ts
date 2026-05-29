@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import type { NewsHighlight } from '../types/news-highlight-types';
+import type { NewsPreviewDTO } from '@/domain/entities';
 
 interface UseNewsByCategoryResult {
-  articles: NewsHighlight[];
+  articles: NewsPreviewDTO[];
   isLoading: boolean;
   error: string | null;
 }
 
 function useNewsByCategory(category: string, limit = 3): UseNewsByCategoryResult {
-  const [articles, setArticles] = useState<NewsHighlight[]>([]);
+  const [articles, setArticles] = useState<NewsPreviewDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +21,7 @@ function useNewsByCategory(category: string, limit = 3): UseNewsByCategoryResult
           const params = new URLSearchParams({ category, limit: String(limit) });
           const response = await fetch(`/api/news?${params}`);
           if (!response.ok) throw new Error('Failed to fetch news');
-          const data = (await response.json()) as NewsHighlight[];
+          const data = (await response.json()) as NewsPreviewDTO[];
           setArticles(data);
         } catch (err) {
           setError(err instanceof Error ? err.message : 'Unknown error');

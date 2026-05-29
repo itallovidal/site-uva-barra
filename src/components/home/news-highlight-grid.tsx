@@ -1,8 +1,8 @@
-import type { NewsHighlight } from '../../types/news-highlight-types';
+import type { NewsPreviewDTO } from '../../domain/entities';
 import { NewsHighlightCard } from './news-highlight-card';
 
 interface NewsHighlightGridProps {
-  highlights: NewsHighlight[];
+  highlights: NewsPreviewDTO[];
 }
 
 function NewsHighlightGrid({ highlights }: NewsHighlightGridProps) {

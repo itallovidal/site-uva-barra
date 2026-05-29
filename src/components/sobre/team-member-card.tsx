@@ -1,7 +1,7 @@
-import type { TeamMember } from '@/types/team-member-types';
+import type { UserProfileDTO } from '@/domain/entities';
 
 interface TeamMemberCardProps {
-  member: TeamMember;
+  member: UserProfileDTO;
 }
 
 function TeamMemberCard({ member }: TeamMemberCardProps) {
@@ -14,9 +14,9 @@ function TeamMemberCard({ member }: TeamMemberCardProps) {
 
   return (
     <div className="flex items-center gap-4 rounded-lg border bg-white p-4">
-      {member.photoUrl ? (
+      {member.avatarUrl ? (
         <img
-          src={member.photoUrl}
+          src={member.avatarUrl}
           alt={member.name}
           className="h-16 w-16 rounded-full object-cover"
         />
@@ -27,7 +27,7 @@ function TeamMemberCard({ member }: TeamMemberCardProps) {
       )}
       <div>
         <h3 className="font-semibold text-zinc-900">{member.name}</h3>
-        <p className="text-sm text-neutral-500">{member.role}</p>
+        <p className="text-sm text-neutral-500">{member.bio}</p>
       </div>
     </div>
   );

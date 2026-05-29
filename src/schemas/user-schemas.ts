@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ROLES } from '@/types/auth-types';
+import { UserProfession } from '@/domain/constants';
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -8,12 +8,12 @@ const loginSchema = z.object({
 
 const signupSchema = z
   .object({
-    email: z.string().email('Email inválido'),
     name: z.string().min(1, 'Nome é obrigatório'),
+    email: z.string().email('Email inválido'),
     password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
     confirmPassword: z.string().min(1, 'Confirmação de senha é obrigatória'),
-    role: z.string({ message: 'Selecione uma função' }).refine(
-      (val) => ROLES.includes(val as (typeof ROLES)[number]),
+    profession: z.enum(
+      Object.values(UserProfession) as [typeof UserProfession[keyof typeof UserProfession], ...typeof UserProfession[keyof typeof UserProfession][]],
       { message: 'Selecione uma função' }
     ),
   })

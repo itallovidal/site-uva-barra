@@ -1,6 +1,6 @@
-function timeAgo(dateString: string): string {
+function timeAgo(date: string | Date): string {
   const now = Date.now();
-  const past = new Date(dateString).getTime();
+  const past = typeof date === 'string' ? new Date(date).getTime() : date.getTime();
   const diffMs = now - past;
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffHours / 24);

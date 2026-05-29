@@ -20,9 +20,14 @@ import {
   ComboboxList,
   ComboboxItem,
 } from '@/components/lib/combobox';
-import { signupSchema } from '@/schemas/auth-schemas';
-import { ROLES } from '@/types/auth-types';
-import type { RequestSignupDTO } from '@/types/auth-types';
+
+import { signupSchema } from '@/schemas/user-schemas';
+import { UserProfession } from '@/domain/constants';
+import type { UserRequestDTO } from '@/domain/entities';
+
+type SignupFormData = Omit<UserRequestDTO, 'role' | 'bio'> & { confirmPassword: string };
+
+const professionOptions = Object.values(UserProfession);
 
 function SignupPage() {
   const {
@@ -30,12 +35,19 @@ function SignupPage() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<RequestSignupDTO & { confirmPassword: string }>({
-    resolver: zodResolver(signupSchema),
+  } = useForm<SignupFormData>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(signupSchema) as any,
   });
 
-  function onSubmit(data: RequestSignupDTO) {
-    console.log('Signup submitted:', data);
+  function onSubmit(data: SignupFormData) {
+    const dto: UserRequestDTO = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      profession: data.profession,
+    };
+    console.log('Signup submitted:', dto);
   }
 
   return (
@@ -139,11 +151,11 @@ function SignupPage() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="role" className="text-sm font-medium">
+              <label htmlFor="profession" className="text-sm font-medium">
                 Em que você pode ajudar? (Função)
               </label>
               <Controller
-                name="role"
+                name="profession"
                 control={control}
                 render={({ field }) => (
                   <Combobox
@@ -157,9 +169,9 @@ function SignupPage() {
                     />
                     <ComboboxContent>
                       <ComboboxList>
-                        {ROLES.map((role) => (
-                          <ComboboxItem key={role} value={role}>
-                            {role.charAt(0).toUpperCase() + role.slice(1)}
+                        {professionOptions.map((profession) => (
+                          <ComboboxItem key={profession} value={profession}>
+                            {profession.charAt(0).toUpperCase() + profession.slice(1).replace(/_/g, ' ')}
                           </ComboboxItem>
                         ))}
                       </ComboboxList>
@@ -167,7 +179,9 @@ function SignupPage() {
                   </Combobox>
                 )}
               />
-              {errors.role && <p className="text-sm text-destructive">{errors.role.message}</p>}
+              {errors.profession && (
+                <p className="text-sm text-destructive">{errors.profession.message}</p>
+              )}
             </div>
 
             <Button type="submit" className="w-full">

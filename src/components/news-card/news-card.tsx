@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import type { NewsHighlight } from '../../types/news-highlight-types';
+import type { NewsPreviewDTO } from '../../domain/entities';
 import { timeAgo } from '../../utils/time-ago';
 
 interface NewsCardProps {
-  article: NewsHighlight;
+  article: NewsPreviewDTO;
 }
 
 function NewsCard({ article }: NewsCardProps) {
-  const { id, imageUrl, category, title, summary, author, publishedAt } = article;
+  const { id, coverImageUrl, categoryName, title, summary, authorName, publishedAt } = article;
 
   return (
     <Link
@@ -15,9 +15,9 @@ function NewsCard({ article }: NewsCardProps) {
       className="group flex gap-6 rounded-lg border bg-white p-4 transition-colors hover:bg-zinc-50"
     >
       <div className="h-40 w-60 flex-shrink-0 overflow-hidden rounded-md">
-        {imageUrl ? (
+        {coverImageUrl ? (
           <img
-            src={imageUrl}
+            src={coverImageUrl}
             alt={title}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -29,7 +29,7 @@ function NewsCard({ article }: NewsCardProps) {
       <div className="flex flex-1 flex-col justify-between">
         <div>
           <span className="inline-block rounded-full bg-red-600 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-white">
-            {category}
+            {categoryName}
           </span>
           <h3 className="mt-2 text-xl font-bold text-zinc-900 line-clamp-2 group-hover:underline">
             {title}
@@ -43,10 +43,10 @@ function NewsCard({ article }: NewsCardProps) {
 
         <div className="mt-2 text-sm text-zinc-400">
           {publishedAt && <span>{timeAgo(publishedAt)}</span>}
-          {author && (
+          {authorName && (
             <>
               <span className="mx-1">-</span>
-              <span>Por {author}</span>
+              <span>Por {authorName}</span>
             </>
           )}
         </div>
