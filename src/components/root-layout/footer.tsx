@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
+import { InstagramLogoIcon, LinkedinLogoIcon } from '@phosphor-icons/react';
 
 const NAV_LINKS = [
   { text: 'Sobre a UVA', href: '/sobre' },
@@ -53,7 +53,7 @@ function Footer() {
               className="text-white transition-colors hover:text-foreground"
               aria-label="Instagram"
             >
-              <InstagramLogo size={20} weight="fill" />
+              <InstagramLogoIcon size={20} weight="fill" />
             </a>
             <a
               href="https://linkedin.com"
@@ -62,7 +62,7 @@ function Footer() {
               className="text-white transition-colors hover:text-foreground"
               aria-label="LinkedIn"
             >
-              <LinkedinLogo size={20} weight="fill" />
+              <LinkedinLogoIcon size={20} weight="fill" />
             </a>
           </div>
         </div>

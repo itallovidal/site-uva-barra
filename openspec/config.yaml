@@ -14,6 +14,7 @@ context: |
   - Named functions instead of arrow functions for components and utilities
   - File names in kebab-case (lowercase with hyphens)
   - Named exports only, no export default
+  - Use the current Phosphor icon exports with the `Icon` suffix when available; avoid deprecated icon names that trigger warnings
   - See CODING-RULES.md for complete developer guidelines
   - See openspec/specs/coding-conventions/spec.md for formal spec
 

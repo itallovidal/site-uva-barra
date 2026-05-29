@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { FileX } from '@phosphor-icons/react';
+import { FileXIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
 
 function NotFoundPage() {
@@ -7,7 +7,7 @@ function NotFoundPage() {
 
   return (
     <main className="motion-safe:animate-fade-in flex min-h-dvh flex-col items-center justify-center px-4 text-center">
-      <FileX size={96} className="mb-6 text-red-600" weight="duotone" />
+      <FileXIcon size={96} className="mb-6 text-red-600" weight="duotone" />
 
       <h1 className="mb-4 text-5xl font-bold tracking-tight text-red-600">Página não encontrada</h1>
 

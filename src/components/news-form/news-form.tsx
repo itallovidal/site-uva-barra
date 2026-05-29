@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  FileText,
-  NotePencil,
-  ImageSquare,
-  Tag,
-  Article,
+  FileTextIcon,
+  ImageSquareIcon,
+  TagIcon,
+  ArticleIcon,
 } from '@phosphor-icons/react';
-import { MDXEditor, headingsPlugin, listsPlugin, linkPlugin, quotePlugin, markdownShortcutPlugin, toolbarPlugin, UndoRedo, BoldItalicUnderlineToggles, BlockTypeSelect, ListsToggle, CreateLink, InsertImage } from '@mdxeditor/editor';
+import { MDXEditor, headingsPlugin, listsPlugin, linkPlugin, quotePlugin, markdownShortcutPlugin, toolbarPlugin, UndoRedo, BoldItalicUnderlineToggles, BlockTypeSelect, ListsToggle, CreateLink } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 
 import { Input } from '@/components/lib/input';
@@ -144,7 +143,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
             Título
           </label>
           <div className="relative">
-            <Article
+            <ArticleIcon
               size={16}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
             />
@@ -165,7 +164,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
             Resumo
           </label>
           <div className="relative">
-            <FileText
+            <FileTextIcon
               size={16}
               className="absolute left-3 top-3 text-muted-foreground"
             />
@@ -277,7 +276,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
                           }
                         }}
                       >
-                        <Tag size={12} />
+                        <TagIcon size={12} />
                         {tag.name}
                       </Badge>
                     );
@@ -293,7 +292,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
             URL da Imagem de Capa
           </label>
           <div className="relative">
-            <ImageSquare
+            <ImageSquareIcon
               size={16}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
             />

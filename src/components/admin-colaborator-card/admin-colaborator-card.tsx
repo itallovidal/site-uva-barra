@@ -1,4 +1,4 @@
-import { Check, Trash } from '@phosphor-icons/react';
+import { CheckIcon, TrashIcon } from '@phosphor-icons/react';
 import { Card, CardContent } from '@/components/lib/card';
 import { Button } from '@/components/lib/button';
 import type { UserProfessionType } from '@/domain/constants';
@@ -69,7 +69,7 @@ function AdminColaboratorCard({
               size="sm"
               onClick={() => onApprove?.(id)}
             >
-              <Check size={16} className="text-green-600" />
+              <CheckIcon size={16} className="text-green-600" />
               Aprovar
             </Button>
             <Button
@@ -77,7 +77,7 @@ function AdminColaboratorCard({
               size="sm"
               onClick={() => onDelete?.(id)}
             >
-              <Trash size={16} />
+              <TrashIcon size={16} />
               Excluir
             </Button>
           </div>

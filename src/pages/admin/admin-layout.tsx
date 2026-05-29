@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { List } from '@phosphor-icons/react';
+import { ListIcon, XIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
 import {
   Drawer,
@@ -9,7 +9,6 @@ import {
   DrawerClose,
 } from '@/components/lib/drawer';
 import { AdminSidebar } from './admin-sidebar';
-import { X } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 
 function AdminLayout() {
@@ -25,7 +24,7 @@ function AdminLayout() {
         <Drawer direction="left">
           <DrawerTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="Abrir menu admin">
-              <List size={22} />
+              <ListIcon size={22} />
             </Button>
           </DrawerTrigger>
           <DrawerContent className="flex flex-col h-full">
@@ -35,7 +34,7 @@ function AdminLayout() {
               </Link>
               <DrawerClose asChild>
                 <Button variant="ghost" size="icon-xs" aria-label="Fechar menu">
-                  <X size={16} />
+                  <XIcon size={16} />
                 </Button>
               </DrawerClose>
             </DrawerHeader>

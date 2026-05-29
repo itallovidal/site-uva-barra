@@ -1,6 +1,6 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EnvelopeSimple, User, Lock, NotePencil } from '@phosphor-icons/react';
+import { EnvelopeSimpleIcon, UserIcon, LockIcon, NotePencilIcon } from '@phosphor-icons/react';
 
 import {
   Card,
@@ -71,7 +71,7 @@ function CollaboratorRegisterPage() {
                 Nome
               </label>
               <div className="relative">
-                <User
+                <UserIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
@@ -92,7 +92,7 @@ function CollaboratorRegisterPage() {
                 Email
               </label>
               <div className="relative">
-                <EnvelopeSimple
+                <EnvelopeSimpleIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
@@ -113,7 +113,7 @@ function CollaboratorRegisterPage() {
                 Senha
               </label>
               <div className="relative">
-                <Lock
+                <LockIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
@@ -136,7 +136,7 @@ function CollaboratorRegisterPage() {
                 Confirmar Senha
               </label>
               <div className="relative">
-                <Lock
+                <LockIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
@@ -227,7 +227,7 @@ function CollaboratorRegisterPage() {
                 Biografia
               </label>
               <div className="relative">
-                <NotePencil
+                <NotePencilIcon
                   size={16}
                   className="absolute left-3 top-3 text-muted-foreground"
                 />

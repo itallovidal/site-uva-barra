@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import { NavBar } from '@/components/nav-bar';
 import { Footer } from './footer';
-import { Newspaper, Envelope, Info } from '@phosphor-icons/react';
+import { NewspaperIcon, EnvelopeIcon, InfoIcon } from '@phosphor-icons/react';
 
 const BRAND = 'Agência UVA Barra';
 
 const NAV_ITEMS = [
-  { link: '/novidades', text: 'Novidades', icon: Newspaper },
-  { link: '/contato', text: 'Contato', icon: Envelope },
-  { link: '/sobre', text: 'Sobre', icon: Info },
+  { link: '/novidades', text: 'Novidades', icon: NewspaperIcon },
+  { link: '/contato', text: 'Contato', icon: EnvelopeIcon },
+  { link: '/sobre', text: 'Sobre', icon: InfoIcon },
 ];
 
 function RootLayout() {

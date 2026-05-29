@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EnvelopeSimple, User, Lock } from '@phosphor-icons/react';
+import { EnvelopeSimpleIcon, UserIcon, LockIcon } from '@phosphor-icons/react';
 
 import {
   Card,
@@ -67,7 +67,7 @@ function SignupPage() {
                 Email
               </label>
               <div className="relative">
-                <EnvelopeSimple
+                <EnvelopeSimpleIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
@@ -88,7 +88,7 @@ function SignupPage() {
                 Nome
               </label>
               <div className="relative">
-                <User
+                <UserIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
@@ -109,7 +109,7 @@ function SignupPage() {
                 Senha
               </label>
               <div className="relative">
-                <Lock
+                <LockIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
@@ -132,7 +132,7 @@ function SignupPage() {
                 Confirmar Senha
               </label>
               <div className="relative">
-                <Lock
+                <LockIcon
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />

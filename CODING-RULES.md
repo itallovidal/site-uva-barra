@@ -158,6 +158,11 @@ Links de navegação usam tipografia específica:
 - `src/components/[component-name]/` — Componentes compartilhados entre múltiplas páginas (ex: `nav-bar/`).
 - `src/components/root-layout/` — Layout raiz e seus sub-componentes.
 
+### Phosphor Icons
+- Use os exports atuais do `@phosphor-icons/react` com sufixo `Icon` quando disponíveis.
+- Não introduza nomes de ícones depreciados, porque eles geram warnings e quebram a padronização do projeto.
+- Ao adicionar ou corrigir ícones, prefira atualizar também os usos existentes no mesmo arquivo para manter consistência.
+
 ### Component Files
 - Um componente principal por arquivo
 - Arquivo de mesmo nome do componente (kebab-case)

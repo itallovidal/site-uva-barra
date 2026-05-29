@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import {
-  Users,
-  UserPlus,
-  ClipboardText,
-  FilePlus,
-  FileText,
-  CheckCircle,
-  EnvelopeSimple,
-  Envelope,
-  SignOut,
+  UsersIcon,
+  UserPlusIcon,
+  ClipboardTextIcon,
+  FilePlusIcon,
+  FileTextIcon,
+  CheckCircleIcon,
+  EnvelopeSimpleIcon,
+  EnvelopeIcon,
+  SignOutIcon,
 } from '@phosphor-icons/react';
 import { cn } from '@/components/lib/utils';
 import type { Icon } from '@phosphor-icons/react';
@@ -28,24 +28,24 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
   {
     label: 'Colaboradores',
     items: [
-      { link: '/admin/collaborators/register', text: 'Registro de Colaborador', icon: UserPlus },
-      { link: '/admin/collaborators/requests', text: 'Solicitações', icon: ClipboardText },
-      { link: '/admin/collaborators', text: 'Lista de Colaboradores', icon: Users },
+      { link: '/admin/collaborators/register', text: 'Registro de Colaborador', icon: UserPlusIcon },
+      { link: '/admin/collaborators/requests', text: 'Solicitações', icon: ClipboardTextIcon },
+      { link: '/admin/collaborators', text: 'Lista de Colaboradores', icon: UsersIcon },
     ],
   },
   {
     label: 'Artigos',
     items: [
-      { link: '/admin/articles/create', text: 'Criação de Artigos', icon: FilePlus },
-      { link: '/admin/articles', text: 'Listagem de Artigos', icon: FileText },
-      { link: '/admin/articles/approve', text: 'Aprovação de Artigos', icon: CheckCircle },
+      { link: '/admin/articles/create', text: 'Criação de Artigos', icon: FilePlusIcon },
+      { link: '/admin/articles', text: 'Listagem de Artigos', icon: FileTextIcon },
+      { link: '/admin/articles/approve', text: 'Aprovação de Artigos', icon: CheckCircleIcon },
     ],
   },
   {
     label: 'Newsletter',
     items: [
-      { link: '/admin/newsletter/create', text: 'Criação de Newsletter', icon: EnvelopeSimple },
-      { link: '/admin/newsletter', text: 'Listagem de Newsletter', icon: Envelope },
+      { link: '/admin/newsletter/create', text: 'Criação de Newsletter', icon: EnvelopeSimpleIcon },
+      { link: '/admin/newsletter', text: 'Listagem de Newsletter', icon: EnvelopeIcon },
     ],
   },
 ];
@@ -96,7 +96,7 @@ function AdminSidebar({ className, onItemClick }: AdminSidebarProps) {
           onClick={onItemClick}
           className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors"
         >
-          <SignOut size={18} />
+          <SignOutIcon size={18} />
           Logout
         </Link>
       </div>

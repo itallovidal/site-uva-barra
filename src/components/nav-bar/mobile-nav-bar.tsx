@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { List, X, MagnifyingGlass, SignIn } from '@phosphor-icons/react';
+import { ListIcon, XIcon, MagnifyingGlassIcon, SignInIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
 import { Input } from '@/components/lib/input';
 import {
@@ -24,7 +24,7 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
         <Drawer direction="left">
           <DrawerTrigger asChild>
             <Button className="bg-white" variant="ghost" size="icon" aria-label="Abrir menu">
-              <List size={22} />
+              <ListIcon size={22} />
             </Button>
           </DrawerTrigger>
           <DrawerContent className="flex flex-col h-full">
@@ -34,7 +34,7 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
               </Link>
               <DrawerClose asChild>
                 <Button variant="ghost" size="icon-xs" aria-label="Fechar menu">
-                  <X size={16} />
+                  <XIcon size={16} />
                 </Button>
               </DrawerClose>
             </DrawerHeader>
@@ -59,7 +59,7 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
             <DrawerFooter className="border-t">
               <Button variant="ghost" size="default" className="w-full justify-start gap-2" asChild>
                 <Link to="/entrar">
-                  <SignIn size={18} />
+                  <SignInIcon size={18} />
                   Login
                 </Link>
               </Button>
@@ -68,7 +68,7 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
         </Drawer>
 
         <div className="relative flex-1 max-w-xs">
-          <MagnifyingGlass
+          <MagnifyingGlassIcon
             size={16}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
           />

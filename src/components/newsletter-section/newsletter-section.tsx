@@ -1,4 +1,4 @@
-import { PaperPlaneRight } from '@phosphor-icons/react';
+import { PaperPlaneRightIcon } from '@phosphor-icons/react';
 import { useState, type FormEvent } from 'react';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
@@ -67,7 +67,7 @@ function NewsletterSection() {
             {status === 'loading' ? (
               <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-red-700 border-t-transparent" />
             ) : (
-              <PaperPlaneRight size={18} weight="bold" />
+              <PaperPlaneRightIcon size={18} weight="bold" />
             )}
             Inscrever-se
           </button>
