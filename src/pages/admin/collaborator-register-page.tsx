@@ -22,7 +22,7 @@ import {
 
 import { registerSchema } from '@/schemas/user-schemas';
 import { UserProfession, UserRole } from '@/domain/constants';
-import type { UserRequestDTO } from '@/domain/entities';
+import type { CreateUserDTO } from '@/domain/entities';
 import type { RegisterFormData } from '@/schemas/user-schemas';
 
 const professionOptions = Object.values(UserProfession);
@@ -43,7 +43,7 @@ function CollaboratorRegisterPage() {
   });
 
   function onSubmit(data: RegisterFormData) {
-    const dto: UserRequestDTO = {
+    const dto: CreateUserDTO = {
       name: data.name,
       email: data.email,
       password: data.password,

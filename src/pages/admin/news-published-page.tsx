@@ -13,7 +13,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/lib/dialog';
+import { apiAuthClient } from '@/lib/api-auth-client';
 import type { AdminNewsCardDTO } from '@/domain/entities';
+import type { ResponsePayload } from '@/types/api-response-types';
 
 function NewsPublishedPage() {
   const [publishedNews, setPublishedNews] = useState<AdminNewsCardDTO[]>([]);
@@ -30,8 +32,8 @@ function NewsPublishedPage() {
       try {
         const response = await fetch('/api/news/published');
         if (!response.ok) throw new Error('Falha ao carregar artigos publicados');
-        const data = (await response.json()) as AdminNewsCardDTO[];
-        if (!cancelled) setPublishedNews(data);
+        const payload = (await response.json()) as ResponsePayload<AdminNewsCardDTO[]>;
+        if (!cancelled) setPublishedNews(payload.data ?? []);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
@@ -47,11 +49,11 @@ function NewsPublishedPage() {
   }, []);
 
   const unpublish = useCallback(async function (id: string) {
-    const response = await fetch(`/api/news/${id}/unpublish`, {
+    const payload = await apiAuthClient<{ success: boolean }>(`/api/news/${id}/unpublish`, {
       method: 'POST',
     });
 
-    if (!response.ok) {
+    if (!payload.data?.success) {
       throw new Error('Falha ao despublicar artigo');
     }
 

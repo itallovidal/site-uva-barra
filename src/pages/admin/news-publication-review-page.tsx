@@ -14,7 +14,9 @@ import {
 import { AdminNewsCard } from '@/components/admin-news-card';
 import { Button } from '@/components/lib/button';
 import { Textarea } from '@/components/lib/textarea';
+import { apiAuthClient } from '@/lib/api-auth-client';
 import type { NewsModerationItemDTO, NewsReviewRequestDTO } from '@/domain/entities';
+import type { ResponsePayload } from '@/types/api-response-types';
 
 interface UsePendingNewsModerationResult {
   pendingNews: NewsModerationItemDTO[];
@@ -36,8 +38,8 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
       try {
         const response = await fetch('/api/news/pending');
         if (!response.ok) throw new Error('Falha ao carregar notícias pendentes');
-        const data = (await response.json()) as NewsModerationItemDTO[];
-        if (!cancelled) setPendingNews(data);
+        const payload = (await response.json()) as ResponsePayload<NewsModerationItemDTO[]>;
+        if (!cancelled) setPendingNews(payload.data ?? []);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
@@ -53,11 +55,11 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
   }, []);
 
   const approve = useCallback(async function (id: string) {
-    const response = await fetch(`/api/news/${id}/publish`, {
+    const result = await apiAuthClient<{ success: boolean }>(`/api/news/${id}/publish`, {
       method: 'POST',
     });
 
-    if (!response.ok) {
+    if (!result.data?.success) {
       throw new Error('Falha ao aprovar notícia');
     }
 
@@ -70,15 +72,13 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
 
   const requestReview = useCallback(async function (id: string, comment: string) {
     const payload: NewsReviewRequestDTO = { comment };
-    const response = await fetch(`/api/news/${id}/request-review`, {
+    const result = await apiAuthClient<{ success: boolean }>(`/api/news/${id}/request-review`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
-    if (!response.ok) {
-      const message =
-        response.status === 400 ? 'Comentário obrigatório' : 'Falha ao enviar para revisão';
+    if (!result.data?.success) {
+      const message = 'Falha ao enviar para revisão';
       throw new Error(message);
     }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AdminColaboratorCard } from '@/components/admin-colaborator-card';
+import { apiAuthClient } from '@/lib/api-auth-client';
 import type { User } from '@/domain/entities';
 
 interface UseCollaboratorRequestsResult {
@@ -22,8 +23,8 @@ function useCollaboratorRequests(): UseCollaboratorRequestsResult {
       try {
         const response = await fetch('/api/collaborators/requests');
         if (!response.ok) throw new Error('Falha ao carregar solicitações');
-        const data = (await response.json()) as User[];
-        if (!cancelled) setRequests(data);
+        const payload = (await response.json()) as ResponsePayload<User[]>;
+        if (!cancelled) setRequests(payload.data ?? []);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
@@ -39,11 +40,11 @@ function useCollaboratorRequests(): UseCollaboratorRequestsResult {
   }, []);
 
   const approve = useCallback(async function (id: string) {
-    const response = await fetch(`/api/collaborators/${id}/approve`, {
+    const payload = await apiAuthClient<{ success: boolean }>(`/api/collaborators/${id}/approve`, {
       method: 'POST',
     });
 
-    if (!response.ok) {
+    if (!payload.data?.success) {
       throw new Error('Falha ao aprovar solicitação');
     }
 
@@ -51,11 +52,11 @@ function useCollaboratorRequests(): UseCollaboratorRequestsResult {
   }, []);
 
   const remove = useCallback(async function (id: string) {
-    const response = await fetch(`/api/collaborators/${id}`, {
+    const payload = await apiAuthClient<{ success: boolean }>(`/api/collaborators/${id}`, {
       method: 'DELETE',
     });
 
-    if (!response.ok) {
+    if (!payload.data?.success) {
       throw new Error('Falha ao excluir solicitação');
     }
 

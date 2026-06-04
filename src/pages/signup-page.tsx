@@ -23,9 +23,9 @@ import {
 
 import { signupSchema } from '@/schemas/user-schemas';
 import { UserProfession } from '@/domain/constants';
-import type { UserRequestDTO } from '@/domain/entities';
+import type { CreateUserDTO } from '@/domain/entities';
 
-type SignupFormData = Omit<UserRequestDTO, 'role' | 'bio'> & { confirmPassword: string };
+type SignupFormData = Omit<CreateUserDTO, 'role' | 'bio'> & { confirmPassword: string };
 
 const professionOptions = Object.values(UserProfession);
 
@@ -41,7 +41,7 @@ function SignupPage() {
   });
 
   function onSubmit(data: SignupFormData) {
-    const dto: UserRequestDTO = {
+    const dto: CreateUserDTO = {
       name: data.name,
       email: data.email,
       password: data.password,
