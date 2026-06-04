@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EnvelopeSimpleIcon, LockIcon } from '@phosphor-icons/react';
@@ -7,9 +7,17 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { Input } from '@/components/lib/input';
 import { Button } from '@/components/lib/button';
 import { loginSchema } from '@/schemas/user-schemas';
+import { useAuth } from '@/hooks/use-auth';
+import { useState } from 'react';
 import type { RequestLoginDTO } from '@/domain/entities';
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -18,8 +26,19 @@ function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-  function onSubmit(data: RequestLoginDTO) {
-    console.log('Login:', data);
+  async function onSubmit(data: RequestLoginDTO) {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await login(data);
+      const redirect = searchParams.get('redirect') || '/admin';
+      navigate(redirect);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao conectar ao servidor');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -77,8 +96,12 @@ function LoginPage() {
               )}
             </div>
 
-            <Button type="submit" className="w-full">
-              Entrar
+            {error && (
+              <p className="text-sm text-destructive text-center">{error}</p>
+            )}
+
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </Button>
           </form>
         </CardContent>

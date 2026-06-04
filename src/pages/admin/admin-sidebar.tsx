@@ -9,8 +9,10 @@ import {
   EnvelopeSimpleIcon,
   EnvelopeIcon,
   SignOutIcon,
+  UserCircleIcon,
 } from '@phosphor-icons/react';
 import { cn } from '@/components/lib/utils';
+import { useAuth } from '@/hooks/use-auth';
 import type { Icon } from '@phosphor-icons/react';
 
 interface SidebarItem {
@@ -56,12 +58,20 @@ interface AdminSidebarProps {
 }
 
 function AdminSidebar({ className, onItemClick }: AdminSidebarProps) {
+  const { user } = useAuth();
+
   return (
     <aside className={cn('flex flex-col h-full bg-white', className)}>
-      <div className="px-6 py-5 border-b">
+      <div className="px-6 py-5 border-b space-y-1">
         <Link to="/admin" className="text-base font-bold">
           Agência UVA Barra
         </Link>
+        {user && (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <UserCircleIcon size={14} />
+            <span>{user.name}</span>
+          </div>
+        )}
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">

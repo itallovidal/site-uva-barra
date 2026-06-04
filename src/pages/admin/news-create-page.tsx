@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/lib/card';
+import { apiAuthClient } from '@/lib/api-auth-client';
 import { NewsForm } from '@/components/news-form/news-form';
 import type { NewsFormData } from '@/schemas/news-schemas';
 
@@ -14,13 +15,12 @@ function NewsCreatePage() {
   const navigate = useNavigate();
 
   async function handleCreate(data: NewsFormData) {
-    const response = await fetch('/api/news', {
+    const payload = await apiAuthClient<{ id: string }>('/api/news', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
 
-    if (!response.ok) {
+    if (!payload.data?.id) {
       throw new Error('Falha ao criar notícia');
     }
 

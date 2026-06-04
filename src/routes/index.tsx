@@ -6,6 +6,7 @@ import { SignupPage } from '@/pages/signup-page';
 import { NewsCategoryPage } from '@/pages/news-category-page';
 import { NotFoundPage } from '@/pages/not-found-page';
 import { SobrePage } from '@/pages/sobre-page';
+import { ProtectedRoute } from '@/components/protected-route';
 import { AdminLayout } from '@/pages/admin/admin-layout';
 import { AdminDashboard } from '@/pages/admin/admin-dashboard';
 import { PlaceholderPage } from '@/pages/admin/placeholder-page';
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <AdminLayout />,
+    element: <ProtectedRoute><AdminLayout /></ProtectedRoute>,
     children: [
       {
         path: '/admin',

@@ -18,9 +18,13 @@ The system SHALL provide a login page at `/entrar` with a form that collects ema
 - **WHEN** user submits the form with an empty password
 - **THEN** the system SHALL display a validation error message "Senha é obrigatória"
 
-#### Scenario: Successful submit
+#### Scenario: Successful submit calls login API
 - **WHEN** user fills email and password correctly and clicks "Entrar"
-- **THEN** the system SHALL submit a `RequestLoginDTO` with the provided email and password
+- **THEN** the system SHALL call `AuthContext.login()` with the form data
+- **AND** display a loading state on the submit button while the request is in flight
+- **AND** redirect to `/admin` (or the redirect query param) on success
+- **AND** display "Email ou senha inválidos" on 401 response
+- **AND** display "Erro ao conectar ao servidor" on network error
 
 ### Requirement: Signup form
 
