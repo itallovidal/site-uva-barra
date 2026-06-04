@@ -24,6 +24,7 @@ import {
   ComboboxItem,
 } from '@/components/lib/combobox';
 
+import { env } from '@/env';
 import { newsSchema } from '@/schemas/news-schemas';
 import { NewsStatus } from '@/domain/constants';
 import type { NewsFormData } from '@/schemas/news-schemas';
@@ -63,8 +64,8 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
         setIsLoading(true);
         try {
           const [catRes, tagRes] = await Promise.all([
-            fetch('/api/categories'),
-            fetch('/api/tags'),
+            fetch(`${env.VITE_API_BASE_URL}/categories`),
+            fetch(`${env.VITE_API_BASE_URL}/api/tags`),
           ]);
           if (catRes.ok) {
             const catPayload = (await catRes.json()) as ResponsePayload<Category[]>;

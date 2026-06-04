@@ -1,7 +1,8 @@
 import { NewsStatus } from '@/domain/constants';
-import type { NewsModerationItemDTO } from '@/domain/entities';
 
-const newsModerationMocks: NewsModerationItemDTO[] = [
+import { latestNewsExample, publishedNewsExample } from './news-fixtures';
+
+const pendingNews = [
   {
     id: 'news-pending-1',
     title: 'Nova campanha cultural será lançada na próxima semana',
@@ -30,4 +31,8 @@ const newsModerationMocks: NewsModerationItemDTO[] = [
   },
 ];
 
-export { newsModerationMocks };
+const publishedNews = [publishedNewsExample];
+const newsHighlightMocks = [latestNewsExample];
+const newsCategoryMocks = [latestNewsExample];
+
+export { NewsStatus, newsHighlightMocks, newsCategoryMocks, pendingNews, publishedNews };

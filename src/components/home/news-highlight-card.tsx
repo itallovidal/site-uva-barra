@@ -5,35 +5,32 @@ interface NewsHighlightCardProps {
   highlight: NewsPreviewDTO;
   isFeatured?: boolean;
   isCompact?: boolean;
+  style?: React.CSSProperties;
 }
 
 function NewsHighlightCard({
   highlight,
   isFeatured = false,
   isCompact = false,
+  style,
 }: NewsHighlightCardProps) {
-  const { coverImageUrl, categoryName, title, summary } = highlight;
+  const { coverImageUrl, category, title, summary } = highlight;
+
+  const cover = coverImageUrl.length > 3 ? coverImageUrl : '/agencia-uva-fallback.jpg';
 
   return (
     <Link
       to={`/noticia/${highlight.id}`}
       className={`group relative block overflow-hidden rounded-lg bg-neutral-800 ${
-        isCompact
-          ? 'aspect-[4/3]'
-          : isFeatured
-            ? 'aspect-[16/9] lg:aspect-auto lg:h-full'
-            : 'aspect-[16/9]'
+        isCompact ? 'aspect-[4/3]' : isFeatured ? 'h-100 lg:aspect-auto lg:h-full' : 'h-100'
       }`}
+      style={style}
     >
-      {coverImageUrl ? (
-        <img
-          src={coverImageUrl}
-          alt={title}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-      ) : (
-        <div className="h-full w-full bg-gradient-to-br from-neutral-700 to-neutral-900" />
-      )}
+      <img
+        src={cover}
+        alt={title}
+        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
@@ -43,7 +40,7 @@ function NewsHighlightCard({
             isCompact ? 'mb-1 text-[10px]' : 'mb-2 text-xs'
           }`}
         >
-          {categoryName}
+          {category}
         </span>
         <h2
           className={`mt-1 text-white line-clamp-2 ${

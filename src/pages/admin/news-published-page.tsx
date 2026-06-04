@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/lib/dialog';
+import { env } from '@/env';
 import { apiAuthClient } from '@/lib/api-auth-client';
 import type { AdminNewsCardDTO } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
@@ -30,7 +31,7 @@ function NewsPublishedPage() {
 
     async function doFetch() {
       try {
-        const response = await fetch('/api/news/published');
+        const response = await fetch(`${env.VITE_API_BASE_URL}/api/news/published`);
         if (!response.ok) throw new Error('Falha ao carregar artigos publicados');
         const payload = (await response.json()) as ResponsePayload<AdminNewsCardDTO[]>;
         if (!cancelled) setPublishedNews(payload.data ?? []);

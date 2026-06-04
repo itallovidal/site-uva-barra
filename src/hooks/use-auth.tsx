@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
+import { env } from '@/env';
 import type { RequestLoginDTO, User } from '@/domain/entities';
 import type { LoginResponseData } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
@@ -58,7 +59,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   const login = useCallback(
     async function (data: RequestLoginDTO) {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${env.VITE_API_BASE_URL}/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),

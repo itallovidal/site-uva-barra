@@ -2,9 +2,12 @@ import { useNewsHighlights } from '../hooks/use-news-highlights';
 import { NewsHighlightGrid } from '../components/home/news-highlight-grid';
 import { NewsletterSection } from '../components/newsletter-section';
 import { CategorySection } from '../components/news/category-section';
+import { categoryMap } from '@/types/category-map';
 
 function HomePage() {
-  const { highlights, isLoading, error } = useNewsHighlights();
+  const { highlights, isLoading, error } = useNewsHighlights({
+    perPage: 7,
+  });
 
   if (isLoading) {
     return (
@@ -26,9 +29,10 @@ function HomePage() {
     <main className="lg:max-w-7xl mx-auto px-4 py-6 space-y-10">
       <NewsHighlightGrid highlights={highlights} />
       <NewsletterSection />
-      <CategorySection category="Tecnologia" limit={3} />
-      <CategorySection category="Saúde" limit={3} />
-      <CategorySection category="Educação" limit={3} />
+
+      {Object.keys(categoryMap).map((category) => (
+        <CategorySection key={category} category={category} limit={3} />
+      ))}
     </main>
   );
 }

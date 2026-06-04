@@ -7,7 +7,9 @@ interface NewsCardProps {
 }
 
 function NewsCard({ article }: NewsCardProps) {
-  const { id, coverImageUrl, categoryName, title, summary, authorName, publishedAt } = article;
+  const { id, coverImageUrl, category, title, summary, authorName, publishedAt } = article;
+
+  const cover = coverImageUrl.length > 3 ? coverImageUrl : '/agencia-uva-fallback.jpg';
 
   return (
     <Link
@@ -15,21 +17,17 @@ function NewsCard({ article }: NewsCardProps) {
       className="group flex gap-6 rounded-lg border bg-white p-4 transition-colors hover:bg-zinc-50"
     >
       <div className="h-40 w-60 flex-shrink-0 overflow-hidden rounded-md">
-        {coverImageUrl ? (
-          <img
-            src={coverImageUrl}
-            alt={title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="h-full w-full bg-gradient-to-br from-zinc-200 to-zinc-300" />
-        )}
+        <img
+          src={cover}
+          alt={title}
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
       </div>
 
       <div className="flex flex-1 flex-col justify-between">
         <div>
           <span className="inline-block rounded-full bg-red-600 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-white">
-            {categoryName}
+            {category}
           </span>
           <h3 className="mt-2 text-xl font-bold text-zinc-900 line-clamp-2 group-hover:underline">
             {title}

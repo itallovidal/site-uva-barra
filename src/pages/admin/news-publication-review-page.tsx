@@ -14,6 +14,7 @@ import {
 import { AdminNewsCard } from '@/components/admin-news-card';
 import { Button } from '@/components/lib/button';
 import { Textarea } from '@/components/lib/textarea';
+import { env } from '@/env';
 import { apiAuthClient } from '@/lib/api-auth-client';
 import type { NewsModerationItemDTO, NewsReviewRequestDTO } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
@@ -36,7 +37,7 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
 
     async function doFetch() {
       try {
-        const response = await fetch('/api/news/pending');
+        const response = await fetch(`${env.VITE_API_BASE_URL}/api/news/pending`);
         if (!response.ok) throw new Error('Falha ao carregar notícias pendentes');
         const payload = (await response.json()) as ResponsePayload<NewsModerationItemDTO[]>;
         if (!cancelled) setPendingNews(payload.data ?? []);

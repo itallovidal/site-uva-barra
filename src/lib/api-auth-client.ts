@@ -1,3 +1,4 @@
+import { env } from '@/env';
 import type { ResponsePayload } from '@/types/api-response-types';
 
 const TOKEN_KEY = 'auth-token';
@@ -28,7 +29,7 @@ async function apiAuthClient<T = unknown>(
     headers['Content-Type'] = 'application/json';
   }
 
-  const response = await fetch(url, {
+  const response = await fetch(`${env.VITE_API_BASE_URL}${url}`, {
     ...options,
     headers,
   });

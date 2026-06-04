@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AdminColaboratorCard } from '@/components/admin-colaborator-card';
+import { env } from '@/env';
 import { apiAuthClient } from '@/lib/api-auth-client';
 import type { User } from '@/domain/entities';
+import type { ResponsePayload } from '@/types/api-response-types';
 
 interface UseCollaboratorRequestsResult {
   requests: User[];
@@ -21,7 +23,7 @@ function useCollaboratorRequests(): UseCollaboratorRequestsResult {
 
     async function doFetch() {
       try {
-        const response = await fetch('/api/collaborators/requests');
+        const response = await fetch(`${env.VITE_API_BASE_URL}/api/collaborators/requests`);
         if (!response.ok) throw new Error('Falha ao carregar solicitações');
         const payload = (await response.json()) as ResponsePayload<User[]>;
         if (!cancelled) setRequests(payload.data ?? []);

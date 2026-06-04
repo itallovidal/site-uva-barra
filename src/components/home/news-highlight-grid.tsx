@@ -12,12 +12,12 @@ function NewsHighlightGrid({ highlights }: NewsHighlightGridProps) {
 
   return (
     <div className="space-y-6">
-      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 grid-rows-2">
         <div className="lg:row-span-2">
           <NewsHighlightCard highlight={featured} isFeatured />
         </div>
-        <NewsHighlightCard highlight={second} />
-        <NewsHighlightCard highlight={third} />
+        <NewsHighlightCard style={{ height: '100%' }} highlight={second} />
+        <NewsHighlightCard style={{ height: '100%' }} highlight={third} />
       </section>
 
       <section className="flex flex-col gap-4 md:flex-row">

@@ -8,7 +8,17 @@ interface UseNewsByCategoryResult {
   error: string | null;
 }
 
-function useNewsByCategory(category: string, limit = 3): UseNewsByCategoryResult {
+interface HookParams {
+  category: string;
+  page: number;
+  perPage: number;
+}
+
+function useNewsByCategory({
+  category,
+  page = 1,
+  perPage = 3,
+}: HookParams): UseNewsByCategoryResult {
   const [articles, setArticles] = useState<NewsPreviewDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +29,7 @@ function useNewsByCategory(category: string, limit = 3): UseNewsByCategoryResult
         setIsLoading(true);
         setError(null);
         try {
-          const payload = await getNewsByCategory(category, limit);
+          const payload = await getNewsByCategory(category, page, perPage);
           setArticles(payload.data ?? []);
         } catch (err) {
           setError(err instanceof Error ? err.message : 'Unknown error');
@@ -30,7 +40,7 @@ function useNewsByCategory(category: string, limit = 3): UseNewsByCategoryResult
 
       doFetch();
     },
-    [category, limit]
+    [category, page, perPage]
   );
 
   return { articles, isLoading, error };
