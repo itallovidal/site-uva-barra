@@ -1,8 +1,5 @@
-# news-schemas Specification
+## MODIFIED Requirements
 
-## Purpose
-TBD - created by archiving change refactor-types-to-entities. Update Purpose after archive.
-## Requirements
 ### Requirement: News creation Zod schema
 
 The system SHALL provide a Zod schema `newsSchema` in `src/schemas/news-schemas.ts` for validating news creation/editing form data. The inferred type SHALL NOT be used; the `useForm` generic SHALL use `CreateNewsDTO` from domain entities directly.

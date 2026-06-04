@@ -1,41 +1,20 @@
-## Purpose
-
-Mock service worker setup and mock API handlers for development.
-## Requirements
-### Requirement: Mock Service Worker initialized
-The application SHALL initialize the MSW service worker in development mode before rendering the React tree. The worker MUST intercept HTTP requests made by the application.
-
-#### Scenario: Worker starts in development
-- **WHEN** the application runs in development mode (not production)
-- **THEN** the MSW worker SHALL start and intercept HTTP requests before React renders
-
-#### Scenario: Worker does not start in production
-- **WHEN** the application runs in production mode
-- **THEN** the MSW worker SHALL NOT be started
+## MODIFIED Requirements
 
 ### Requirement: GET /api/health mock handler
+
 The system SHALL provide a mock handler for `GET /api/health` that returns a `ResponsePayload` with status information.
 
 #### Scenario: Health check returns ok
+
 - **WHEN** a `GET /api/health` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "status": "ok" } }`
-
-#### Scenario: Health check response is intercepted
-- **WHEN** the home page component fetches `/api/health`
-- **THEN** the response SHALL come from the MSW mock handler, not from a real server
-
-### Requirement: Health status displayed on home page
-The home page SHALL display the health check result to confirm MSW is working.
-
-#### Scenario: Health status visible
-- **WHEN** the home page loads and the health check succeeds
-- **THEN** the page SHALL display a message indicating the API is responding, such as "API: ok"
 
 ### Requirement: GET /api/news/latest mock handler
 
 The system SHALL return a `ResponsePayload` wrapping an array of `NewsPreviewDTO` objects from the `/api/news/latest` endpoint.
 
 #### Scenario: Returns ResponsePayload with NewsPreviewDTO array
+
 - **WHEN** a `GET /api/news/latest` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... NewsPreviewDTO[] ] }`
 - **AND** each `NewsPreviewDTO` SHALL contain fields: `id`, `title`, `summary`, `coverImageUrl`, `category`, `tags` (string[]), `featured`, `readingTime`, `publishedAt`, `authorName`
@@ -45,6 +24,7 @@ The system SHALL return a `ResponsePayload` wrapping an array of `NewsPreviewDTO
 The system SHALL return a `ResponsePayload` wrapping an array of `NewsPreviewDTO` objects from the `/api/news` endpoint, filterable by category.
 
 #### Scenario: Returns filtered ResponsePayload
+
 - **WHEN** a `GET /api/news?category=Tecnologia` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... filtered NewsPreviewDTO[] ] }`
 
@@ -53,6 +33,7 @@ The system SHALL return a `ResponsePayload` wrapping an array of `NewsPreviewDTO
 The system SHALL return a `ResponsePayload` wrapping an array of `UserProfileDTO` objects from the `/api/collaborators` endpoint.
 
 #### Scenario: Returns ResponsePayload with UserProfileDTO array
+
 - **WHEN** a `GET /api/collaborators` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... UserProfileDTO[] ] }`
 
@@ -61,6 +42,7 @@ The system SHALL return a `ResponsePayload` wrapping an array of `UserProfileDTO
 The system SHALL return a `ResponsePayload` wrapping an array of `Category` objects from the `/api/categories` endpoint.
 
 #### Scenario: Returns ResponsePayload with Category array
+
 - **WHEN** a `GET /api/categories` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... Category[] ] }`
 
@@ -69,6 +51,7 @@ The system SHALL return a `ResponsePayload` wrapping an array of `Category` obje
 The system SHALL accept a `CreateNewsDTO` body and return a `ResponsePayload` with the created news ID.
 
 #### Scenario: Creates news and returns ResponsePayload
+
 - **WHEN** a `POST /api/news` request is made with a valid `CreateNewsDTO` body
 - **THEN** the system SHALL respond with HTTP 201 and JSON body `{ "status": 201, "data": { "id": "<uuid>" } }`
 
@@ -77,6 +60,7 @@ The system SHALL accept a `CreateNewsDTO` body and return a `ResponsePayload` wi
 The system SHALL return a `ResponsePayload` confirming publication.
 
 #### Scenario: Publishes news
+
 - **WHEN** a `POST /api/news/:id/publish` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
@@ -85,6 +69,7 @@ The system SHALL return a `ResponsePayload` confirming publication.
 The system SHALL return a `ResponsePayload` confirming unpublish.
 
 #### Scenario: Unpublishes news
+
 - **WHEN** a `POST /api/news/:id/unpublish` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
@@ -93,6 +78,7 @@ The system SHALL return a `ResponsePayload` confirming unpublish.
 The system SHALL return a `ResponsePayload` confirming review request.
 
 #### Scenario: Requests review
+
 - **WHEN** a `POST /api/news/:id/request-review` request is made with a valid comment
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
@@ -101,6 +87,7 @@ The system SHALL return a `ResponsePayload` confirming review request.
 The system SHALL return a `ResponsePayload` confirming approval.
 
 #### Scenario: Approves collaborator
+
 - **WHEN** a `POST /api/collaborators/:id/approve` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
@@ -109,6 +96,7 @@ The system SHALL return a `ResponsePayload` confirming approval.
 The system SHALL return a `ResponsePayload` confirming deletion.
 
 #### Scenario: Deletes collaborator request
+
 - **WHEN** a `DELETE /api/collaborators/:id` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
@@ -117,47 +105,6 @@ The system SHALL return a `ResponsePayload` confirming deletion.
 The system SHALL return a `ResponsePayload` wrapping an array of pending collaborator `User` objects.
 
 #### Scenario: Returns pending requests
+
 - **WHEN** a `GET /api/collaborators/requests` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... User[] ] }`
-
-## ADDED Requirements
-
-### Requirement: POST /api/categories mock handler
-
-The system SHALL provide a mock handler for `POST /api/categories` that validates the request body using the `categorySchema` Zod schema, creates a new category with a generated UUID, and appends it to the mutable categories array.
-
-#### Scenario: Creates category successfully
-
-- **WHEN** a `POST /api/categories` request is made with a valid JSON body `{ "name": "Esportes" }`
-- **THEN** the system SHALL respond with HTTP 201 and JSON body `{ "success": true, "id": "<uuid>" }`
-- **AND** the new category SHALL be added to the in-memory categories array
-
-#### Scenario: Returns 400 for empty name
-
-- **WHEN** a `POST /api/categories` request is made with an empty name
-- **THEN** the system SHALL respond with HTTP 400 and JSON body `{ "error": "Nome é obrigatório" }`
-
-### Requirement: DELETE /api/categories/:id mock handler
-
-The system SHALL provide a mock handler for `DELETE /api/categories/:id` that removes a category by its ID from the mutable categories array.
-
-#### Scenario: Deletes existing category
-
-- **WHEN** a `DELETE /api/categories/cat_tec` request is made
-- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "success": true }`
-- **AND** the category SHALL be removed from the in-memory categories array
-
-#### Scenario: Returns 404 for non-existent category
-
-- **WHEN** a `DELETE /api/categories/nonexistent` request is made
-- **THEN** the system SHALL respond with HTTP 404 and JSON body `{ "error": "Categoria não encontrada" }`
-
-### Requirement: GET /api/categories uses mutable array
-
-The system SHALL change the `GET /api/categories` handler to return categories from a mutable in-memory array (instead of the static imported mock array), consistent with the collaborator mock pattern.
-
-#### Scenario: Returns all categories
-
-- **WHEN** a `GET /api/categories` request is made
-- **THEN** the system SHALL respond with HTTP 200 and a JSON array of `Category` objects
-- **AND** the array SHALL reflect any categories added or removed during the session
