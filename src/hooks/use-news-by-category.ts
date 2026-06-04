@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { NewsPreviewDTO } from '@/domain/entities';
+import type { ResponsePayload } from '@/types/api-response-types';
 
 interface UseNewsByCategoryResult {
   articles: NewsPreviewDTO[];
@@ -21,8 +22,8 @@ function useNewsByCategory(category: string, limit = 3): UseNewsByCategoryResult
           const params = new URLSearchParams({ category, limit: String(limit) });
           const response = await fetch(`/api/news?${params}`);
           if (!response.ok) throw new Error('Failed to fetch news');
-          const data = (await response.json()) as NewsPreviewDTO[];
-          setArticles(data);
+          const payload = (await response.json()) as ResponsePayload<NewsPreviewDTO[]>;
+          setArticles(payload.data ?? []);
         } catch (err) {
           setError(err instanceof Error ? err.message : 'Unknown error');
         } finally {

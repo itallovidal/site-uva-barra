@@ -1,4 +1,3 @@
-import { NewsStatus } from './constants';
 import type {
   UserRoleType,
   UserProfessionType,
@@ -23,8 +22,7 @@ export interface User {
 export interface Category {
   id: string;
   name: string;
-  description?: string | null;
-  createdAt: Date;
+  tags: string[];
 }
 
 export interface News {
@@ -33,37 +31,54 @@ export interface News {
   slug: string;
   summary: string;
   content: string;
-  coverImageUrl?: string | null;
-  categoryId: string;
-  authorId: string;
+  coverImageUrl: string;
+  category: string;
+  author: string;
   status: NewsStatusType;
   tags: string[];
   featured: boolean;
-  readingTime: number | null;
+  readingTime: number;
   createdAt: Date;
   updatedAt: Date;
   publishedAt?: Date | null;
 }
 
-export interface NewsRequestDTO {
+export interface CreateNewsDTO {
   title: string;
   summary: string;
   content: string;
-  categoryId: string;
-  tagIds: string[];
-  coverImageUrl?: string | null;
-  status?: typeof NewsStatus.DRAFT | typeof NewsStatus.REVIEW;
-  featured?: boolean;
-  readingTime?: number | null;
+  coverImageUrl: string;
+  category: string;
+  tags: string[];
+  featured: boolean;
+  status: NewsStatusType;
+  slug?: string;
+  author?: string;
 }
 
-export interface UserRequestDTO {
+export interface CreateCategoryRequestDTO {
+  name: string;
+  tags?: string[];
+}
+
+export interface UpdateCategoryRequestDTO {
+  name: string;
+  tags: string[];
+}
+
+export interface CreateUserDTO {
   name: string;
   email: string;
   password: string;
   profession: UserProfessionType;
-  role?: UserRoleType;
   bio?: string | null;
+  role?: UserRoleType;
+}
+
+export interface TokenPayloadDTO {
+  sub: string;
+  email: string;
+  role: string;
 }
 
 export interface RequestLoginDTO {
@@ -71,15 +86,20 @@ export interface RequestLoginDTO {
   password: string;
 }
 
+export interface LoginResponseData {
+  accessToken: string;
+  user: Omit<User, 'password'>;
+}
+
 export interface NewsPreviewDTO {
   id: string;
   title: string;
   summary: string;
-  coverImageUrl: string | null;
-  categoryName: string;
-  tags: Array<{ id: string; name: string; slug: string }>;
+  coverImageUrl: string;
+  category: string;
+  tags: string[];
   featured: boolean;
-  readingTime: number | null;
+  readingTime: number;
   publishedAt: Date | null;
   authorName: string;
 }

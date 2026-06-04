@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { NewsPreviewDTO } from '@/domain/entities';
+import type { ResponsePayload } from '@/types/api-response-types';
 
 interface UseNewsHighlightsResult {
   highlights: NewsPreviewDTO[];
@@ -17,8 +18,8 @@ function useNewsHighlights(): UseNewsHighlightsResult {
       try {
         const response = await fetch('/api/news/latest');
         if (!response.ok) throw new Error('Failed to fetch news');
-        const data = (await response.json()) as NewsPreviewDTO[];
-        setHighlights(data);
+        const payload = (await response.json()) as ResponsePayload<NewsPreviewDTO[]>;
+        setHighlights(payload.data ?? []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
