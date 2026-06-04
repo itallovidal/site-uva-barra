@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { listAllCollaborators } from '@/api/collaborators/list-all';
 import type { UserProfileDTO } from '@/domain/entities';
-import type { ResponsePayload } from '@/types/api-response-types';
 
 interface UseCollaboratorsResult {
   collaborators: UserProfileDTO[];
@@ -16,9 +16,7 @@ function useCollaborators(): UseCollaboratorsResult {
   useEffect(function fetchCollaborators() {
     async function doFetch() {
       try {
-        const response = await fetch('/api/collaborators');
-        if (!response.ok) throw new Error('Failed to fetch collaborators');
-        const payload = (await response.json()) as ResponsePayload<UserProfileDTO[]>;
+        const payload = await listAllCollaborators();
         setCollaborators(payload.data ?? []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');

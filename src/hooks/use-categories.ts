@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { listAllCategories } from '@/api/categories/list-all';
 import type { Category } from '@/domain/entities';
-import type { ResponsePayload } from '@/types/api-response-types';
 
 interface UseCategoriesResult {
   categories: Category[];
@@ -16,9 +16,7 @@ function useCategories(): UseCategoriesResult {
   useEffect(function fetchCategories() {
     async function doFetch() {
       try {
-        const response = await fetch('/api/categories');
-        if (!response.ok) throw new Error('Failed to fetch categories');
-        const payload = (await response.json()) as ResponsePayload<Category[]>;
+        const payload = await listAllCategories();
         setCategories(payload.data ?? []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
