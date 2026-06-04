@@ -199,4 +199,60 @@ const latestNewsMeta = {
   totalPages: 5,
 };
 
-export { draftNewsExample, latestNewsExample, latestNewsMeta, publishedNewsExample };
+const newsDetailFixture = {
+  id: '3f6494ec-6366-43af-8572-440f07c4bf8f',
+  title: ''Zico, O Samurai de Quintino' leva aos cinemas uma abordagem inédita sobre a trajetória do ídolo rubro-negro',
+  slug: 'zico-o-samurai-de-quintino',
+  summary:
+    'Documentário acompanha a caminhada de Zico, da infância em Quintino à consagração como símbolo do Flamengo e referência mundial no esporte.',
+  content: `# Zico, O Samurai de Quintino
+
+**Gênero:** Documentário | **Duração:** 98 min | **Direção:** Ale McHaddo
+
+---
+
+## Sinopse
+
+O documentário mergulha na trajetória singular de **Arthur Antunes Coimbra**, o Zico, desde os campos de várzea do bairro de Quintino, no Rio de Janeiro, até os palcos mais grandiosos do futebol mundial. Com depoimentos exclusivos, imagens de arquivo raras e entrevistas com ex-companheiros, treinadores e familiares, o filme reconstrói a vida de um dos maiores jogadores de todos os tempos.
+
+## Destaques da Produção
+
+- Depoimentos inéditos do próprio Zico sobre sua infância humilde
+- Imagens restauradas de partidas históricas pelo Flamengo e pela Seleção Brasileira
+- Relatos emocionantes da Copa do Mundo de 1982, considerada uma das mais belas seleções da história
+
+## Crítica
+
+A produção equilibra habilidade e emoção ao narrar os altos e baixos de uma carreira que transcendeu o futebol. A edição é precisa e o ritmo mantém o espectador preso do início ao fim.
+
+> "Zico não foi apenas um jogador. Ele foi um modo de ver o futebol." — Depoimento de ex-companheiro no filme
+
+## Conclusão
+
+*Zico, O Samurai de Quintino* é leitura obrigatória para qualquer aficionado pelo futebol brasileiro. Um retrato humano, honesto e apaixonante de um ídolo eterno.
+
+---
+
+*Texto: Agência UVA Barra*
+`,
+  coverImageUrl: '/agencia-uva-fallback.jpg',
+  category: 'Cultura & Artes',
+  author: 'Agência UVA Barra',
+  status: 'published',
+  tags: [
+    'agencia uva barra',
+    'agencia uva barra assistiu',
+    'cinema',
+    'critica 2',
+    'filme',
+    'universidade veiga de almeida',
+    'uva barra',
+  ],
+  featured: false,
+  readingTime: 3,
+  createdAt: '2026-06-04T10:00:00.000Z',
+  updatedAt: '2026-06-04T10:00:00.000Z',
+  publishedAt: '2026-06-04T03:02:25.983Z',
+};
+
+export { draftNewsExample, latestNewsExample, latestNewsMeta, newsDetailFixture, publishedNewsExample };

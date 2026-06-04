@@ -4,6 +4,7 @@ import { HomePage } from '@/pages/home-page';
 import { LoginPage } from '@/pages/login-page';
 import { SignupPage } from '@/pages/signup-page';
 import { NewsCategoryPage } from '@/pages/news-category-page';
+import { NewsDetailPage } from '@/pages/news-detail-page';
 import { NotFoundPage } from '@/pages/not-found-page';
 import { SobrePage } from '@/pages/sobre-page';
 import { ProtectedRoute } from '@/components/protected-route';
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: '/news/category/:category',
         element: <NewsCategoryPage />,
+      },
+      {
+        path: '/noticia/:id',
+        element: <NewsDetailPage />,
       },
       {
         path: '/sobre',
