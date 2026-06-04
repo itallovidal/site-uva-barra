@@ -1,11 +1,11 @@
 import type { Category } from '@/domain/entities';
 
 const categoriesMock: Category[] = [
-  { id: 'cat_tec', name: 'Tecnologia', description: null, createdAt: new Date('2026-01-01') },
-  { id: 'cat_edu', name: 'Educação', description: null, createdAt: new Date('2026-01-01') },
-  { id: 'cat_sau', name: 'Saúde', description: null, createdAt: new Date('2026-01-01') },
-  { id: 'cat_inov', name: 'Inovação', description: null, createdAt: new Date('2026-01-01') },
-  { id: 'cat_cul', name: 'Cultura', description: null, createdAt: new Date('2026-01-01') },
+  { id: 'cat_tec', name: 'Tecnologia', tags: ['tag_ia', 'tag_startups', 'tag_5g'] },
+  { id: 'cat_edu', name: 'Educação', tags: ['tag_educacao'] },
+  { id: 'cat_sau', name: 'Saúde', tags: ['tag_saude'] },
+  { id: 'cat_inov', name: 'Inovação', tags: ['tag_inovacao'] },
+  { id: 'cat_cul', name: 'Cultura', tags: ['tag_cultura'] },
 ];
 
 export { categoriesMock };

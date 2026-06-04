@@ -29,6 +29,7 @@ import { NewsStatus } from '@/domain/constants';
 import type { NewsFormData } from '@/schemas/news-schemas';
 import type { NewsFormProps } from './news-form-types';
 import type { Category } from '@/domain/entities';
+import type { ResponsePayload } from '@/types/api-response-types';
 
 function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -51,7 +52,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
     defaultValues: {
       status: NewsStatus.DRAFT,
       featured: false,
-      tagIds: [],
+      tags: [],
       ...defaultValues,
     },
   });
@@ -66,12 +67,12 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
             fetch('/api/tags'),
           ]);
           if (catRes.ok) {
-            const catData = (await catRes.json()) as Category[];
-            setCategories(catData);
+            const catPayload = (await catRes.json()) as ResponsePayload<Category[]>;
+            setCategories(catPayload.data ?? []);
           }
           if (tagRes.ok) {
-            const tagData = (await tagRes.json()) as Array<{ id: string; name: string }>;
-            setTags(tagData);
+            const tagPayload = (await tagRes.json()) as ResponsePayload<Array<{ id: string; name: string }>>;
+            setTags(tagPayload.data ?? []);
           }
         } catch {
           setFeedback({ type: 'error', message: 'Erro ao carregar dados do formulário' });
@@ -221,7 +222,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
             Categoria
           </label>
           <Controller
-            name="categoryId"
+            name="category"
             control={control}
             render={({ field }) => (
               <Combobox
@@ -236,7 +237,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
                 <ComboboxContent>
                   <ComboboxList>
                     {categories.map((cat) => (
-                      <ComboboxItem key={cat.id} value={cat.id}>
+                      <ComboboxItem key={cat.id} value={cat.name}>
                         {cat.name}
                       </ComboboxItem>
                     ))}
@@ -245,8 +246,8 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
               </Combobox>
             )}
           />
-          {errors.categoryId && (
-            <p className="text-sm text-destructive">{errors.categoryId.message}</p>
+          {errors.category && (
+            <p className="text-sm text-destructive">{errors.category.message}</p>
           )}
         </div>
 
@@ -257,7 +258,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
               <p className="text-sm text-muted-foreground">Nenhuma tag disponível</p>
             )}
             <Controller
-              name="tagIds"
+              name="tags"
               control={control}
               render={({ field }) => (
                 <>
