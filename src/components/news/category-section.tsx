@@ -15,26 +15,20 @@ function CategorySection({ category, limit = 3 }: CategorySectionProps) {
     perPage: limit,
   });
 
+  if (!isLoading && !error && articles.length === 0) return <></>;
+
   return (
-    <section key={category} className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-1.5 rounded-full bg-red-600" />
-          <h2 className="text-2xl font-bold text-zinc-900">{category}</h2>
-        </div>
-        <Link
-          to={`/noticias?categoria=${encodeURIComponent(category)}`}
-          className="text-sm font-medium text-red-600 underline-offset-4 hover:underline"
-        >
-          Ver mais →
-        </Link>
+    <section key={category} className="flex h-full flex-col gap-4">
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-1.5 rounded-full bg-red-600" />
+        <h2 className="text-2xl font-bold text-zinc-900">{category}</h2>
       </div>
 
       {isLoading && (
-        <div className="space-y-3">
+        <div className="flex flex-1 flex-col gap-3">
           {Array.from({ length: limit }).map((_, i) => (
-            <div key={i} className="flex gap-6 rounded-lg border bg-white p-4">
-              <Skeleton className="h-40 w-60 shrink-0 rounded-md" />
+            <div key={i} className="flex flex-1 flex-col gap-6 rounded-lg border bg-white p-4">
+              <Skeleton className="aspect-video w-full shrink-0 rounded-md" />
               <div className="flex flex-1 flex-col gap-2">
                 <Skeleton className="h-4 w-20" />
                 <Skeleton className="h-6 w-3/4" />
@@ -46,17 +40,29 @@ function CategorySection({ category, limit = 3 }: CategorySectionProps) {
         </div>
       )}
 
-      {error && <p className="text-red-400">Erro ao carregar notícias: {error}</p>}
+      {error && <p className="flex-1 text-red-400">Erro ao carregar notícias: {error}</p>}
 
       {!isLoading && !error && articles.length === 0 && (
-        <p className="text-neutral-400">Nenhuma notícia encontrada.</p>
+        <p className="flex-1 text-neutral-400">Nenhuma notícia encontrada.</p>
       )}
 
       {!isLoading && !error && articles.length > 0 && (
-        <div className="space-y-3">
-          {articles.map((article) => (
-            <NewsCard key={article.id} article={article} />
-          ))}
+        <div className="flex flex-1 flex-col gap-3">
+          <div className="flex flex-1 flex-col gap-3">
+            {articles.map((article) => (
+              <div key={article.id} className="flex-1">
+                <NewsCard article={article} isVertical />
+              </div>
+            ))}
+          </div>
+          <div className="mt-auto pt-2">
+            <Link
+              to={`/noticias?categoria=${encodeURIComponent(category)}`}
+              className="inline-flex items-center text-sm font-medium text-red-600 underline-offset-4 hover:underline"
+            >
+              Ver mais &rarr;
+            </Link>
+          </div>
         </div>
       )}
     </section>

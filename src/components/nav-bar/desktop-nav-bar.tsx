@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { MagnifyingGlassIcon, SignInIcon } from '@phosphor-icons/react';
+import { SignInIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
-import { Input } from '@/components/lib/input';
+import { GlobalSearch } from '@/components/shared/global-search';
 import type { NavItem } from '../../types/nav-bar-types';
 
 interface DesktopNavBarProps {
@@ -34,18 +34,10 @@ function DesktopNavBar({ brand, navItems }: DesktopNavBarProps) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <div className="relative">
-            <MagnifyingGlassIcon
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-black"
-            />
-            <Input
-              style={{ background: 'white' }}
-              type="search"
-              placeholder="Pesquisar..."
-              className="h-8 w-48 pl-8 text-sm text-black bg-white placeholder:text-gray-800"
-            />
-          </div>
+          <GlobalSearch 
+            inputClassName="h-8 w-48 text-sm text-black bg-white placeholder:text-gray-800"
+            buttonClassName="text-black hover:text-black/70 hover:bg-transparent"
+          />
           <Button variant="secondary" size="sm" className="gap-1.5 bg-white" asChild>
             <Link to="/entrar">
               <SignInIcon size={16} />

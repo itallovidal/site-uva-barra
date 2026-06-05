@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useNewsListing } from '@/hooks/use-news-listing';
 import { useNewsSearch } from '@/hooks/use-news-search';
@@ -17,7 +17,7 @@ function NewsListingPage() {
   const sortParam = (searchParams.get('ordem') as 'desc' | 'asc') ?? 'desc';
   const pageParam = Number(searchParams.get('pagina') ?? '1') || 1;
 
-  const [activeSearch, setActiveSearch] = useState('');
+  const activeSearch = searchParams.get('busca') ?? '';
 
   const { categories } = useCategories();
 
@@ -31,7 +31,6 @@ function NewsListingPage() {
   const searchResult = useNewsSearch(activeSearch);
 
   const isSearchMode = activeSearch.trim().length > 0;
-
   const articles = isSearchMode ? searchResult.articles : listingResult.articles;
   const meta = isSearchMode ? searchResult.meta : listingResult.meta;
   const isLoading = isSearchMode ? searchResult.isLoading : listingResult.isLoading;
@@ -77,13 +76,14 @@ function NewsListingPage() {
     [setSearchParams]
   );
 
-  const handleSearch = useCallback((term: string) => {
-    setActiveSearch(term);
-  }, []);
-
   const handleClearSearch = useCallback(() => {
-    setActiveSearch('');
-  }, []);
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete('busca');
+      next.delete('pagina');
+      return next;
+    });
+  }, [setSearchParams]);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -94,11 +94,9 @@ function NewsListingPage() {
           categories={categories}
           selectedCategory={categoryParam}
           selectedSort={sortParam}
-          searchTerm={activeSearch}
+          isSearchMode={isSearchMode}
           onCategoryChange={handleCategoryChange}
           onSortChange={handleSortChange}
-          onSearch={handleSearch}
-          onClearSearch={handleClearSearch}
         />
 
         {isSearchMode && (

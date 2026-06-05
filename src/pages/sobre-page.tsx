@@ -29,26 +29,26 @@ function groupByCategory(members: UserProfileDTO[]): Map<string, UserProfileDTO[
 }
 
 function SobrePage() {
-  const { collaborators, isLoading, error } = useCollaborators();
+  // const { collaborators, isLoading, error } = useCollaborators();
 
-  const grouped = groupByCategory(collaborators);
+  // const grouped = groupByCategory(collaborators);
 
   return (
-    <>
+    <div className="min-h-screen bg-zinc-50">
       <section
-        className="relative flex h-[20vh] w-full items-center justify-center bg-cover bg-center"
+        className="relative flex h-[40vh] w-full items-center justify-center bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=1920&q=80')",
         }}
       >
         <div className="absolute inset-0 bg-black/50" />
-        <h1 className="relative text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+        {/* <h1 className="relative text-3xl font-bold text-white md:text-4xl lg:text-5xl">
           Agência UVA Barra
-        </h1>
+        </h1> */}
       </section>
 
-      <main className="mx-auto max-w-7xl space-y-8 px-4 py-8">
+      <main className="mx-auto max-w-7xl space-y-8 px-4 py-8 ">
         <section className="space-y-4 text-justify leading-relaxed text-zinc-700">
           <p>
             A Agência UVA Barra é uma agência experimental de notícias da Universidade Veiga de
@@ -73,7 +73,7 @@ function SobrePage() {
           </p>
         </section>
 
-        <section className="space-y-8">
+        {/* <section className="space-y-8">
           <h1 className="text-3xl font-bold text-zinc-900">Colaboradores</h1>
 
           {isLoading && <p className="text-neutral-500">Carregando colaboradores...</p>}
@@ -91,9 +91,9 @@ function SobrePage() {
               })}
             </div>
           )}
-        </section>
+        </section> */}
       </main>
-    </>
+    </div>
   );
 }
 

@@ -52,17 +52,13 @@ function NewsDetailPage() {
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
-      {/* Imagem de capa */}
-      <div className="mb-6 overflow-hidden rounded-xl">
-        <img
-          src={coverSrc}
-          alt={news.title}
-          className="h-72 w-full object-cover sm:h-96"
-          onError={function handleImgError(e) {
-            (e.currentTarget as HTMLImageElement).src = FALLBACK_IMAGE;
-          }}
-        />
-      </div>
+      {/* Título */}
+      <h1 className="mb-4 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl">
+        {news.title}
+      </h1>
+
+      {/* Resumo */}
+      <p className="mb-8 text-lg italic text-zinc-600">{news.summary}</p>
 
       {/* Tags */}
       {news.tags.length > 0 && (
@@ -90,13 +86,17 @@ function NewsDetailPage() {
         </span>
       </div>
 
-      {/* Título */}
-      <h1 className="mb-4 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl">
-        {news.title}
-      </h1>
-
-      {/* Resumo */}
-      <p className="mb-8 text-lg italic text-zinc-600">{news.summary}</p>
+      {/* Imagem de capa */}
+      <div className="mb-6 overflow-hidden rounded-xl">
+        <img
+          src={coverSrc}
+          alt={news.title}
+          className="h-72 w-full object-cover sm:h-96"
+          onError={function handleImgError(e) {
+            (e.currentTarget as HTMLImageElement).src = FALLBACK_IMAGE;
+          }}
+        />
+      </div>
 
       {/* Corpo da notícia */}
       {isHtml ? (

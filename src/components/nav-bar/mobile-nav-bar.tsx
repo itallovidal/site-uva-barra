@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ListIcon, XIcon, MagnifyingGlassIcon, SignInIcon } from '@phosphor-icons/react';
+import { ListIcon, XIcon, SignInIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
-import { Input } from '@/components/lib/input';
+import { GlobalSearch } from '@/components/shared/global-search';
 import {
   Drawer,
   DrawerTrigger,
@@ -68,15 +68,9 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
         </Drawer>
 
         <div className="relative flex-1 max-w-xs">
-          <MagnifyingGlassIcon
-            size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-          />
-          <Input
-            style={{ background: 'white' }}
-            type="search"
-            placeholder="Pesquisar..."
-            className="h-8 w-full pl-8 text-sm"
+          <GlobalSearch 
+            inputClassName="h-8 w-full text-sm text-black bg-white placeholder:text-gray-800"
+            buttonClassName="text-black hover:text-black/70 hover:bg-transparent"
           />
         </div>
       </div>

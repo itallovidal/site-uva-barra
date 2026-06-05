@@ -30,9 +30,11 @@ function HomePage() {
       <NewsHighlightGrid highlights={highlights} />
       <NewsletterSection />
 
-      {Object.keys(categoryMap).map((category) => (
-        <CategorySection key={category} category={category} limit={3} />
-      ))}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {Object.keys(categoryMap).map((category) => (
+          <CategorySection key={category} category={category} limit={1} />
+        ))}
+      </div>
     </main>
   );
 }
