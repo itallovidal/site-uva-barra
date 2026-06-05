@@ -5,6 +5,7 @@ import { LoginPage } from '@/pages/login-page';
 import { SignupPage } from '@/pages/signup-page';
 import { NewsCategoryPage } from '@/pages/news-category-page';
 import { NewsDetailPage } from '@/pages/news-detail-page';
+import { NewsListingPage } from '@/pages/news-listing-page';
 import { NotFoundPage } from '@/pages/not-found-page';
 import { SobrePage } from '@/pages/sobre-page';
 import { ProtectedRoute } from '@/components/protected-route';
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/cadastro',
         element: <SignupPage />,
+      },
+      {
+        path: '/noticias',
+        element: <NewsListingPage />,
       },
       {
         path: '/news/category/:category',

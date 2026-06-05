@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useNewsByCategory } from '../../hooks/use-news-by-category';
 import { NewsCard } from '../news-card/news-card';
 import { Skeleton } from '../lib/skeleton';
@@ -16,9 +17,17 @@ function CategorySection({ category, limit = 3 }: CategorySectionProps) {
 
   return (
     <section key={category} className="space-y-4">
-      <div className="flex items-center gap-3">
-        <div className="h-8 w-1.5 rounded-full bg-red-600" />
-        <h2 className="text-2xl font-bold text-zinc-900">{category}</h2>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-1.5 rounded-full bg-red-600" />
+          <h2 className="text-2xl font-bold text-zinc-900">{category}</h2>
+        </div>
+        <Link
+          to={`/noticias?categoria=${encodeURIComponent(category)}`}
+          className="text-sm font-medium text-red-600 underline-offset-4 hover:underline"
+        >
+          Ver mais →
+        </Link>
       </div>
 
       {isLoading && (

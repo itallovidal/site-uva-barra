@@ -10,7 +10,7 @@ async function getNewsByCategory(
   const encodedCategory = encodeURIComponent(category);
 
   const response = await fetch(
-    `${env.VITE_API_BASE_URL}/news/latest/${encodedCategory}?page=${page}&perPage=${perPage}`
+    `${env.VITE_API_BASE_URL}/news/category/${encodedCategory}?page=${page}&perPage=${perPage}`
   );
 
   if (!response.ok) throw new Error('Failed to fetch news');

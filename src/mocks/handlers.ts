@@ -5,13 +5,13 @@ import { getUserByEmailHandler } from './user/get-user-by-email';
 import { updateUserHandler } from './user/update-user';
 import { deleteUserHandler } from './user/delete-user';
 import { getHealthHandler } from './health/get-health';
-import { getLatestNewsHandler } from './news/get-latest-news';
-import { getLatestNewsByCategoryHandler, getNewsQueryAliasHandler } from './news/get-latest-news-by-category';
 import { getNewsByIdHandler } from './news/get-news-by-id';
 import { getNewsBySlugHandler } from './news/get-news-by-slug';
 import { createNewsHandler } from './news/create-news';
 import { updateNewsHandler } from './news/update-news';
 import { deleteNewsHandler } from './news/delete-news';
+import { searchNewsHandler } from './news/search-news';
+import { getNewsListingHandler, getNewsListingByCategoryHandler } from './news/get-news-listing';
 import { getCollaboratorsHandler } from './collaborators/get-collaborators';
 import { getCollaboratorRequestsHandler } from './collaborators/get-collaborator-requests';
 import { approveCollaboratorHandler } from './collaborators/approve-collaborator';
@@ -31,9 +31,9 @@ const handlers = [
   updateUserHandler,
   deleteUserHandler,
   getHealthHandler,
-  getLatestNewsHandler,
-  getLatestNewsByCategoryHandler,
-  getNewsQueryAliasHandler,
+  getNewsListingHandler,
+  getNewsListingByCategoryHandler,
+  searchNewsHandler,
   getNewsByIdHandler,
   getNewsBySlugHandler,
   createNewsHandler,
