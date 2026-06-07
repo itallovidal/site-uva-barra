@@ -106,14 +106,14 @@ function LoginPage() {
           </form>
         </CardContent>
 
-        <CardFooter className="justify-center">
+        {/* <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
             Não tem conta?{' '}
             <Link to="/cadastro" className="font-medium text-primary hover:underline">
               Cadastre-se
             </Link>
           </p>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </main>
   );

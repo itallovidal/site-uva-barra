@@ -1,12 +1,11 @@
 import { useNewsHighlights } from '../hooks/use-news-highlights';
 import { NewsHighlightGrid } from '../components/home/news-highlight-grid';
 import { NewsletterSection } from '../components/newsletter-section';
-import { CategorySection } from '../components/news/category-section';
-import { categoryMap } from '@/types/category-map';
+import { NewsCard } from '@/components/news-card/news-card';
 
 function HomePage() {
   const { highlights, isLoading, error } = useNewsHighlights({
-    perPage: 7,
+    perPage: 15,
   });
 
   if (isLoading) {
@@ -25,16 +24,33 @@ function HomePage() {
     );
   }
 
+  const mainArticles = highlights.slice(0, 7);
+  const rest = highlights.slice(7);
+
   return (
     <main className="lg:max-w-7xl mx-auto px-4 py-6 space-y-10">
-      <NewsHighlightGrid highlights={highlights} />
+      <NewsHighlightGrid highlights={mainArticles} />
       <NewsletterSection />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {rest.length > 0 && (
+        <section className="flex flex-col gap-4 md:flex-row">
+          {rest.map((article) => (
+            <div key={article.id} className="flex-1">
+              <NewsCard article={article} isVertical />
+            </div>
+          ))}
+        </section>
+      )}
+
+      {rest.length === 0 && (
+        <p className="text-neutral-500">Nenhuma notícia adicional encontrada.</p>
+      )}
+
+      {/* <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {Object.keys(categoryMap).map((category) => (
           <CategorySection key={category} category={category} limit={1} />
         ))}
-      </div>
+      </div> */}
     </main>
   );
 }

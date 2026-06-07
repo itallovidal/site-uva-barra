@@ -31,7 +31,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     label: 'Colaboradores',
     items: [
       { link: '/admin/collaborators/register', text: 'Registro de Colaborador', icon: UserPlusIcon },
-      { link: '/admin/collaborators/requests', text: 'Solicitações', icon: ClipboardTextIcon },
+      // { link: '/admin/collaborators/requests', text: 'Solicitações', icon: ClipboardTextIcon },
       { link: '/admin/collaborators', text: 'Lista de Colaboradores', icon: UsersIcon },
     ],
   },
@@ -40,16 +40,16 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     items: [
       { link: '/admin/articles/create', text: 'Criação de Artigos', icon: FilePlusIcon },
       { link: '/admin/articles/published', text: 'Artigos Publicados', icon: FileTextIcon },
-      { link: '/admin/articles/approve', text: 'Aprovação de Artigos', icon: CheckCircleIcon },
+      // { link: '/admin/articles/approve', text: 'Aprovação de Artigos', icon: CheckCircleIcon },
     ],
   },
-  {
-    label: 'Newsletter',
-    items: [
-      { link: '/admin/newsletter/create', text: 'Criação de Newsletter', icon: EnvelopeSimpleIcon },
-      { link: '/admin/newsletter', text: 'Listagem de Newsletter', icon: EnvelopeIcon },
-    ],
-  },
+  // {
+  //   label: 'Newsletter',
+  //   items: [
+  //     { link: '/admin/newsletter/create', text: 'Criação de Newsletter', icon: EnvelopeSimpleIcon },
+  //     { link: '/admin/newsletter', text: 'Listagem de Newsletter', icon: EnvelopeIcon },
+  //   ],
+  // },
 ];
 
 interface AdminSidebarProps {

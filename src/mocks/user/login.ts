@@ -4,7 +4,7 @@ import { mockJwt, userExample } from './user-fixtures';
 
 function handleLogin({ request }: { request: Request }) {
   return request.json().then(function (body: { email?: string; password?: string }) {
-    if (body.email === 'joao@exemplo.com' && body.password === 'senha123') {
+    if (body.email === 'admin@gmail.com' && body.password === 'senha123') {
       return HttpResponse.json({
         status: 200,
         data: {

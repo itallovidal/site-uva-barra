@@ -4,7 +4,10 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.coerce.number().default(3000),
   HOST: z.string().default('0.0.0.0'),
-  VITE_ENABLE_MSW: z.string().transform((val) => val === 'true'),
+  VITE_ENABLE_MSW: z
+    .string()
+    .transform((val) => val === 'true')
+    .default(true),
   VITE_API_BASE_URL: z.string().default(''),
 });
 

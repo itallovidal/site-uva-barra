@@ -201,7 +201,8 @@ const latestNewsMeta = {
 
 const newsDetailFixture = {
   id: '3f6494ec-6366-43af-8572-440f07c4bf8f',
-  title: ''Zico, O Samurai de Quintino' leva aos cinemas uma abordagem inédita sobre a trajetória do ídolo rubro-negro',
+  title:
+    "'Zico, O Samurai de Quintino' leva aos cinemas uma abordagem inédita sobre a trajetória do ídolo rubro-negro",
   slug: 'zico-o-samurai-de-quintino',
   summary:
     'Documentário acompanha a caminhada de Zico, da infância em Quintino à consagração como símbolo do Flamengo e referência mundial no esporte.',
@@ -255,4 +256,10 @@ A produção equilibra habilidade e emoção ao narrar os altos e baixos de uma 
   publishedAt: '2026-06-04T03:02:25.983Z',
 };
 
-export { draftNewsExample, latestNewsExample, latestNewsMeta, newsDetailFixture, publishedNewsExample };
+export {
+  draftNewsExample,
+  latestNewsExample,
+  latestNewsMeta,
+  newsDetailFixture,
+  publishedNewsExample,
+};
