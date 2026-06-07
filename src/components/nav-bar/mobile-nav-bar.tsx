@@ -10,14 +10,16 @@ import {
   DrawerClose,
   DrawerFooter,
 } from '@/components/lib/drawer';
+import type { Category } from '@/domain/entities';
 import type { NavItem } from '../../types/nav-bar-types';
 
 interface MobileNavBarProps {
   brand: string;
   navItems: NavItem[];
+  categories: Category[];
 }
 
-function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
+function MobileNavBar({ brand, navItems, categories }: MobileNavBarProps) {
   return (
     <div className="lg:hidden  bg-red-600">
       <div className="flex h-14 items-center justify-between px-4 border-b gap-3">
@@ -54,6 +56,24 @@ function MobileNavBar({ brand, navItems }: MobileNavBarProps) {
                   </DrawerClose>
                 );
               })}
+
+              <div className="mt-4 border-t pt-4">
+                <p className="px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  editoriais
+                </p>
+                <div className="mt-2 flex flex-col gap-1">
+                  {categories.map((category) => (
+                    <DrawerClose key={category.id} asChild>
+                      <Link
+                        to={`/noticias?categoria=${encodeURIComponent(category.name)}`}
+                        className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                      >
+                        {category.name}
+                      </Link>
+                    </DrawerClose>
+                  ))}
+                </div>
+              </div>
             </nav>
 
             <DrawerFooter className="border-t">

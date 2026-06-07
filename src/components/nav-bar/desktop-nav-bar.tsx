@@ -1,15 +1,23 @@
 import { Link } from 'react-router-dom';
-import { SignInIcon } from '@phosphor-icons/react';
+import { CaretDownIcon, SignInIcon, TagIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/lib/dropdown-menu';
+import type { Category } from '@/domain/entities';
 import { GlobalSearch } from '@/components/shared/global-search';
 import type { NavItem } from '../../types/nav-bar-types';
 
 interface DesktopNavBarProps {
   brand: string;
   navItems: NavItem[];
+  categories: Category[];
 }
 
-function DesktopNavBar({ brand, navItems }: DesktopNavBarProps) {
+function DesktopNavBar({ brand, navItems, categories }: DesktopNavBarProps) {
   return (
     <div className="hidden lg:flex h-16 items-center justify-center border-b bg-red-600 px-2">
       <div className="hidden lg:w-7xl lg:flex h-16 items-center justify-between border-b">
@@ -31,6 +39,28 @@ function DesktopNavBar({ brand, navItems }: DesktopNavBarProps) {
               </Link>
             );
           })}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="flex items-center gap-1.5 text-sm text-white transition-colors hover:text-gray-200"
+              >
+                <TagIcon size={14} />
+                editoriais
+                <CaretDownIcon size={14} />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="center" className="min-w-56 border-red-200 bg-white p-2">
+              {categories.map((category) => (
+                <DropdownMenuItem asChild key={category.id}>
+                  <Link to={`/noticias?categoria=${encodeURIComponent(category.name)}`}>
+                    {category.name}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         <div className="flex items-center gap-3">
