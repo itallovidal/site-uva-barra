@@ -15,7 +15,7 @@ function NewsCreatePage() {
   const navigate = useNavigate();
 
   async function handleCreate(data: NewsFormData) {
-    const payload = await apiAuthClient<{ id: string }>('/api/news', {
+    const payload = await apiAuthClient<{ id: string }>('/news', {
       method: 'POST',
       body: JSON.stringify(data),
     });
@@ -24,7 +24,7 @@ function NewsCreatePage() {
       throw new Error('Falha ao criar notícia');
     }
 
-    navigate('/admin/articles');
+    navigate('/admin/news/published');
   }
 
   return (

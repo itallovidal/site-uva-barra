@@ -1,4 +1,5 @@
 import { env } from '@/env';
+import { apiAuthClient } from '@/lib/api-auth-client';
 import type { NewsPreviewDTO } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
@@ -7,6 +8,7 @@ interface GetNewsListingParams {
   sort?: 'desc' | 'asc';
   page?: number;
   perPage?: number;
+  status?: string;
 }
 
 async function getNewsListing({
@@ -20,15 +22,15 @@ async function getNewsListing({
     page: String(page),
     perPage: String(perPage),
   });
+  if (typeof status !== 'undefined' && status !== null) params.set('status', status);
 
-  let url = `${env.VITE_API_BASE_URL}/news`;
+  let url = `/news`;
   if (category) {
-    url = `${env.VITE_API_BASE_URL}/news/category/${encodeURIComponent(category)}`;
+    url = `/news/category/${encodeURIComponent(category)}`;
   }
 
-  const response = await fetch(`${url}?${params.toString()}`);
-  if (!response.ok) throw new Error('Failed to fetch news listing');
-  return (await response.json()) as ResponsePayload<NewsPreviewDTO[]>;
+  const payload = await apiAuthClient<NewsPreviewDTO[]>(`${url}?${params.toString()}`);
+  return payload as ResponsePayload<NewsPreviewDTO[]>;
 }
 
 export { getNewsListing };

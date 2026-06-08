@@ -24,6 +24,8 @@ function HomePage() {
     );
   }
 
+  console.log('Destaques carregados:', highlights);
+
   const mainArticles = highlights.slice(0, 7);
   const rest = highlights.slice(7);
 

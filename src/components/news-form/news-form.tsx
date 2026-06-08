@@ -34,7 +34,7 @@ import type { ResponsePayload } from '@/types/api-response-types';
 
 function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [tags, setTags] = useState<Array<{ id: string; name: string }>>([]);
+  const [tags, setTags] = useState<Array<{ id: string; name: string }>>([]); // Keeping tags state updated elsewhere
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
@@ -47,6 +47,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
     handleSubmit,
     control,
     formState: { errors },
+    watch,
   } = useForm<NewsFormData>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(newsSchema) as any,
@@ -63,17 +64,10 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
       async function doFetch() {
         setIsLoading(true);
         try {
-          const [catRes, tagRes] = await Promise.all([
-            fetch(`${env.VITE_API_BASE_URL}/categories`),
-            fetch(`${env.VITE_API_BASE_URL}/api/tags`),
-          ]);
+          const catRes = await fetch(`${env.VITE_API_BASE_URL}/categories`);
           if (catRes.ok) {
             const catPayload = (await catRes.json()) as ResponsePayload<Category[]>;
             setCategories(catPayload.data ?? []);
-          }
-          if (tagRes.ok) {
-            const tagPayload = (await tagRes.json()) as ResponsePayload<Array<{ id: string; name: string }>>;
-            setTags(tagPayload.data ?? []);
           }
         } catch {
           setFeedback({ type: 'error', message: 'Erro ao carregar dados do formulário' });
@@ -86,6 +80,17 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
     },
     []
   );
+
+  const watchedCategory = watch('category');
+
+  useEffect(function updateTagsOnCategoryChange() {
+    const cat = categories.find((c) => c.id === watchedCategory);
+    if (cat) {
+      setTags((cat.tags ?? []).map((t) => ({ id: t, name: t })));
+    } else {
+      setTags([]);
+    }
+  }, [watchedCategory, categories]);
 
   async function handleFormSubmit(data: NewsFormData) {
     setIsSubmitting(true);
@@ -238,7 +243,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
                 <ComboboxContent>
                   <ComboboxList>
                     {categories.map((cat) => (
-                      <ComboboxItem key={cat.id} value={cat.name}>
+                      <ComboboxItem key={cat.id} value={cat.id}>
                         {cat.name}
                       </ComboboxItem>
                     ))}

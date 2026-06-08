@@ -36,10 +36,8 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
     let cancelled = false;
 
     async function doFetch() {
-      try {
-        const response = await fetch(`${env.VITE_API_BASE_URL}/api/news/pending`);
-        if (!response.ok) throw new Error('Falha ao carregar notícias pendentes');
-        const payload = (await response.json()) as ResponsePayload<NewsModerationItemDTO[]>;
+        try {
+        const payload = await apiAuthClient<NewsModerationItemDTO[]>('/news/pending');
         if (!cancelled) setPendingNews(payload.data ?? []);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
@@ -56,7 +54,7 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
   }, []);
 
   const approve = useCallback(async function (id: string) {
-    const result = await apiAuthClient<{ success: boolean }>(`/api/news/${id}/publish`, {
+    const result = await apiAuthClient<{ success: boolean }>(`/news/${id}/publish`, {
       method: 'POST',
     });
 
@@ -73,7 +71,7 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
 
   const requestReview = useCallback(async function (id: string, comment: string) {
     const payload: NewsReviewRequestDTO = { comment };
-    const result = await apiAuthClient<{ success: boolean }>(`/api/news/${id}/request-review`, {
+    const result = await apiAuthClient<{ success: boolean }>(`/news/${id}/request-review`, {
       method: 'POST',
       body: JSON.stringify(payload),
     });

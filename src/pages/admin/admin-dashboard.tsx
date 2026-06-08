@@ -7,9 +7,9 @@ function AdminDashboard() {
       </div>
 
       <section>
-        <h2 className="text-lg font-semibold mb-4">Últimos Artigos</h2>
+        <h2 className="text-lg font-semibold mb-4">Últimas Notícias</h2>
         <div className="border rounded-lg p-6">
-          <p className="text-muted-foreground">Nenhum artigo publicado recentemente.</p>
+          <p className="text-muted-foreground">Nenhuma notícia publicada recentemente.</p>
         </div>
       </section>
 

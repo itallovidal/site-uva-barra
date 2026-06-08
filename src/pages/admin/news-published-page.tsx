@@ -22,6 +22,8 @@ function NewsPublishedPage() {
   const [publishedNews, setPublishedNews] = useState<AdminNewsCardDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'published' | 'unpublished'>('published');
   const [actionError, setActionError] = useState<string | null>(null);
   const [previewNews, setPreviewNews] = useState<AdminNewsCardDTO | null>(null);
   const [isUnpublishingId, setIsUnpublishingId] = useState<string | null>(null);
@@ -31,9 +33,8 @@ function NewsPublishedPage() {
 
     async function doFetch() {
       try {
-        const response = await fetch(`${env.VITE_API_BASE_URL}/api/news/published`);
-        if (!response.ok) throw new Error('Falha ao carregar artigos publicados');
-        const payload = (await response.json()) as ResponsePayload<AdminNewsCardDTO[]>;
+        const q = searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : '';
+        const payload = await apiAuthClient<AdminNewsCardDTO[]>(`/news?page=1&perPage=10&status=${statusFilter}${q}`);
         if (!cancelled) setPublishedNews(payload.data ?? []);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
@@ -42,20 +43,21 @@ function NewsPublishedPage() {
       }
     }
 
+    setIsLoading(true);
     doFetch();
 
     return function cleanup() {
       cancelled = true;
     };
-  }, []);
+  }, [searchTerm, statusFilter]);
 
   const unpublish = useCallback(async function (id: string) {
-    const payload = await apiAuthClient<{ success: boolean }>(`/api/news/${id}/unpublish`, {
+    const payload = await apiAuthClient<{ success: boolean }>(`/news/${id}/unpublish`, {
       method: 'POST',
     });
 
     if (!payload.data?.success) {
-      throw new Error('Falha ao despublicar artigo');
+      throw new Error('Falha ao despublicar notícia');
     }
 
     setPublishedNews(function removeUnpublished(prev) {
@@ -81,7 +83,7 @@ function NewsPublishedPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <p className="text-muted-foreground">Carregando artigos publicados...</p>
+        <p className="text-muted-foreground">Carregando notícias publicadas...</p>
       </div>
     );
   }
@@ -98,10 +100,10 @@ function NewsPublishedPage() {
   if (publishedNews.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
-        <p className="text-lg font-semibold text-zinc-900">Nenhum artigo publicado</p>
-        <p className="text-muted-foreground text-sm mt-1">
-          Os artigos publicados aparecerão aqui para revisão e despublicação.
-        </p>
+        <p className="text-lg font-semibold text-zinc-900">Nenhuma notícia publicada</p>
+            <p className="text-muted-foreground text-sm mt-1">
+              As notícias publicadas aparecerão aqui para revisão e despublicação.
+            </p>
       </div>
     );
   }
@@ -109,10 +111,27 @@ function NewsPublishedPage() {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-zinc-900">Artigos Publicados</h1>
+        <h1 className="text-2xl font-semibold text-zinc-900">Notícias Publicadas</h1>
         <p className="text-sm text-muted-foreground">
-          Artigos já publicados ({publishedNews.length})
+          Notícias já publicadas ({publishedNews.length})
         </p>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <input
+          placeholder="Pesquisar notícias"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="rounded-md border px-3 py-2 w-64"
+        />
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value as 'published' | 'unpublished')}
+          className="rounded-md border px-3 py-2"
+        >
+          <option value="published">Publicadas</option>
+          <option value="unpublished">Não publicadas</option>
+        </select>
       </div>
 
       {actionError && (
@@ -158,7 +177,7 @@ function NewsPublishedPage() {
       >
         <DialogContent className="sm:max-w-4xl">
           <DialogHeader>
-            <DialogTitle>Artigo publicado</DialogTitle>
+            <DialogTitle>Notícia publicada</DialogTitle>
             <DialogDescription>
               {previewNews ? `${previewNews.categoryName} · ${previewNews.authorName}` : ''}
             </DialogDescription>

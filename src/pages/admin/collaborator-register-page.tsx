@@ -12,13 +12,8 @@ import {
 import { Input } from '@/components/lib/input';
 import { Button } from '@/components/lib/button';
 import { Textarea } from '@/components/lib/textarea';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxContent,
-  ComboboxList,
-  ComboboxItem,
-} from '@/components/lib/combobox';
+import { createCollaborator } from '@/api/collaborators/create-user';
+import { useNavigate } from 'react-router-dom';
 
 import { registerSchema } from '@/schemas/user-schemas';
 import { UserProfession, UserRole } from '@/domain/constants';
@@ -43,16 +38,29 @@ function CollaboratorRegisterPage() {
   });
 
   function onSubmit(data: RegisterFormData) {
-    const dto: CreateUserDTO = {
+    const dto = {
       name: data.name,
       email: data.email,
       password: data.password,
-      profession: data.profession,
+      // backend expects profession in UPPERCASE
+      profession: data.profession ? data.profession.toUpperCase() : data.profession,
       role: data.role,
       bio: data.bio ?? null,
     };
-    console.log('Register collaborator:', dto);
+
+    (async () => {
+      try {
+        await createCollaborator(dto as any);
+        navigate('/admin/collaborators');
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Falha ao criar colaborador', err);
+        alert('Falha ao criar colaborador. Verifique os dados e tente novamente.');
+      }
+    })();
   }
+
+  const navigate = useNavigate();
 
   return (
     <main className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-md items-center justify-center px-4 py-8">
@@ -162,25 +170,19 @@ function CollaboratorRegisterPage() {
                 name="profession"
                 control={control}
                 render={({ field }) => (
-                  <Combobox
+                  <select
+                    id="profession"
+                    className="w-full rounded-md border px-3 py-2"
                     value={field.value ?? ''}
-                    onValueChange={(newValue) => field.onChange(newValue || '')}
+                    onChange={(e) => field.onChange(e.target.value)}
                   >
-                    <ComboboxInput
-                      placeholder="Selecione uma função"
-                      className="w-full"
-                      {...field}
-                    />
-                    <ComboboxContent>
-                      <ComboboxList>
-                        {professionOptions.map((profession) => (
-                          <ComboboxItem key={profession} value={profession}>
-                            {profession.charAt(0).toUpperCase() + profession.slice(1).replace(/_/g, ' ')}
-                          </ComboboxItem>
-                        ))}
-                      </ComboboxList>
-                    </ComboboxContent>
-                  </Combobox>
+                    <option value="">Selecione uma função</option>
+                    {professionOptions.map((profession) => (
+                      <option key={profession} value={profession}>
+                        {profession.charAt(0).toUpperCase() + profession.slice(1).replace(/_/g, ' ')}
+                      </option>
+                    ))}
+                  </select>
                 )}
               />
               {errors.profession && (

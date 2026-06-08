@@ -36,11 +36,11 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     ],
   },
   {
-    label: 'Artigos',
+    label: 'Notícias',
     items: [
-      { link: '/admin/articles/create', text: 'Criação de Artigos', icon: FilePlusIcon },
-      { link: '/admin/articles/published', text: 'Artigos Publicados', icon: FileTextIcon },
-      // { link: '/admin/articles/approve', text: 'Aprovação de Artigos', icon: CheckCircleIcon },
+      { link: '/admin/news/create', text: 'Criação de Notícias', icon: FilePlusIcon },
+      { link: '/admin/news/published', text: 'Notícias Publicadas', icon: FileTextIcon },
+      // { link: '/admin/news/approve', text: 'Aprovação de Notícias', icon: CheckCircleIcon },
     ],
   },
   // {

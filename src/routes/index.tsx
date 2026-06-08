@@ -77,15 +77,15 @@ const router = createBrowserRouter([
         element: <CollaboratorsRequestsPage />,
       },
       {
-        path: '/admin/articles/published',
+        path: '/admin/news/published',
         element: <NewsPublishedPage />,
       },
       {
-        path: '/admin/articles/create',
+        path: '/admin/news/create',
         element: <NewsCreatePage />,
       },
       {
-        path: '/admin/articles/approve',
+        path: '/admin/news/approve',
         element: <NewsPublicationReviewPage />,
       },
       {
