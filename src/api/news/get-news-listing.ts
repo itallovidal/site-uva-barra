@@ -1,5 +1,4 @@
 import { env } from '@/env';
-import { apiAuthClient } from '@/lib/api-auth-client';
 import type { NewsPreviewDTO } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
@@ -29,8 +28,16 @@ async function getNewsListing({
     url = `/news/category/${encodeURIComponent(category)}`;
   }
 
-  const payload = await apiAuthClient<NewsPreviewDTO[]>(`${url}?${params.toString()}`);
-  return payload as ResponsePayload<NewsPreviewDTO[]>;
+  const token = localStorage.getItem('auth-token');
+  const response = await fetch(`${env.VITE_API_BASE_URL}${url}?${params.toString()}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+  if (!response.ok) throw new Error('Falha ao carregar notícias');
+  const payload = (await response.json()) as ResponsePayload<NewsPreviewDTO[]>;
+  return payload;
 }
 
 export { getNewsListing };

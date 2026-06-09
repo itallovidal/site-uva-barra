@@ -15,7 +15,6 @@ import { AdminNewsCard } from '@/components/admin-news-card';
 import { Button } from '@/components/lib/button';
 import { Textarea } from '@/components/lib/textarea';
 import { env } from '@/env';
-import { apiAuthClient } from '@/lib/api-auth-client';
 import type { NewsModerationItemDTO, NewsReviewRequestDTO } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
@@ -37,7 +36,15 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
 
     async function doFetch() {
         try {
-        const payload = await apiAuthClient<NewsModerationItemDTO[]>('/news/pending');
+        const token = localStorage.getItem('auth-token');
+        const response = await fetch(`${env.VITE_API_BASE_URL}/news/pending`, {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        });
+        if (!response.ok) throw new Error('Falha ao carregar notícias pendentes');
+        const payload = (await response.json()) as ResponsePayload<NewsModerationItemDTO[]>;
         if (!cancelled) setPendingNews(payload.data ?? []);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
@@ -54,9 +61,16 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
   }, []);
 
   const approve = useCallback(async function (id: string) {
-    const result = await apiAuthClient<{ success: boolean }>(`/news/${id}/publish`, {
+    const token = localStorage.getItem('auth-token');
+    const response = await fetch(`${env.VITE_API_BASE_URL}/news/${id}/publish`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
+    if (!response.ok) throw new Error('Falha ao aprovar notícia');
+    const result = (await response.json()) as ResponsePayload<{ success: boolean }>;
 
     if (!result.data?.success) {
       throw new Error('Falha ao aprovar notícia');
@@ -71,10 +85,17 @@ function usePendingNewsModeration(): UsePendingNewsModerationResult {
 
   const requestReview = useCallback(async function (id: string, comment: string) {
     const payload: NewsReviewRequestDTO = { comment };
-    const result = await apiAuthClient<{ success: boolean }>(`/news/${id}/request-review`, {
+    const token = localStorage.getItem('auth-token');
+    const response = await fetch(`${env.VITE_API_BASE_URL}/news/${id}/request-review`, {
       method: 'POST',
       body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
+    if (!response.ok) throw new Error('Falha ao enviar para revisão');
+    const result = (await response.json()) as ResponsePayload<{ success: boolean }>;
 
     if (!result.data?.success) {
       const message = 'Falha ao enviar para revisão';

@@ -7,18 +7,26 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/lib/card';
-import { apiAuthClient } from '@/lib/api-auth-client';
+import { env } from '@/env';
 import { NewsForm } from '@/components/news-form/news-form';
 import type { NewsFormData } from '@/schemas/news-schemas';
+import type { ResponsePayload } from '@/types/api-response-types';
 
 function NewsCreatePage() {
   const navigate = useNavigate();
 
   async function handleCreate(data: NewsFormData) {
-    const payload = await apiAuthClient<{ id: string }>('/news', {
+    const token = localStorage.getItem('auth-token');
+    const response = await fetch(`${env.VITE_API_BASE_URL}/news`, {
       method: 'POST',
       body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
+    if (!response.ok) throw new Error('Falha ao criar notícia');
+    const payload = (await response.json()) as ResponsePayload<{ id: string }>;
 
     if (!payload.data?.id) {
       throw new Error('Falha ao criar notícia');

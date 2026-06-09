@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AdminColaboratorCard } from '@/components/admin-colaborator-card';
 import { env } from '@/env';
-import { apiAuthClient } from '@/lib/api-auth-client';
 import type { User } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
@@ -42,9 +41,16 @@ function useCollaboratorRequests(): UseCollaboratorRequestsResult {
   }, []);
 
   const approve = useCallback(async function (id: string) {
-    const payload = await apiAuthClient<{ success: boolean }>(`/api/collaborators/${id}/approve`, {
+    const token = localStorage.getItem('auth-token');
+    const response = await fetch(`${env.VITE_API_BASE_URL}/api/collaborators/${id}/approve`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
+    if (!response.ok) throw new Error('Falha ao aprovar solicitação');
+    const payload = (await response.json()) as ResponsePayload<{ success: boolean }>;
 
     if (!payload.data?.success) {
       throw new Error('Falha ao aprovar solicitação');
@@ -54,9 +60,16 @@ function useCollaboratorRequests(): UseCollaboratorRequestsResult {
   }, []);
 
   const remove = useCallback(async function (id: string) {
-    const payload = await apiAuthClient<{ success: boolean }>(`/api/collaborators/${id}`, {
+    const token = localStorage.getItem('auth-token');
+    const response = await fetch(`${env.VITE_API_BASE_URL}/api/collaborators/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
+    if (!response.ok) throw new Error('Falha ao excluir solicitação');
+    const payload = (await response.json()) as ResponsePayload<{ success: boolean }>;
 
     if (!payload.data?.success) {
       throw new Error('Falha ao excluir solicitação');

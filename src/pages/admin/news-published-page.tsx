@@ -14,7 +14,6 @@ import {
   DialogTitle,
 } from '@/components/lib/dialog';
 import { env } from '@/env';
-import { apiAuthClient } from '@/lib/api-auth-client';
 import type { AdminNewsCardDTO } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
@@ -34,7 +33,15 @@ function NewsPublishedPage() {
     async function doFetch() {
       try {
         const q = searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : '';
-        const payload = await apiAuthClient<AdminNewsCardDTO[]>(`/news?page=1&perPage=10&status=${statusFilter}${q}`);
+        const token = localStorage.getItem('auth-token');
+        const response = await fetch(`${env.VITE_API_BASE_URL}/news?page=1&perPage=10&status=${statusFilter}${q}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        });
+        if (!response.ok) throw new Error('Falha ao carregar notícias');
+        const payload = (await response.json()) as ResponsePayload<AdminNewsCardDTO[]>;
         if (!cancelled) setPublishedNews(payload.data ?? []);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
@@ -52,9 +59,16 @@ function NewsPublishedPage() {
   }, [searchTerm, statusFilter]);
 
   const unpublish = useCallback(async function (id: string) {
-    const payload = await apiAuthClient<{ success: boolean }>(`/news/${id}/unpublish`, {
+    const token = localStorage.getItem('auth-token');
+    const response = await fetch(`${env.VITE_API_BASE_URL}/news/${id}/unpublish`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
+    if (!response.ok) throw new Error('Falha ao despublicar notícia');
+    const payload = (await response.json()) as ResponsePayload<{ success: boolean }>;
 
     if (!payload.data?.success) {
       throw new Error('Falha ao despublicar notícia');
