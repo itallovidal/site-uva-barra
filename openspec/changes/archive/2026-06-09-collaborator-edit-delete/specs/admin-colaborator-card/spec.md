@@ -1,4 +1,4 @@
-## ADDED Requirements
+## MODIFIED Requirements
 
 ### Requirement: AdminColaboratorCard supports admin and preview variants
 
