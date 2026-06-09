@@ -14,6 +14,7 @@ interface AuthContextValue {
   token: string | null;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  isLoading: boolean;
   login: (data: RequestLoginDTO) => Promise<void>;
   logout: () => void;
 }
@@ -35,6 +36,7 @@ interface AuthProviderProps {
 function AuthProvider({ children }: AuthProviderProps) {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<Omit<User, 'password'> | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(
     function restoreSession() {
@@ -50,6 +52,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           localStorage.removeItem(USER_KEY);
         }
       }
+      setIsLoading(false);
     },
     []
   );
@@ -96,7 +99,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   );
 
   return (
-    <AuthContext.Provider value={{ user, token, isAuthenticated, isAdmin, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isAuthenticated, isAdmin, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
