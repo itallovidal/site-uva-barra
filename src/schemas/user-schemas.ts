@@ -42,7 +42,21 @@ const registerSchema = z
     path: ['confirmPassword'],
   });
 
-type RegisterFormData = z.infer<typeof registerSchema>;
+const editCollaboratorSchema = z.object({
+  name: z.string().min(1, 'Nome é obrigatório'),
+  email: z.string().email('Email inválido'),
+  profession: z.enum(
+    Object.values(UserProfession) as [typeof UserProfession[keyof typeof UserProfession], ...typeof UserProfession[keyof typeof UserProfession][]],
+    { message: 'Selecione uma função' }
+  ),
+  role: z.enum(
+    Object.values(UserRole) as [typeof UserRole[keyof typeof UserRole], ...typeof UserRole[keyof typeof UserRole][]],
+  ).optional(),
+  bio: z.string().optional(),
+});
 
-export { loginSchema, signupSchema, registerSchema };
-export type { RegisterFormData };
+type RegisterFormData = z.infer<typeof registerSchema>;
+type EditCollaboratorFormData = z.infer<typeof editCollaboratorSchema>;
+
+export { loginSchema, signupSchema, registerSchema, editCollaboratorSchema };
+export type { RegisterFormData, EditCollaboratorFormData };

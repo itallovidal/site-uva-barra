@@ -1,8 +1,9 @@
-import { CheckIcon, TrashIcon } from '@phosphor-icons/react';
+import { CheckIcon, TrashIcon, NotePencilIcon } from '@phosphor-icons/react';
 import { Card, CardContent } from '@/components/lib/card';
 import { Button } from '@/components/lib/button';
 import type { UserProfessionType } from '@/domain/constants';
 import { UserProfession } from '@/domain/constants';
+import { useAuth } from '@/hooks/use-auth';
 
 const PROFESSION_LABELS: Record<UserProfessionType, string> = {
   [UserProfession.DESIGNER]: 'Designer',
@@ -20,6 +21,7 @@ interface AdminColaboratorCardProps {
   profession: UserProfessionType;
   variant: 'admin' | 'preview';
   onApprove?: (id: string) => void;
+  onEdit?: (id: string) => void;
   onDelete?: (id: string) => void;
 }
 
@@ -30,8 +32,15 @@ function AdminColaboratorCard({
   profession,
   variant,
   onApprove,
+  onEdit,
   onDelete,
 }: AdminColaboratorCardProps) {
+  const { user, isAdmin } = useAuth();
+
+  const isOwnCard = user?.id === id;
+  const canEdit = isAdmin || isOwnCard;
+  const canDelete = (isAdmin || isOwnCard) && !isOwnCard;
+
   const initials = name
     .split(' ')
     .map((part) => part[0])
@@ -62,24 +71,40 @@ function AdminColaboratorCard({
           </div>
         </div>
 
-        {variant === 'admin' && (
+        {(variant === 'admin' || canEdit) && (
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onApprove?.(id)}
-            >
-              <CheckIcon size={16} className="text-green-600" />
-              Aprovar
-            </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => onDelete?.(id)}
-            >
-              <TrashIcon size={16} />
-              Excluir
-            </Button>
+            {variant === 'admin' && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onApprove?.(id)}
+              >
+                <CheckIcon size={16} className="text-green-600" />
+                Aprovar
+              </Button>
+            )}
+
+            {canEdit && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onEdit?.(id)}
+              >
+                <NotePencilIcon size={16} />
+                Editar
+              </Button>
+            )}
+
+            {canDelete && (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => onDelete?.(id)}
+              >
+                <TrashIcon size={16} />
+                Excluir
+              </Button>
+            )}
           </div>
         )}
       </CardContent>

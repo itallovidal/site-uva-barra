@@ -31,8 +31,10 @@ function handleApproveCollaborator({ request, params }: { request: Request; para
   teamMemberMocks.push({
     id: approved.id,
     name: approved.name,
+    email: approved.email,
     avatarUrl: approved.avatarUrl ?? null,
     profession: approved.profession,
+    role: approved.role,
     bio: approved.bio ?? null,
   });
 

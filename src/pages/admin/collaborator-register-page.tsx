@@ -1,6 +1,4 @@
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { EnvelopeSimpleIcon, UserIcon, LockIcon, NotePencilIcon } from '@phosphor-icons/react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Card,
@@ -9,58 +7,35 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/lib/card';
-import { Input } from '@/components/lib/input';
-import { Button } from '@/components/lib/button';
-import { Textarea } from '@/components/lib/textarea';
+import { CollaboratorForm } from '@/components/collaborator-form/collaborator-form';
 import { createCollaborator } from '@/api/collaborators/create-user';
-import { useNavigate } from 'react-router-dom';
-
-import { registerSchema } from '@/schemas/user-schemas';
-import { UserProfession, UserRole } from '@/domain/constants';
-import type { CreateUserDTO } from '@/domain/entities';
-import type { RegisterFormData } from '@/schemas/user-schemas';
-
-const professionOptions = Object.values(UserProfession);
-const roleOptions = Object.values(UserRole);
+import type { CollaboratorFormData } from '@/components/collaborator-form/collaborator-form-types';
 
 function CollaboratorRegisterPage() {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<RegisterFormData>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(registerSchema) as any,
-    defaultValues: {
-      role: 'collaborator',
-    },
-  });
+  const navigate = useNavigate();
 
-  function onSubmit(data: RegisterFormData) {
-    const dto = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      // backend expects profession in UPPERCASE
-      profession: data.profession ? data.profession.toUpperCase() : data.profession,
-      role: data.role,
-      bio: data.bio ?? null,
+  async function handleCreate(data: CollaboratorFormData) {
+    const registerData = data as {
+      name: string;
+      email: string;
+      password: string;
+      profession: string;
+      role?: string;
+      bio?: string;
     };
 
-    (async () => {
-      try {
-        await createCollaborator(dto as any);
-        navigate('/admin/collaborators');
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Falha ao criar colaborador', err);
-        alert('Falha ao criar colaborador. Verifique os dados e tente novamente.');
-      }
-    })();
-  }
+    const dto = {
+      name: registerData.name,
+      email: registerData.email,
+      password: registerData.password,
+      profession: registerData.profession ? registerData.profession.toUpperCase() : registerData.profession,
+      role: registerData.role,
+      bio: registerData.bio ?? null,
+    };
 
-  const navigate = useNavigate();
+    await createCollaborator(dto as any);
+    navigate('/admin/collaborators');
+  }
 
   return (
     <main className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-md items-center justify-center px-4 py-8">
@@ -73,181 +48,7 @@ function CollaboratorRegisterPage() {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-medium">
-                Nome
-              </label>
-              <div className="relative">
-                <UserIcon
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                />
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="Nome do colaborador"
-                  className="pl-9"
-                  aria-invalid={!!errors.name}
-                  {...register('name')}
-                />
-              </div>
-              {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
-              <div className="relative">
-                <EnvelopeSimpleIcon
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="seu@email.com"
-                  className="pl-9"
-                  aria-invalid={!!errors.email}
-                  {...register('email')}
-                />
-              </div>
-              {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium">
-                Senha
-              </label>
-              <div className="relative">
-                <LockIcon
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                />
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Sua senha"
-                  className="pl-9"
-                  aria-invalid={!!errors.password}
-                  {...register('password')}
-                />
-              </div>
-              {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="confirmPassword" className="text-sm font-medium">
-                Confirmar Senha
-              </label>
-              <div className="relative">
-                <LockIcon
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                />
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  placeholder="Confirme sua senha"
-                  className="pl-9"
-                  aria-invalid={!!errors.confirmPassword}
-                  {...register('confirmPassword')}
-                />
-              </div>
-              {errors.confirmPassword && (
-                <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="profession" className="text-sm font-medium">
-                Profissão
-              </label>
-              <Controller
-                name="profession"
-                control={control}
-                render={({ field }) => (
-                  <select
-                    id="profession"
-                    className="w-full rounded-md border px-3 py-2"
-                    value={field.value ?? ''}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  >
-                    <option value="">Selecione uma função</option>
-                    {professionOptions.map((profession) => (
-                      <option key={profession} value={profession}>
-                        {profession.charAt(0).toUpperCase() + profession.slice(1).replace(/_/g, ' ')}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              />
-              {errors.profession && (
-                <p className="text-sm text-destructive">{errors.profession.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="role" className="text-sm font-medium">
-                Função
-              </label>
-              <Controller
-                name="role"
-                control={control}
-                render={({ field }) => (
-                  <Combobox
-                    value={field.value ?? ''}
-                    onValueChange={(newValue) => field.onChange(newValue || '')}
-                  >
-                    <ComboboxInput
-                      placeholder="Selecione uma função"
-                      className="w-full"
-                      {...field}
-                    />
-                    <ComboboxContent>
-                      <ComboboxList>
-                        {roleOptions.map((role) => (
-                          <ComboboxItem key={role} value={role}>
-                            {role.charAt(0).toUpperCase() + role.slice(1)}
-                          </ComboboxItem>
-                        ))}
-                      </ComboboxList>
-                    </ComboboxContent>
-                  </Combobox>
-                )}
-              />
-              {errors.role && (
-                <p className="text-sm text-destructive">{errors.role.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="bio" className="text-sm font-medium">
-                Biografia
-              </label>
-              <div className="relative">
-                <NotePencilIcon
-                  size={16}
-                  className="absolute left-3 top-3 text-muted-foreground"
-                />
-                <Textarea
-                  id="bio"
-                  placeholder="Breve biografia do colaborador"
-                  className="pl-9"
-                  aria-invalid={!!errors.bio}
-                  {...register('bio')}
-                />
-              </div>
-              {errors.bio && <p className="text-sm text-destructive">{errors.bio.message}</p>}
-            </div>
-
-            <Button type="submit" className="w-full">
-              Registrar Colaborador
-            </Button>
-          </form>
+          <CollaboratorForm mode="create" onSubmit={handleCreate} />
         </CardContent>
       </Card>
     </main>
@@ -255,3 +56,4 @@ function CollaboratorRegisterPage() {
 }
 
 export { CollaboratorRegisterPage };
+

@@ -136,7 +136,9 @@ export interface NewsReviewRequestDTO {
 export interface UserProfileDTO {
   id: string;
   name: string;
+  email: string;
   avatarUrl: string | null;
   profession: UserProfessionType;
+  role: UserRoleType;
   bio: string | null;
 }

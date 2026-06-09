@@ -12,6 +12,7 @@ import { updateNewsHandler } from './news/update-news';
 import { deleteNewsHandler } from './news/delete-news';
 import { searchNewsHandler } from './news/search-news';
 import { getNewsListingHandler, getNewsListingByCategoryHandler } from './news/get-news-listing';
+import { listUsersHandler } from './user/list-users';
 import { getCollaboratorsHandler } from './collaborators/get-collaborators';
 import { getCollaboratorRequestsHandler } from './collaborators/get-collaborator-requests';
 import { approveCollaboratorHandler } from './collaborators/approve-collaborator';
@@ -39,6 +40,7 @@ const handlers = [
   createNewsHandler,
   updateNewsHandler,
   deleteNewsHandler,
+  listUsersHandler,
   getCollaboratorsHandler,
   getCollaboratorRequestsHandler,
   approveCollaboratorHandler,

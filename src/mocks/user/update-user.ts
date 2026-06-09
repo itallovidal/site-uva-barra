@@ -1,6 +1,7 @@
 import { HttpResponse, http, type PathParams } from 'msw';
 
 import { userExample } from './user-fixtures';
+import { teamMemberMocks } from '../collaborators/collaborators-state';
 
 function isAuthenticated(request: Request): boolean {
   const authHeader = request.headers.get('Authorization');
@@ -18,16 +19,26 @@ function handleUpdateUser({ request, params }: { request: Request; params: PathP
   if (!isAuthenticated(request)) return unauthorizedResponse();
 
   const id = typeof params.id === 'string' ? params.id : '';
-  if (id !== userExample.id) {
-    return HttpResponse.json(
-      { status: 404, data: null, error: { message: 'Usuário não encontrado', code: 'USER_NOT_FOUND' } },
-      { status: 404 }
-    );
+
+  const memberIndex = teamMemberMocks.findIndex((m) => m.id === id);
+  if (memberIndex !== -1) {
+    return request.json().then(function (body) {
+      const updated = { ...teamMemberMocks[memberIndex], ...body };
+      teamMemberMocks[memberIndex] = updated;
+      return HttpResponse.json({ status: 200, data: updated });
+    });
   }
 
-  return request.json().then(function () {
-    return HttpResponse.json({ status: 200, data: userExample });
-  });
+  if (id === userExample.id) {
+    return request.json().then(function () {
+      return HttpResponse.json({ status: 200, data: userExample });
+    });
+  }
+
+  return HttpResponse.json(
+    { status: 404, data: null, error: { message: 'Usuário não encontrado', code: 'USER_NOT_FOUND' } },
+    { status: 404 }
+  );
 }
 
 export const updateUserHandler = http.put('/user/:id', handleUpdateUser);
