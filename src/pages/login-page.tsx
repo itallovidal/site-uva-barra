@@ -1,9 +1,9 @@
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EnvelopeSimpleIcon, LockIcon } from '@phosphor-icons/react';
 
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/lib/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/lib/card';
 import { Input } from '@/components/lib/input';
 import { Button } from '@/components/lib/button';
 import { loginSchema } from '@/schemas/user-schemas';
@@ -68,9 +68,7 @@ function LoginPage() {
                   {...register('email')}
                 />
               </div>
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
-              )}
+              {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
             </div>
 
             <div className="space-y-2">
@@ -96,9 +94,7 @@ function LoginPage() {
               )}
             </div>
 
-            {error && (
-              <p className="text-sm text-destructive text-center">{error}</p>
-            )}
+            {error && <p className="text-sm text-destructive text-center">{error}</p>}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Entrando...' : 'Entrar'}

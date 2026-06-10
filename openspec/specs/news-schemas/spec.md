@@ -46,3 +46,13 @@ The system SHALL provide a Zod schema `newsSchema` in `src/schemas/news-schemas.
 
 - **WHEN** the news schema validates without coverImageUrl
 - **THEN** it SHALL not produce an error for the missing field
+
+#### Scenario: Validates author required
+
+- **WHEN** the news schema validates without an author
+- **THEN** it SHALL produce a validation error
+
+#### Scenario: Accepts valid author string
+
+- **WHEN** the news schema validates with a non-empty author string
+- **THEN** it SHALL pass validation

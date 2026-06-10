@@ -56,7 +56,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 3,
     publishedAt: '2026-06-04T03:02:25.983Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: '20d778fd-5d82-4ee3-af1e-0543676f7b13',
@@ -70,7 +70,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 6,
     publishedAt: '2026-06-04T03:02:25.146Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: 'bd1c494b-ae38-4ad0-a0db-7509dad20753',
@@ -85,7 +85,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 4,
     publishedAt: '2026-06-04T03:02:24.314Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: '54ce56c3-86ae-400b-9308-610f612973bb',
@@ -99,7 +99,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 4,
     publishedAt: '2026-06-04T03:02:23.473Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: 'adafa384-7533-4157-bf67-39defea57064',
@@ -114,7 +114,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 3,
     publishedAt: '2026-06-04T03:02:22.636Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: '482f279c-dcb2-450f-82bb-d4b60c2c000c',
@@ -128,7 +128,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 2,
     publishedAt: '2026-06-04T03:02:21.804Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: 'a7985dcb-e8da-4864-90dc-f61281fdbd4a',
@@ -142,7 +142,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 2,
     publishedAt: '2026-06-04T03:02:20.972Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: '065802c7-c743-4945-9bc5-4bad82b1cf15',
@@ -162,7 +162,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 2,
     publishedAt: '2026-06-04T03:02:20.136Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: 'daf89efa-e864-48e7-b5a8-a9d548caebfe',
@@ -175,7 +175,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 3,
     publishedAt: '2026-06-04T03:02:19.298Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
   {
     id: 'f2aba235-56aa-4c86-a6c0-41fe84d5330d',
@@ -188,7 +188,7 @@ const latestNewsExample = [
     featured: false,
     readingTime: 7,
     publishedAt: '2026-06-04T03:02:18.463Z',
-    authorName: 'Agência UVA - Barra',
+    author: 'Agência UVA - Barra',
   },
 ];
 

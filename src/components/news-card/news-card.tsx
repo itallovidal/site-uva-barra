@@ -13,7 +13,7 @@ function HorizontalCard({
   category,
   title,
   summary,
-  authorName,
+  author,
   publishedAt,
 }: NewsPreviewDTO) {
   return (
@@ -46,10 +46,10 @@ function HorizontalCard({
 
         <div className="mt-2 text-sm text-zinc-400">
           {publishedAt && <span>{timeAgo(publishedAt)}</span>}
-          {authorName && (
+          {author && (
             <>
               <span className="mx-1">-</span>
-              <span>Por {authorName}</span>
+              <span>Por {author}</span>
             </>
           )}
         </div>
@@ -64,7 +64,7 @@ function VerticalCard({
   category,
   title,
   summary,
-  authorName,
+  author,
   publishedAt,
 }: NewsPreviewDTO) {
   return (
@@ -97,10 +97,10 @@ function VerticalCard({
 
         <div className="mt-2 text-sm text-zinc-400">
           {publishedAt && <span>{timeAgo(publishedAt)}</span>}
-          {authorName && (
+          {author && (
             <>
               <span className="mx-1">-</span>
-              <span>Por {authorName}</span>
+              <span>Por {author}</span>
             </>
           )}
         </div>

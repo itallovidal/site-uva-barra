@@ -51,7 +51,7 @@ The system SHALL define domain entities (`User`, `Category`, `News`) and DTOs in
 #### Scenario: NewsPreviewDTO shape
 
 - **WHEN** a `NewsPreviewDTO` object is created
-- **THEN** it SHALL have fields: `id`, `title`, `summary`, `coverImageUrl` (string), `category` (string), `tags` (string[]), `featured` (boolean), `readingTime` (number), `publishedAt` (Date | null), `authorName` (string)
+- **THEN** it SHALL have fields: `id`, `title`, `summary`, `coverImageUrl` (string), `category` (string), `tags` (string[]), `featured` (boolean), `readingTime` (number), `publishedAt` (Date | null), `author` (string)
 
 #### Scenario: UserProfileDTO shape
 
@@ -61,12 +61,12 @@ The system SHALL define domain entities (`User`, `Category`, `News`) and DTOs in
 #### Scenario: NewsModerationItemDTO shape
 
 - **WHEN** a `NewsModerationItemDTO` object is created
-- **THEN** it SHALL have fields: `id`, `title`, `summary`, `content`, `coverImageUrl` (string | null), `categoryName` (string), `authorName` (string), `status` (NewsStatus), `updatedAt` (Date)
+- **THEN** it SHALL have fields: `id`, `title`, `summary`, `content`, `coverImageUrl` (string | null), `categoryName` (string), `author` (string), `status` (NewsStatus), `updatedAt` (Date)
 
 #### Scenario: AdminNewsCardDTO shape
 
 - **WHEN** an `AdminNewsCardDTO` object is created
-- **THEN** it SHALL have fields: `id`, `title`, `summary`, `content`, `coverImageUrl` (string | null), `categoryName` (string), `authorName` (string), `status` (NewsStatus), `updatedAt` (Date), `publishedAt` (Date | optional)
+- **THEN** it SHALL have fields: `id`, `title`, `summary`, `content`, `coverImageUrl` (string | null), `categoryName` (string), `author` (string), `status` (NewsStatus), `updatedAt` (Date), `publishedAt` (Date | optional)
 
 ### Requirement: TokenPayloadDTO
 
@@ -102,7 +102,7 @@ The system SHALL provide a `CreateNewsDTO` interface for creating news articles,
 #### Scenario: Create news payload shape
 
 - **WHEN** a `CreateNewsDTO` is created
-- **THEN** it SHALL have fields: `title`, `summary`, `content` (strings), `coverImageUrl` (string), `category` (string), `tags` (string[]), `featured` (boolean), `status` (NewsStatusType), `slug` (optional string), `author` (optional string)
+- **THEN** it SHALL have fields: `title`, `summary`, `content` (strings), `coverImageUrl` (string), `category` (string), `tags` (string[]), `featured` (boolean), `status` (NewsStatusType), `slug` (optional string), `author` (string)
 
 ### Requirement: CreateUserDTO
 

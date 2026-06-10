@@ -53,7 +53,7 @@ export interface CreateNewsDTO {
   featured: boolean;
   status: NewsStatusType;
   slug?: string;
-  author?: string;
+  author: string;
 }
 
 export interface CreateCategoryRequestDTO {
@@ -101,7 +101,7 @@ export interface NewsPreviewDTO {
   featured: boolean;
   readingTime: number;
   publishedAt: Date | null;
-  authorName: string;
+  author: string;
 }
 
 export interface NewsModerationItemDTO {
@@ -111,7 +111,7 @@ export interface NewsModerationItemDTO {
   content: string;
   coverImageUrl: string | null;
   categoryName: string;
-  authorName: string;
+  author: string;
   status: NewsStatusType;
   updatedAt: Date;
 }
@@ -123,7 +123,7 @@ export interface AdminNewsCardDTO {
   content: string;
   coverImageUrl: string | null;
   categoryName: string;
-  authorName: string;
+  author: string;
   status: NewsStatusType;
   updatedAt: Date;
   publishedAt?: Date | null;

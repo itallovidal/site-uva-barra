@@ -12,6 +12,7 @@ const newsSchema = z.object({
     .enum([NewsStatus.DRAFT, NewsStatus.REVIEW])
     .default(NewsStatus.DRAFT),
   featured: z.boolean().default(false),
+  author: z.string().min(1, 'Autor é obrigatório'),
 });
 
 type NewsFormData = z.infer<typeof newsSchema>;

@@ -6,6 +6,7 @@ import {
   ImageSquareIcon,
   TagIcon,
   ArticleIcon,
+  UserIcon,
 } from '@phosphor-icons/react';
 import { MDXEditor, headingsPlugin, listsPlugin, linkPlugin, quotePlugin, markdownShortcutPlugin, toolbarPlugin, UndoRedo, BoldItalicUnderlineToggles, BlockTypeSelect, ListsToggle, CreateLink } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
@@ -84,7 +85,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
   const watchedCategory = watch('category');
 
   useEffect(function updateTagsOnCategoryChange() {
-    const cat = categories.find((c) => c.id === watchedCategory);
+    const cat = categories.find((c) => c.name === watchedCategory || c.id === watchedCategory);
     if (cat) {
       setTags((cat.tags ?? []).map((t) => ({ id: t, name: t })));
     } else {
@@ -224,6 +225,27 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
         </div>
 
         <div className="space-y-2">
+          <label htmlFor="author" className="text-sm font-medium">
+            Autor
+          </label>
+          <div className="relative">
+            <UserIcon
+              size={16}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <Input
+              id="author"
+              type="text"
+              placeholder="Nome do autor"
+              className="pl-9"
+              aria-invalid={!!errors.author}
+              {...register('author')}
+            />
+          </div>
+          {errors.author && <p className="text-sm text-destructive">{errors.author.message}</p>}
+        </div>
+
+        <div className="space-y-2">
           <label htmlFor="category" className="text-sm font-medium">
             Categoria
           </label>
@@ -238,12 +260,11 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
                 <ComboboxInput
                   placeholder="Selecione uma categoria"
                   className="w-full"
-                  {...field}
                 />
                 <ComboboxContent>
                   <ComboboxList>
                     {categories.map((cat) => (
-                      <ComboboxItem key={cat.id} value={cat.id}>
+                      <ComboboxItem key={cat.id} value={cat.name}>
                         {cat.name}
                       </ComboboxItem>
                     ))}
@@ -365,7 +386,7 @@ function NewsForm({ defaultValues, onSubmit, mode }: NewsFormProps) {
           disabled={isSubmitting}
           onClick={handleReviewSubmit}
         >
-          {isSubmitting ? 'Salvando...' : mode === 'create' ? 'Enviar para Revisão' : 'Enviar para Revisão'}
+          {isSubmitting ? 'Salvando...' : mode === 'create' ? 'Criar notícia' : 'Editar notícia'}
         </Button>
       </div>
     </form>
