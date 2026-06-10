@@ -27,7 +27,7 @@ function NewsListingPage() {
   const [previewNews, setPreviewNews] = useState<AdminNewsCardDTO | null>(null);
   const [previewNewsData, setPreviewNewsData] = useState<News | null>(null);
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
-  const [isUnpublishingId, setIsUnpublishingId] = useState<string | null>(null);
+  const [isTogglingPublishId, setIsTogglingPublishId] = useState<string | null>(null);
 
   useEffect(function loadPublishedNews() {
     let cancelled = false;
@@ -60,7 +60,7 @@ function NewsListingPage() {
     };
   }, [searchTerm, statusFilter]);
 
-  const unpublish = useCallback(async function (id: string) {
+  const togglePublish = useCallback(async function (id: string, shouldPublish: boolean) {
     const token = localStorage.getItem('auth-token');
     const response = await fetch(`${env.VITE_API_BASE_URL}/news/${id}`, {
       method: 'PUT',
@@ -68,32 +68,38 @@ function NewsListingPage() {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
-      body: JSON.stringify({ status: 'draft', publishedAt: null }),
+      body: JSON.stringify(
+        shouldPublish
+          ? { status: 'published', publishedAt: new Date().toISOString() }
+          : { status: 'draft', publishedAt: null }
+      ),
     });
-    if (!response.ok) throw new Error('Falha ao despublicar notícia');
+    if (!response.ok) throw new Error(shouldPublish ? 'Falha ao publicar notícia' : 'Falha ao despublicar notícia');
     const payload = (await response.json()) as ResponsePayload<News>;
 
     if (!payload.data) {
-      throw new Error('Falha ao despublicar notícia');
+      throw new Error(shouldPublish ? 'Falha ao publicar notícia' : 'Falha ao despublicar notícia');
     }
 
-    setPublishedNews(function removeUnpublished(prev) {
+    // Recarrega a lista para refletir o novo estado
+    setPublishedNews(function removeToggled(prev) {
       return prev.filter(function filterArticle(article) {
         return article.id !== id;
       });
     });
   }, []);
 
-  async function handleUnpublish(id: string) {
-    setIsUnpublishingId(id);
+  async function handleTogglePublish(id: string) {
+    const shouldPublish = statusFilter === 'unpublished';
+    setIsTogglingPublishId(id);
     setActionError(null);
 
     try {
-      await unpublish(id);
+      await togglePublish(id, shouldPublish);
     } catch (err) {
       setActionError(err instanceof Error ? err.message : 'Erro desconhecido');
     } finally {
-      setIsUnpublishingId(null);
+      setIsTogglingPublishId(null);
     }
   }
 
@@ -178,13 +184,13 @@ function NewsListingPage() {
                     },
                   },
                   {
-                    label: 'Despublicar',
-                    variant: 'destructive',
-                    onClick: function onClickUnpublish() {
-                      void handleUnpublish(article.id);
+                    label: statusFilter === 'unpublished' ? 'Publicar' : 'Despublicar',
+                    variant: statusFilter === 'unpublished' ? 'default' : 'destructive',
+                    onClick: function onClickTogglePublish() {
+                      void handleTogglePublish(article.id);
                     },
-                    isLoading: isUnpublishingId === article.id,
-                    loadingLabel: 'Despublicando',
+                    isLoading: isTogglingPublishId === article.id,
+                    loadingLabel: statusFilter === 'unpublished' ? 'Publicando' : 'Despublicando',
                   },
                 ]}
               />
