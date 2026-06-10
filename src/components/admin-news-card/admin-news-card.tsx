@@ -19,11 +19,14 @@ interface AdminNewsCardProps {
   actions: AdminNewsCardAction[];
 }
 
-function formatDate(value: Date): string {
+function formatDate(value: Date | string | null | undefined): string {
+  if (!value) return '';
+  const date = new Date(value);
+  if (isNaN(date.getTime())) return '';
   return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'short',
     timeStyle: 'short',
-  }).format(new Date(value));
+  }).format(date);
 }
 
 function getStatusLabel(status: AdminNewsCardDTO['status']): string {
@@ -39,7 +42,7 @@ function AdminNewsCard({ article, actions }: AdminNewsCardProps) {
       <CardHeader className="border-b px-6 pb-5 pt-6">
         <CardTitle className="text-lg leading-snug">{article.title}</CardTitle>
         <CardDescription>
-          {article.categoryName} · {article.authorName}
+          {article.author ? `${article.categoryName} · ${article.author}` : article.categoryName}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5 px-6 py-6">
@@ -63,9 +66,11 @@ function AdminNewsCard({ article, actions }: AdminNewsCardProps) {
             <p className="text-xs uppercase tracking-wider text-muted-foreground">
               Status: {getStatusLabel(article.status)}
             </p>
-            <p className="text-xs text-muted-foreground">
-              Atualizada em {formatDate(article.updatedAt)}
-            </p>
+            {article.updatedAt && (
+              <p className="text-xs text-muted-foreground">
+                Atualizada em {formatDate(article.updatedAt)}
+              </p>
+            )}
             {article.publishedAt && (
               <p className="text-xs text-muted-foreground">
                 Publicada em {formatDate(article.publishedAt)}

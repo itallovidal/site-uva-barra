@@ -39,7 +39,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     label: 'Notícias',
     items: [
       { link: '/admin/news/create', text: 'Criação de Notícias', icon: FilePlusIcon },
-      { link: '/admin/news/published', text: 'Notícias Publicadas', icon: FileTextIcon },
+      { link: '/admin/news', text: 'Listagem de Notícias', icon: FileTextIcon },
       // { link: '/admin/news/approve', text: 'Aprovação de Notícias', icon: CheckCircleIcon },
     ],
   },

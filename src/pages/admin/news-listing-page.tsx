@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-
 import { AdminNewsCard } from '@/components/admin-news-card';
 import { Button } from '@/components/lib/button';
 import {
@@ -13,11 +10,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/lib/dialog';
+import { NewsArticleRenderer } from '@/components/news/news-article-renderer';
 import { env } from '@/env';
-import type { AdminNewsCardDTO } from '@/domain/entities';
+import { getNewsById } from '@/api/news/get-news-by-id';
+import type { AdminNewsCardDTO, News } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
-function NewsPublishedPage() {
+function NewsListingPage() {
   const [publishedNews, setPublishedNews] = useState<AdminNewsCardDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -25,6 +24,8 @@ function NewsPublishedPage() {
   const [statusFilter, setStatusFilter] = useState<'published' | 'unpublished'>('published');
   const [actionError, setActionError] = useState<string | null>(null);
   const [previewNews, setPreviewNews] = useState<AdminNewsCardDTO | null>(null);
+  const [previewNewsData, setPreviewNewsData] = useState<News | null>(null);
+  const [isLoadingPreview, setIsLoadingPreview] = useState(false);
   const [isUnpublishingId, setIsUnpublishingId] = useState<string | null>(null);
 
   useEffect(function loadPublishedNews() {
@@ -97,7 +98,7 @@ function NewsPublishedPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <p className="text-muted-foreground">Carregando notícias publicadas...</p>
+        <p className="text-muted-foreground">Carregando notícias...</p>
       </div>
     );
   }
@@ -114,9 +115,9 @@ function NewsPublishedPage() {
   if (publishedNews.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
-        <p className="text-lg font-semibold text-zinc-900">Nenhuma notícia publicada</p>
+        <p className="text-lg font-semibold text-zinc-900">Nenhuma notícia encontrada</p>
             <p className="text-muted-foreground text-sm mt-1">
-              As notícias publicadas aparecerão aqui para revisão e despublicação.
+              Nenhuma notícia corresponde aos filtros atuais.
             </p>
       </div>
     );
@@ -125,9 +126,9 @@ function NewsPublishedPage() {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-zinc-900">Notícias Publicadas</h1>
+        <h1 className="text-2xl font-semibold text-zinc-900">Listagem de Notícias</h1>
         <p className="text-sm text-muted-foreground">
-          Notícias já publicadas ({publishedNews.length})
+          Notícias cadastradas ({publishedNews.length})
         </p>
       </div>
 
@@ -166,6 +167,17 @@ function NewsPublishedPage() {
                   variant: 'secondary',
                   onClick: function onClickPreview() {
                     setPreviewNews(article);
+                    setIsLoadingPreview(true);
+                    getNewsById(article.id)
+                      .then(function (payload) {
+                        setPreviewNewsData(payload.data ?? null);
+                      })
+                      .catch(function () {
+                        setPreviewNewsData(null);
+                      })
+                      .finally(function () {
+                        setIsLoadingPreview(false);
+                      });
                   },
                 },
                 {
@@ -186,25 +198,30 @@ function NewsPublishedPage() {
       <Dialog
         open={previewNews !== null}
         onOpenChange={function onOpenChange(open) {
-          if (!open) setPreviewNews(null);
+          if (!open) {
+            setPreviewNews(null);
+            setPreviewNewsData(null);
+          }
         }}
       >
-        <DialogContent className="sm:max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>Notícia publicada</DialogTitle>
+        <DialogContent className="sm:max-w-4xl flex flex-col max-h-[80vh] !p-0">
+          <DialogHeader className="px-6 pt-6 pb-2 flex-shrink-0">
+            <DialogTitle>Notícia</DialogTitle>
             <DialogDescription>
-              {previewNews ? `${previewNews.categoryName} · ${previewNews.authorName}` : ''}
+              {previewNews
+                ? previewNews.categoryName +
+                  (previewNews.author ? ` · ${previewNews.author}` : '')
+                : ''}
             </DialogDescription>
           </DialogHeader>
 
           {previewNews && (
-            <div className="space-y-5">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-semibold leading-tight text-zinc-900">
-                  {previewNews.title}
-                </h2>
-                <p className="text-sm text-muted-foreground">{previewNews.summary}</p>
-              </div>
+            <div className="overflow-y-auto flex-1 px-6 py-4 space-y-5">
+              <h2 className="text-2xl font-semibold leading-tight text-zinc-900">
+                {previewNews.title}
+              </h2>
+
+              <p className="text-sm text-muted-foreground">{previewNews.summary}</p>
 
               {previewNews.coverImageUrl && (
                 <div className="overflow-hidden rounded-lg border bg-zinc-100">
@@ -216,19 +233,30 @@ function NewsPublishedPage() {
                 </div>
               )}
 
-              <div className="prose prose-zinc max-w-none prose-headings:text-zinc-900 prose-p:text-zinc-700 prose-li:text-zinc-700 prose-a:text-red-600">
-                <Markdown remarkPlugins={[remarkGfm]}>{previewNews.content}</Markdown>
-              </div>
+              {isLoadingPreview ? (
+                <p className="text-sm text-muted-foreground">Carregando conteúdo...</p>
+              ) : previewNewsData ? (
+                <NewsArticleRenderer
+                  title={previewNewsData.title}
+                  summary={previewNewsData.summary}
+                  category={previewNewsData.category}
+                  author={previewNewsData.author}
+                  coverImageUrl={previewNewsData.coverImageUrl}
+                  tags={previewNewsData.tags}
+                  content={previewNewsData.content}
+                />
+              ) : null}
             </div>
           )}
 
-          <DialogFooter>
+          <DialogFooter className="px-6 pb-6 pt-2 flex-shrink-0">
             <Button
               type="button"
               variant="outline"
-              onClick={function closePreview() {
-                setPreviewNews(null);
-              }}
+                  onClick={function closePreview() {
+                    setPreviewNews(null);
+                    setPreviewNewsData(null);
+                  }}
             >
               Fechar
             </Button>
@@ -239,4 +267,4 @@ function NewsPublishedPage() {
   );
 }
 
-export { NewsPublishedPage };
+export { NewsListingPage };

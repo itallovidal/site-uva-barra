@@ -1,10 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { useNewsById } from '@/hooks/use-news-by-id';
-import { NewsHtmlContent } from '@/components/news/news-html-content';
-
-const FALLBACK_IMAGE = '/agencia-uva-fallback.jpg';
+import { NewsArticleRenderer } from '@/components/news/news-article-renderer';
 
 function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -47,65 +43,21 @@ function NewsDetailPage() {
     );
   }
 
-  const coverSrc = news.coverImageUrl || FALLBACK_IMAGE;
-  const isHtml = /<main[^>]*id=["']materia["']/i.test(news.content);
-
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
-      {/* Título */}
       <h1 className="mb-4 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl">
         {news.title}
       </h1>
 
-      {/* Resumo */}
-      <p className="mb-8 text-lg italic text-zinc-600">{news.summary}</p>
-
-      {/* Tags */}
-      {news.tags.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-2">
-          {news.tags.map(function renderTag(tag) {
-            return (
-              <span
-                key={tag}
-                className="rounded-full border border-zinc-300 px-3 py-0.5 text-xs text-zinc-600"
-              >
-                {tag}
-              </span>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Badge de categoria + Autor */}
-      <div className="mb-3 flex flex-wrap items-center gap-3">
-        <span className="inline-block rounded-full bg-red-600 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-white">
-          {news.category}
-        </span>
-        <span className="text-sm text-zinc-500">
-          Escrito por: <span className="font-medium text-zinc-700">{news.author}</span>
-        </span>
-      </div>
-
-      {/* Imagem de capa */}
-      <div className="mb-6 overflow-hidden rounded-xl">
-        <img
-          src={coverSrc}
-          alt={news.title}
-          className="h-72 w-full object-cover sm:h-96"
-          onError={function handleImgError(e) {
-            (e.currentTarget as HTMLImageElement).src = FALLBACK_IMAGE;
-          }}
-        />
-      </div>
-
-      {/* Corpo da notícia */}
-      {isHtml ? (
-        <NewsHtmlContent content={news.content} />
-      ) : (
-        <div className="prose max-w-none prose-headings:text-zinc-900 prose-p:text-zinc-700 prose-li:text-zinc-700 prose-a:text-red-600">
-          <Markdown remarkPlugins={[remarkGfm]}>{news.content}</Markdown>
-        </div>
-      )}
+      <NewsArticleRenderer
+        title={news.title}
+        summary={news.summary}
+        category={news.category}
+        author={news.author}
+        coverImageUrl={news.coverImageUrl}
+        tags={news.tags}
+        content={news.content}
+      />
     </article>
   );
 }
