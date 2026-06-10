@@ -110,7 +110,7 @@ export interface NewsModerationItemDTO {
   summary: string;
   content: string;
   coverImageUrl: string | null;
-  categoryName: string;
+  category: string;
   author: string;
   status: NewsStatusType;
   updatedAt: Date;
@@ -122,7 +122,7 @@ export interface AdminNewsCardDTO {
   summary: string;
   content: string;
   coverImageUrl: string | null;
-  categoryName: string;
+  category: string;
   author: string;
   status: NewsStatusType;
   updatedAt: Date;

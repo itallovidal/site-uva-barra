@@ -42,7 +42,7 @@ function AdminNewsCard({ article, actions }: AdminNewsCardProps) {
       <CardHeader className="border-b px-6 pb-5 pt-6">
         <CardTitle className="text-lg leading-snug">{article.title}</CardTitle>
         <CardDescription>
-          {article.author ? `${article.categoryName} · ${article.author}` : article.categoryName}
+          {article.author ? `${article.category} · ${article.author}` : article.category}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5 px-6 py-6">
@@ -88,7 +88,7 @@ function AdminNewsCard({ article, actions }: AdminNewsCardProps) {
                 onClick={action.onClick}
                 disabled={action.disabled || action.isLoading}
               >
-                {action.isLoading ? action.loadingLabel ?? `${action.label}...` : action.label}
+                {action.isLoading ? (action.loadingLabel ?? `${action.label}...`) : action.label}
               </Button>
             );
           })}

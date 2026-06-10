@@ -309,7 +309,7 @@ function NewsPublicationReviewPage() {
           <DialogHeader>
             <DialogTitle>Em revisão - Ainda Não publicado</DialogTitle>
             <DialogDescription>
-              {previewNews ? `${previewNews.categoryName} · ${previewNews.author}` : ''}
+              {previewNews ? `${previewNews.category} · ${previewNews.author}` : ''}
             </DialogDescription>
           </DialogHeader>
 

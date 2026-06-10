@@ -219,7 +219,7 @@ function NewsListingPage() {
             <DialogTitle>Notícia</DialogTitle>
             <DialogDescription>
               {previewNews
-                ? previewNews.categoryName +
+                ? previewNews.category +
                   (previewNews.author ? ` · ${previewNews.author}` : '')
                 : ''}
             </DialogDescription>
