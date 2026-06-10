@@ -25,6 +25,7 @@ import { getCategoryByIdHandler } from './categories/get-category-by-id';
 import { updateCategoryHandler } from './categories/update-category';
 import { deleteCategoryHandler } from './categories/delete-category';
 import { getTagsHandler } from './categories/get-tags';
+import { newsletterRegisterHandler } from './newsletter/register';
 
 const handlers = [
   loginHandler,
@@ -55,6 +56,7 @@ const handlers = [
   updateCategoryHandler,
   deleteCategoryHandler,
   getTagsHandler,
+  newsletterRegisterHandler,
 ];
 
 export { handlers };

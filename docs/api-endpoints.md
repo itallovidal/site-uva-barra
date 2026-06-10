@@ -918,6 +918,48 @@ Busca notícias por termo.
 
 ---
 
+## Newsletter
+
+### POST /newsletter/register
+
+Registra um email na newsletter.
+
+**Auth:** Não requer
+
+**Request Body:**
+
+```json
+{
+  "email": "test@example.com"
+}
+```
+
+**Response 201:**
+
+```json
+{
+  "status": 201,
+  "data": {
+    "success": true
+  }
+}
+```
+
+**Response 400:**
+
+```json
+{
+  "status": 400,
+  "data": null,
+  "error": {
+    "message": "Email é obrigatório",
+    "code": "VALIDATION_ERROR"
+  }
+}
+```
+
+---
+
 ## Categories
 
 ### POST /categories
