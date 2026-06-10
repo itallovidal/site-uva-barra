@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CaretDownIcon, SignInIcon, TagIcon } from '@phosphor-icons/react';
+import { CaretDownIcon, SignInIcon, GearIcon, TagIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
 import {
   DropdownMenu,
@@ -9,6 +9,7 @@ import {
 } from '@/components/lib/dropdown-menu';
 import type { Category } from '@/domain/entities';
 import { GlobalSearch } from '@/components/shared/global-search';
+import { useAuth } from '@/hooks/use-auth';
 import type { NavItem } from '../../types/nav-bar-types';
 
 interface DesktopNavBarProps {
@@ -18,6 +19,8 @@ interface DesktopNavBarProps {
 }
 
 function DesktopNavBar({ brand, navItems, categories }: DesktopNavBarProps) {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="hidden lg:flex h-16 items-center justify-center border-b bg-red-600 px-2">
       <div className="hidden lg:w-7xl lg:flex h-16 items-center justify-between border-b">
@@ -69,10 +72,17 @@ function DesktopNavBar({ brand, navItems, categories }: DesktopNavBarProps) {
             buttonClassName="text-black hover:text-black/70 hover:bg-transparent"
           />
           <Button variant="secondary" size="sm" className="gap-1.5 bg-white" asChild>
-            <Link to="/entrar">
-              <SignInIcon size={16} />
-              Login
-            </Link>
+            {isAuthenticated ? (
+              <Link to="/admin">
+                <GearIcon size={16} />
+                Administração
+              </Link>
+            ) : (
+              <Link to="/entrar">
+                <SignInIcon size={16} />
+                Login
+              </Link>
+            )}
           </Button>
         </div>
       </div>

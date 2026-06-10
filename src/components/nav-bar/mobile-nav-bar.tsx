@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ListIcon, XIcon, SignInIcon } from '@phosphor-icons/react';
+import { ListIcon, XIcon, SignInIcon, GearIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/lib/button';
 import { GlobalSearch } from '@/components/shared/global-search';
+import { useAuth } from '@/hooks/use-auth';
 import {
   Drawer,
   DrawerTrigger,
@@ -20,6 +21,8 @@ interface MobileNavBarProps {
 }
 
 function MobileNavBar({ brand, navItems, categories }: MobileNavBarProps) {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="lg:hidden  bg-red-600">
       <div className="flex h-14 items-center justify-between px-4 border-b gap-3">
@@ -77,12 +80,23 @@ function MobileNavBar({ brand, navItems, categories }: MobileNavBarProps) {
             </nav>
 
             <DrawerFooter className="border-t">
-              <Button variant="ghost" size="default" className="w-full justify-start gap-2" asChild>
-                <Link to="/entrar">
-                  <SignInIcon size={18} />
-                  Login
-                </Link>
-              </Button>
+              <DrawerClose asChild>
+                <Button variant="ghost" size="default" className="w-full justify-start gap-2" asChild>
+                  <Link to={isAuthenticated ? '/admin' : '/entrar'}>
+                    {isAuthenticated ? (
+                      <>
+                        <GearIcon size={18} />
+                        Administração
+                      </>
+                    ) : (
+                      <>
+                        <SignInIcon size={18} />
+                        Login
+                      </>
+                    )}
+                  </Link>
+                </Button>
+              </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>

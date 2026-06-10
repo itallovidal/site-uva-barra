@@ -9,6 +9,7 @@ import {
   EnvelopeSimpleIcon,
   EnvelopeIcon,
   SignOutIcon,
+  ArrowLeftIcon,
   UserCircleIcon,
 } from '@phosphor-icons/react';
 import { cn } from '@/components/lib/utils';
@@ -100,7 +101,15 @@ function AdminSidebar({ className, onItemClick }: AdminSidebarProps) {
         ))}
       </nav>
 
-      <div className="border-t px-3 py-3">
+      <div className="border-t px-3 py-3 space-y-0.5">
+        <Link
+          to="/"
+          onClick={onItemClick}
+          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+        >
+          <ArrowLeftIcon size={18} />
+          Voltar ao site
+        </Link>
         <Link
           to="/admin/logout"
           onClick={onItemClick}
