@@ -24,7 +24,7 @@ The system SHALL allow the admin to preview and unpublish articles from the list
 
 #### Scenario: Published article can be unpublished
 - **WHEN** the admin clicks the unpublish action on a published article
-- **THEN** the system SHALL submit the unpublish action for that article
+- **THEN** the system SHALL submit a `PUT /news/:id` request with body `{ "status": "draft", "publishedAt": null }`
 - **AND** update or remove the card after success
 
 #### Scenario: Action failure is handled

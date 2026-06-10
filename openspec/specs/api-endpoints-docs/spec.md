@@ -93,7 +93,8 @@ The documentation SHALL cover all News endpoints.
 #### Scenario: Update news documented
 
 - **WHEN** reading the News section
-- **THEN** the endpoint `PUT /news/:id` SHALL be documented as authenticated with partial body and response `{ status: 200, data: News }`
+- **THEN** the endpoint `PUT /news/:id` SHALL be documented as authenticated with partial body fields including `status` (`draft` | `published` | `review` | `archived`) and `publishedAt` (ISO string or `null`)
+- **AND** response SHALL be `{ status: 200, data: News }`
 
 #### Scenario: Delete news documented
 

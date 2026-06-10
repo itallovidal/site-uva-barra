@@ -612,7 +612,9 @@ Atualiza uma notícia.
 ```json
 {
   "title": "Título atualizado",
-  "featured": false
+  "featured": false,
+  "status": "draft",
+  "publishedAt": null
 }
 ```
 
@@ -630,13 +632,13 @@ Atualiza uma notícia.
     "coverImageUrl": "https://exemplo.com/capa.jpg",
     "category": "tecnologia",
     "author": "Nome do Autor",
-    "status": "published",
+    "status": "draft",
     "tags": ["tag1", "tag2"],
     "featured": false,
     "readingTime": 3,
     "createdAt": "2026-06-04T10:00:00.000Z",
     "updatedAt": "2026-06-04T10:00:00.000Z",
-    "publishedAt": "2026-06-04T12:00:00.000Z"
+    "publishedAt": null
   }
 }
 ```

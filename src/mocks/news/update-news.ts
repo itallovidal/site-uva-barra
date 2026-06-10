@@ -18,15 +18,15 @@ function handleUpdateNews({ request, params }: { request: Request; params: PathP
   if (!isAuthenticated(request)) return unauthorizedResponse();
 
   const id = typeof params.id === 'string' ? params.id : '';
-  if (id !== publishedNewsExample.id) {
-    return HttpResponse.json(
-      { status: 404, data: null, error: { message: 'Notícia não encontrada', code: 'NOT_FOUND' } },
-      { status: 404 }
-    );
-  }
 
-  return request.json().then(function () {
-    return HttpResponse.json({ status: 200, data: publishedNewsExample });
+  return request.json().then(function (body) {
+    const updatedNews = {
+      ...publishedNewsExample,
+      id,
+      ...(body.status !== undefined && { status: body.status }),
+      ...(body.publishedAt !== undefined && { publishedAt: body.publishedAt }),
+    };
+    return HttpResponse.json({ status: 200, data: updatedNews });
   });
 }
 

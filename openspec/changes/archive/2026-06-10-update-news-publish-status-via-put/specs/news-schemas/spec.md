@@ -1,8 +1,31 @@
-# news-schemas Specification
+## ADDED Requirements
 
-## Purpose
-TBD - created by archiving change refactor-types-to-entities. Update Purpose after archive.
-## Requirements
+### Requirement: News update schema accepts status and publishedAt
+
+The system SHALL allow the news schema used for editing (`PUT /news/:id`) to accept `status` and `publishedAt` as optional fields.
+
+#### Scenario: Accepts valid status enum
+
+- **WHEN** the news schema validates a body with `status: "published"`
+- **THEN** it SHALL pass validation
+
+#### Scenario: Accepts null publishedAt
+
+- **WHEN** the news schema validates a body with `publishedAt: null`
+- **THEN** it SHALL pass validation
+
+#### Scenario: Accepts ISO string publishedAt
+
+- **WHEN** the news schema validates a body with `publishedAt: "2026-06-10T12:00:00.000Z"`
+- **THEN** it SHALL pass validation
+
+#### Scenario: Rejects invalid status value
+
+- **WHEN** the news schema validates a body with `status: "invalid"`
+- **THEN** it SHALL produce a validation error
+
+## MODIFIED Requirements
+
 ### Requirement: News creation Zod schema
 
 The system SHALL provide a Zod schema `newsSchema` in `src/schemas/news-schemas.ts` for validating news creation/editing form data. The inferred type SHALL NOT be used; the `useForm` generic SHALL use `CreateNewsDTO` from domain entities directly.
@@ -56,42 +79,3 @@ The system SHALL provide a Zod schema `newsSchema` in `src/schemas/news-schemas.
 
 - **WHEN** the news schema validates with a non-empty author string
 - **THEN** it SHALL pass validation
-
-#### Scenario: Accepts valid status enum
-
-- **WHEN** the news schema validates a body with `status: "published"`
-- **THEN** it SHALL pass validation
-
-#### Scenario: Accepts null publishedAt
-
-- **WHEN** the news schema validates a body with `publishedAt: null`
-- **THEN** it SHALL pass validation
-
-#### Scenario: Accepts ISO string publishedAt
-
-- **WHEN** the news schema validates a body with `publishedAt: "2026-06-10T12:00:00.000Z"`
-- **THEN** it SHALL pass validation
-
-### Requirement: News update schema accepts status and publishedAt
-
-The system SHALL allow the news schema used for editing (`PUT /news/:id`) to accept `status` and `publishedAt` as optional fields.
-
-#### Scenario: Accepts valid status enum
-
-- **WHEN** the news schema validates a body with `status: "published"`
-- **THEN** it SHALL pass validation
-
-#### Scenario: Accepts null publishedAt
-
-- **WHEN** the news schema validates a body with `publishedAt: null`
-- **THEN** it SHALL pass validation
-
-#### Scenario: Accepts ISO string publishedAt
-
-- **WHEN** the news schema validates a body with `publishedAt: "2026-06-10T12:00:00.000Z"`
-- **THEN** it SHALL pass validation
-
-#### Scenario: Rejects invalid status value
-
-- **WHEN** the news schema validates a body with `status: "invalid"`
-- **THEN** it SHALL produce a validation error

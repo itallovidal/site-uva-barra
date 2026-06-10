@@ -72,21 +72,19 @@ The system SHALL accept a `CreateNewsDTO` body and return a `ResponsePayload` wi
 - **WHEN** a `POST /api/news` request is made with a valid `CreateNewsDTO` body
 - **THEN** the system SHALL respond with HTTP 201 and JSON body `{ "status": 201, "data": { "id": "<uuid>" } }`
 
-### Requirement: POST /api/news/:id/publish mock handler
+### Requirement: PUT /api/news/:id mock handler
 
-The system SHALL return a `ResponsePayload` confirming publication.
+The mock handler for `PUT /news/:id` SHALL accept `status` and `publishedAt` in the request body and reflect them in the response.
 
-#### Scenario: Publishes news
-- **WHEN** a `POST /api/news/:id/publish` request is made
-- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
+#### Scenario: Updates status and publishedAt
+- **WHEN** an authenticated `PUT /news/:id` request is made with body `{ "status": "draft", "publishedAt": null }`
+- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ status: 200, data: <updated News> }`
+- **AND** the returned news object SHALL have `status: "draft"` and `publishedAt: null`
 
-### Requirement: POST /api/news/:id/unpublish mock handler
-
-The system SHALL return a `ResponsePayload` confirming unpublish.
-
-#### Scenario: Unpublishes news
-- **WHEN** a `POST /api/news/:id/unpublish` request is made
-- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
+#### Scenario: Publishes news via PUT
+- **WHEN** an authenticated `PUT /news/:id` request is made with body `{ "status": "published", "publishedAt": "2026-06-10T12:00:00.000Z" }`
+- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ status: 200, data: <updated News> }`
+- **AND** the returned news object SHALL have `status: "published"` and the provided `publishedAt`
 
 ### Requirement: POST /api/news/:id/request-review mock handler
 

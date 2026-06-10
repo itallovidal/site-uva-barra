@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { NewspaperIcon } from 'lucide-react';
 
 import { AdminNewsCard } from '@/components/admin-news-card';
 import { Button } from '@/components/lib/button';
@@ -61,17 +62,18 @@ function NewsListingPage() {
 
   const unpublish = useCallback(async function (id: string) {
     const token = localStorage.getItem('auth-token');
-    const response = await fetch(`${env.VITE_API_BASE_URL}/news/${id}/unpublish`, {
-      method: 'POST',
+    const response = await fetch(`${env.VITE_API_BASE_URL}/news/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
+      body: JSON.stringify({ status: 'draft', publishedAt: null }),
     });
     if (!response.ok) throw new Error('Falha ao despublicar notícia');
-    const payload = (await response.json()) as ResponsePayload<{ success: boolean }>;
+    const payload = (await response.json()) as ResponsePayload<News>;
 
-    if (!payload.data?.success) {
+    if (!payload.data) {
       throw new Error('Falha ao despublicar notícia');
     }
 
@@ -112,16 +114,10 @@ function NewsListingPage() {
     );
   }
 
-  if (publishedNews.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-24 text-center">
-        <p className="text-lg font-semibold text-zinc-900">Nenhuma notícia encontrada</p>
-            <p className="text-muted-foreground text-sm mt-1">
-              Nenhuma notícia corresponde aos filtros atuais.
-            </p>
-      </div>
-    );
-  }
+  const emptyTitle = statusFilter === 'unpublished' ? 'Sem notícias pendentes.' : 'Sem notícias para mostrar';
+  const emptyDescription = statusFilter === 'unpublished'
+    ? 'Não há notícias que precisam de aprovação.'
+    : 'As notícias publicadas aparecerão aqui.';
 
   return (
     <div className="space-y-8">
@@ -155,45 +151,53 @@ function NewsListingPage() {
         </div>
       )}
 
-      <div className="grid gap-5">
-        {publishedNews.map(function renderArticle(article) {
-          return (
-            <AdminNewsCard
-              key={article.id}
-              article={article}
-              actions={[
-                {
-                  label: 'Pré-Visualizar',
-                  variant: 'secondary',
-                  onClick: function onClickPreview() {
-                    setPreviewNews(article);
-                    setIsLoadingPreview(true);
-                    getNewsById(article.id)
-                      .then(function (payload) {
-                        setPreviewNewsData(payload.data ?? null);
-                      })
-                      .catch(function () {
-                        setPreviewNewsData(null);
-                      })
-                      .finally(function () {
-                        setIsLoadingPreview(false);
-                      });
+      {publishedNews.length > 0 ? (
+        <div className="grid gap-5">
+          {publishedNews.map(function renderArticle(article) {
+            return (
+              <AdminNewsCard
+                key={article.id}
+                article={article}
+                actions={[
+                  {
+                    label: 'Pré-Visualizar',
+                    variant: 'secondary',
+                    onClick: function onClickPreview() {
+                      setPreviewNews(article);
+                      setIsLoadingPreview(true);
+                      getNewsById(article.id)
+                        .then(function (payload) {
+                          setPreviewNewsData(payload.data ?? null);
+                        })
+                        .catch(function () {
+                          setPreviewNewsData(null);
+                        })
+                        .finally(function () {
+                          setIsLoadingPreview(false);
+                        });
+                    },
                   },
-                },
-                {
-                  label: 'Despublicar',
-                  variant: 'destructive',
-                  onClick: function onClickUnpublish() {
-                    void handleUnpublish(article.id);
+                  {
+                    label: 'Despublicar',
+                    variant: 'destructive',
+                    onClick: function onClickUnpublish() {
+                      void handleUnpublish(article.id);
+                    },
+                    isLoading: isUnpublishingId === article.id,
+                    loadingLabel: 'Despublicando',
                   },
-                  isLoading: isUnpublishingId === article.id,
-                  loadingLabel: 'Despublicando',
-                },
-              ]}
-            />
-          );
-        })}
-      </div>
+                ]}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <NewspaperIcon className="size-16 text-muted-foreground/20 mb-4" />
+          <p className="text-lg font-semibold text-zinc-900">{emptyTitle}</p>
+          <p className="text-muted-foreground text-sm mt-1">{emptyDescription}</p>
+        </div>
+      )}
 
       <Dialog
         open={previewNews !== null}
