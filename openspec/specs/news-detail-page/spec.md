@@ -42,27 +42,39 @@ O sistema SHALL fornecer o hook `useNewsById(id)` que gerencia o ciclo de carreg
 ---
 
 ### Requirement: Layout da página de detalhe
-O sistema SHALL exibir o conteúdo da notícia na seguinte ordem vertical: imagem de capa → tags → badge de categoria (vermelho) → resumo → corpo da notícia.
+
+The system SHALL display the news article content using the `NewsArticleRenderer` component inside an `<article>` wrapper with `mx-auto max-w-3xl px-4 py-8`.
+
+#### Scenario: Article rendered by NewsArticleRenderer
+- **WHEN** the detail page loads successfully
+- **THEN** it SHALL render the `NewsArticleRenderer` component with the article data
+- **AND** the page title (`<h1>`) SHALL remain displayed directly in the detail page above the renderer
 
 #### Scenario: Imagem de capa presente
-- **WHEN** `news.coverImageUrl` está preenchido
-- **THEN** uma `<img>` com a URL da capa é exibida no topo da página com `object-fit: cover`
+- **WHEN** `news.coverImageUrl` is filled
+- **THEN** the `NewsArticleRenderer` SHALL render the cover image with `object-fit: cover` and fallback
 
 #### Scenario: Imagem de capa ausente
 - **WHEN** `news.coverImageUrl` está vazio ou nulo
 - **THEN** a imagem fallback `/agencia-uva-fallback.jpg` é exibida
 
 #### Scenario: Tags exibidas
-- **WHEN** `news.tags` contém itens
-- **THEN** cada tag é renderizada como um badge/chip abaixo da imagem de capa
+- **WHEN** `news.tags` contains items
+- **THEN** the `NewsArticleRenderer` SHALL render each tag as a chip/badge
 
 #### Scenario: Badge de categoria
-- **WHEN** a página é renderizada
-- **THEN** `news.category` é exibido como badge com fundo vermelho (`bg-red-600`) e texto branco, igual ao padrão dos cards
+- **WHEN** the page is rendered
+- **THEN** `news.category` SHALL be displayed as a badge with `bg-red-600` background and white text
+
+#### Scenario: Autor condicional
+- **WHEN** `news.author` is truthy
+- **THEN** the renderer SHALL display "Escrito por: {author}"
+- **WHEN** `news.author` is falsy
+- **THEN** the renderer SHALL omit the author line entirely
 
 #### Scenario: Resumo exibido
-- **WHEN** a página é renderizada
-- **THEN** `news.summary` é exibido em destaque (fonte maior ou itálico) entre o badge de categoria e o corpo
+- **WHEN** the page is rendered
+- **THEN** `news.summary` SHALL be displayed in italic between the category badge and the content body
 
 ---
 

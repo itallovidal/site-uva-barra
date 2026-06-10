@@ -16,7 +16,7 @@
 - [x] 3.1 Update `src/routes/index.tsx`: change path from `/admin/news/published` to `/admin/news`
 - [x] 3.2 Update `src/pages/admin/admin-sidebar.tsx`: change link from `/admin/news/published` to `/admin/news` and text from "Notícias Publicadas" to "Listagem de Notícias"
 - [x] 3.3 Update `src/pages/admin/news-create-page.tsx`: change navigate redirect from `/admin/news/published` to `/admin/news`
-- [x] 3.4 Rename `NewsPublishedPage` → `NewsListingPage`: rename file to `news-listing-page.tsx`, update function name, export, and all imports
+- [x] 3.4 Rename file to `news-listing-page.tsx`, rename component to `NewsListingPage` (aliased as `AdminNewsListingPage` in routes to avoid conflict with public `NewsListingPage`), update exports and imports
 - [x] 3.5 Update page title in `NewsListingPage` from "Notícias Publicadas" to "Listagem de Notícias" and update subtitle accordingly
 
 ## 4. Fix AdminNewsCard Author Display
