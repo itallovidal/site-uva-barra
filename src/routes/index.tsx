@@ -17,7 +17,7 @@ import { CollaboratorsRequestsPage } from '@/pages/admin/collaborators-requests-
 import { CollaboratorsListPage } from '@/pages/admin/collaborators-list-page';
 import { NewsCreatePage } from '@/pages/admin/news-create-page';
 import { NewsPublicationReviewPage } from '@/pages/admin/news-publication-review-page';
-import { NewsListingPage } from '@/pages/admin/news-listing-page';
+import { NewsListingPage as AdminNewsListingPage } from '@/pages/admin/news-listing-page';
 
 const router = createBrowserRouter([
   {
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin/news',
-        element: <NewsListingPage />,
+        element: <AdminNewsListingPage />,
       },
       {
         path: '/admin/news/create',
