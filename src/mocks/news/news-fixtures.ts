@@ -134,7 +134,7 @@ const latestNewsExample = [
     id: 'a7985dcb-e8da-4864-90dc-f61281fdbd4a',
     title: 'Workshop da SeCom aborda os diversos tipos e aplicações de drones',
     summary:
-      'Os alunos puderam conhecer, tirar dúvidas e se aproximar da tecnologia Na última sexta-feira (17), a SeCom promoveu o workshop “A tecnologia dos drones”, que apresentou aos alunos uma nova perspectiva sobre o uso dos veículos aéreos não tripulados e seus diversos tipos e aplicações. O workshop foi ministrado pelo professor e especialista em drones […]',
+      'Os alunos puderam conhecer, tirar dúvidas e se aproximar da tecnologia Na última sexta-feira (17), a SeCom promoveu o workshop "A tecnologia dos drones", que apresentou aos alunos uma nova perspectiva sobre o uso dos veículos aéreos não tripulados e seus diversos tipos e aplicações. O workshop foi ministrado pelo professor e especialista em drones […]',
     coverImageUrl:
       'https://i0.wp.com/agenciauvabarra.com/wp-content/uploads/2019/05/6.jpg?fit=5184%2C3456&ssl=1',
     category: 'Institucional',
@@ -189,6 +189,123 @@ const latestNewsExample = [
     readingTime: 7,
     publishedAt: '2026-06-04T03:02:18.463Z',
     author: 'Agência UVA - Barra',
+  },
+];
+
+const unpublishedNewsExamples = [
+  {
+    id: 'unpub-001-aaaa-bbbb-cccc-ddddeeee0001',
+    title: 'Novo laboratório de IoT será inaugurado no campus Barra',
+    summary:
+      'O espaço contará com equipamentos de ponta para pesquisa em Internet das Coisas, robótica e automação.',
+    coverImageUrl:
+      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80',
+    category: 'Institucional',
+    tags: ['iot', 'tecnologia', 'laboratório', 'pesquisa'],
+    featured: false,
+    readingTime: 4,
+    publishedAt: null,
+    author: 'Agência UVA - Barra',
+    status: 'review',
+    content:
+      '# Novo laboratório de IoT\n\nA Universidade Veiga de Almeida anuncia a inauguração de um novo laboratório dedicado à Internet das Coisas (IoT) no Campus Barra.\n\n## Equipamentos\n\n- Sensores inteligentes\n- Microcontroladores Arduino e ESP32\n- Impressoras 3D\n- Estações de trabalho com softwares de simulação\n\nO laboratório estará disponível para alunos dos cursos de Engenharia, Ciência da Computação e áreas afins a partir do próximo semestre.',
+    createdAt: '2026-06-08T14:30:00.000Z',
+    updatedAt: '2026-06-09T09:15:00.000Z',
+  },
+  {
+    id: 'unpub-002-aaaa-bbbb-cccc-ddddeeee0002',
+    title: 'Programa de monitoria abre inscrições para o segundo semestre',
+    summary:
+      'Estudantes de todos os cursos podem se candidatar às vagas de monitoria acadêmica até o dia 30 de junho.',
+    coverImageUrl:
+      'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80',
+    category: 'Educação',
+    tags: ['monitoria', 'bolsas', 'acadêmico'],
+    featured: false,
+    readingTime: 3,
+    publishedAt: null,
+    author: 'Agência UVA - Barra',
+    status: 'draft',
+    content:
+      '# Programa de Monitoria\n\nEstão abertas as inscrições para o programa de monitoria do segundo semestre de 2026.\n\n## Requisitos\n\n- Estar matriculado em curso de graduação\n- Ter disponibilidade de 12h semanais\n- Não estar cursando a disciplina para a qual se candidata\n\nAs inscrições devem ser realizadas pelo portal do aluno até 30/06.',
+    createdAt: '2026-06-07T10:00:00.000Z',
+    updatedAt: '2026-06-07T10:00:00.000Z',
+  },
+  {
+    id: 'unpub-003-aaaa-bbbb-cccc-ddddeeee0003',
+    title: 'II Seminário de Empreendedorismo Universitário acontece em agosto',
+    summary:
+      'Evento reunirá empreendedores, investidores e acadêmicos para debater inovação e negócios de impacto social.',
+    coverImageUrl:
+      'https://images.unsplash.com/photo-1559136555-930d6f4c3e1c?w=800&q=80',
+    category: 'Política & Economia',
+    tags: ['empreendedorismo', 'inovação', 'seminário'],
+    featured: false,
+    readingTime: 5,
+    publishedAt: null,
+    author: 'Agência UVA - Barra',
+    status: 'review',
+    content:
+      '# II Seminário de Empreendedorismo Universitário\n\nO evento acontecerá nos dias 14 e 15 de agosto no auditório do Campus Barra.\n\n## Programação\n\n**Dia 1**\n- Palestra: "Inovação como diferencial competitivo"\n- Mesa redonda: "Startups universitárias"\n- Workshop: "Do pitch ao negócio"\n\n**Dia 2**\n- Feira de estágios e empregos\n- Hackathon: soluções para cidades inteligentes\n\nAs inscrições são gratuitas e abertas a toda comunidade acadêmica.',
+    createdAt: '2026-06-06T16:45:00.000Z',
+    updatedAt: '2026-06-09T11:30:00.000Z',
+  },
+  {
+    id: 'unpub-004-aaaa-bbbb-cccc-ddddeeee0004',
+    title: 'Alunos de Arquitetura vencem concurso nacional de design sustentável',
+    summary:
+      'Projeto de revitalização de praça pública utilizando materiais recicláveis conquistou o primeiro lugar.',
+    coverImageUrl:
+      'https://images.unsplash.com/photo-1613545325267-1f0c6b8e7d7c?w=800&q=80',
+    category: 'Cultura & Artes',
+    tags: ['arquitetura', 'design', 'sustentabilidade', 'premiação'],
+    featured: true,
+    readingTime: 4,
+    publishedAt: null,
+    author: 'Agência UVA - Barra',
+    status: 'draft',
+    content:
+      '# Alunos de Arquitetura vencem concurso nacional\n\nUm grupo de cinco alunos do curso de Arquitetura e Urbanismo da UVA Barra conquistou o primeiro lugar no Concurso Nacional de Design Sustentável 2026.\n\n## O projeto\n\nO projeto vencedor propõe a revitalização de uma praça no bairro da Lapa, Rio de Janeiro, utilizando exclusivamente materiais recicláveis e de baixo impacto ambiental.\n\n**Diferenciais do projeto:**\n- Uso de PET reciclado em mobiliário urbano\n- Sistemas de captação de água da chuva\n- Iluminação com energia solar\n- Jardins verticais com espécies nativas\n\nA premiação será entregue em cerimônia no próximo mês.',
+    createdAt: '2026-06-05T08:00:00.000Z',
+    updatedAt: '2026-06-05T08:00:00.000Z',
+  },
+  {
+    id: 'unpub-005-aaaa-bbbb-cccc-ddddeeee0005',
+    title: 'Pesquisa sobre células-tronco recebe financiamento internacional',
+    summary:
+      'Estudo coordenado por professores da UVA Barra investiga novas terapias para doenças degenerativas.',
+    coverImageUrl:
+      'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80',
+    category: 'Institucional',
+    tags: ['pesquisa', 'células-tronco', 'medicina', 'financiamento'],
+    featured: false,
+    readingTime: 6,
+    publishedAt: null,
+    author: 'Agência UVA - Barra',
+    status: 'review',
+    content:
+      '# Pesquisa sobre células-tronco recebe financiamento internacional\n\nO projeto de pesquisa coordenado pelos professores Dr. Carlos Mendes e Dra. Ana Oliveira, do curso de Biomedicina, foi contemplado com uma bolsa de pesquisa do Instituto Nacional de Saúde dos Estados Unidos (NIH).\n\n## Sobre a pesquisa\n\nO estudo investiga o uso de células-tronco mesenquimais para regeneração de tecido cardíaco em pacientes com insuficiência cardíaca.\n\nA pesquisa terá duração de três anos e envolverá alunos de iniciação científica da UVA Barra.',
+    createdAt: '2026-06-04T20:15:00.000Z',
+    updatedAt: '2026-06-09T14:00:00.000Z',
+  },
+  {
+    id: 'unpub-006-aaaa-bbbb-cccc-ddddeeee0006',
+    title: 'Cineclube UVA exibe mostra de cinema latino-americano em julho',
+    summary:
+      'Sessões gratuitas acontecerão todas as quintas-feiras com filmes de diretores argentinos, chilenos e colombianos.',
+    coverImageUrl:
+      'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80',
+    category: 'Cultura & Artes',
+    tags: ['cineclube', 'cinema', 'latino-americano', 'cultura'],
+    featured: false,
+    readingTime: 3,
+    publishedAt: null,
+    author: 'Agência UVA - Barra',
+    status: 'draft',
+    content:
+      '# Cineclube UVA exibe mostra de cinema latino-americano\n\nO Cineclube UVA Barra apresenta em julho a mostra "Olhares Latino-Americanos", com filmes de diretores argentinos, chilenos e colombianos.\n\n## Programação\n\n| Data | Filme | País |\n| --- | --- | --- |\n| 03/07 | Relatos Salvajes | Argentina |\n| 10/07 | Una Mujer Fantástica | Chile |\n| 17/07 | Los Colores de la Montaña | Colômbia |\n| 24/07 | El Secreto de sus Ojos | Argentina |\n\nTodas as sessões são gratuitas e abertas ao público, com início às 18h no auditório do campus.',
+    createdAt: '2026-06-03T12:00:00.000Z',
+    updatedAt: '2026-06-08T10:30:00.000Z',
   },
 ];
 
@@ -262,4 +379,5 @@ export {
   latestNewsMeta,
   newsDetailFixture,
   publishedNewsExample,
+  unpublishedNewsExamples,
 };

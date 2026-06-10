@@ -1,5 +1,5 @@
 import { HttpResponse, http, type PathParams } from 'msw';
-import { latestNewsExample, latestNewsMeta } from './news-fixtures';
+import { latestNewsExample, latestNewsMeta, unpublishedNewsExamples } from './news-fixtures';
 
 function isAuthenticated(request: Request): boolean {
   const authHeader = request.headers.get('Authorization');
@@ -25,7 +25,9 @@ function handleGetNewsListing({ request, params }: { request: Request; params: P
     return unauthorizedResponse();
   }
 
-  let filtered = [...latestNewsExample];
+  const allNews = [...latestNewsExample, ...unpublishedNewsExamples];
+
+  let filtered = [...allNews];
 
   if (category) {
     filtered = filtered.filter(
@@ -37,15 +39,17 @@ function handleGetNewsListing({ request, params }: { request: Request; params: P
     filtered = filtered.filter((article) => article.publishedAt);
   } else if (status === 'unpublished') {
     filtered = filtered.filter((article) => !article.publishedAt);
+  } else {
+    filtered = filtered.filter((article) => article.publishedAt);
   }
 
   if (sort === 'asc') {
     filtered = filtered.sort(
-      (a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime()
+      (a, b) => new Date(a.publishedAt ?? a.createdAt).getTime() - new Date(b.publishedAt ?? b.createdAt).getTime()
     );
   } else {
     filtered = filtered.sort(
-      (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      (a, b) => new Date(b.publishedAt ?? b.createdAt).getTime() - new Date(a.publishedAt ?? a.createdAt).getTime()
     );
   }
 
