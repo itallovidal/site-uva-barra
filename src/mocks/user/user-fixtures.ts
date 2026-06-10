@@ -1,7 +1,7 @@
 const userExample = {
   id: '550e8400-e29b-41d4-a716-446655440000',
   name: 'João Silva',
-  email: 'joao@exemplo.com',
+  email: 'admin@email.com',
   avatarUrl: null,
   role: 'collaborator',
   profession: 'desenvolvedor',

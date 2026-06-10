@@ -38,7 +38,7 @@ The system SHALL return a `ResponsePayload` wrapping an array of `NewsPreviewDTO
 #### Scenario: Returns ResponsePayload with NewsPreviewDTO array
 - **WHEN** a `GET /api/news/latest` request is made
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... NewsPreviewDTO[] ] }`
-- **AND** each `NewsPreviewDTO` SHALL contain fields: `id`, `title`, `summary`, `coverImageUrl`, `category`, `tags` (string[]), `featured`, `readingTime`, `publishedAt`, `authorName`
+- **AND** each `NewsPreviewDTO` SHALL contain fields: `id`, `title`, `summary`, `coverImageUrl`, `category`, `tags` (string[]), `featured`, `readingTime`, `publishedAt`, `author`
 
 ### Requirement: GET /api/news mock handler
 
@@ -96,29 +96,113 @@ The system SHALL return a `ResponsePayload` confirming review request.
 - **WHEN** a `POST /api/news/:id/request-review` request is made with a valid comment
 - **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
-### Requirement: POST /api/collaborators/:id/approve mock handler
+### Requirement: POST /registration/:id/approve mock handler
 
-The system SHALL return a `ResponsePayload` confirming approval.
+The system SHALL return a `ResponsePayload` confirming approval of a registration request.
 
-#### Scenario: Approves collaborator
-- **WHEN** a `POST /api/collaborators/:id/approve` request is made
-- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
+#### Scenario: Approves registration
+- **WHEN** an authenticated `POST /registration/:id/approve` request is made
+- **THEN** the system SHALL remove the request from pending and respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
-### Requirement: DELETE /api/collaborators/:id mock handler
+#### Scenario: Registration not found
+- **WHEN** an authenticated `POST /registration/nonexistent/approve` request is made
+- **THEN** the system SHALL respond with HTTP 404 and JSON body `{ "status": 404, "data": null, "error": { "message": "Solicitação não encontrada", "code": "NOT_FOUND" } }`
 
-The system SHALL return a `ResponsePayload` confirming deletion.
+#### Scenario: Unauthenticated approve
+- **WHEN** an unauthenticated `POST /registration/:id/approve` request is made
+- **THEN** the system SHALL respond with HTTP 401 and JSON body `{ "status": 401, "data": null, "error": { "message": "Não autorizado", "code": "UNAUTHORIZED" } }`
 
-#### Scenario: Deletes collaborator request
-- **WHEN** a `DELETE /api/collaborators/:id` request is made
-- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
+### Requirement: POST /registration/:id/reject mock handler
 
-### Requirement: GET /api/collaborators/requests mock handler
+The system SHALL return a `ResponsePayload` confirming rejection of a registration request.
 
-The system SHALL return a `ResponsePayload` wrapping an array of pending collaborator `User` objects.
+#### Scenario: Rejects registration with reason
+- **WHEN** an authenticated `POST /registration/:id/reject` request is made with body `{ "reason": "Perfil não atende aos requisitos" }`
+- **THEN** the system SHALL remove the request from pending and respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
 
-#### Scenario: Returns pending requests
-- **WHEN** a `GET /api/collaborators/requests` request is made
-- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... User[] ] }`
+#### Scenario: Rejects registration without reason
+- **WHEN** an authenticated `POST /registration/:id/reject` request is made without a body
+- **THEN** the system SHALL remove the request from pending and respond with HTTP 200 and JSON body `{ "status": 200, "data": { "success": true } }`
+
+#### Scenario: Registration not found
+- **WHEN** an authenticated `POST /registration/nonexistent/reject` request is made
+- **THEN** the system SHALL respond with HTTP 404 and JSON body `{ "status": 404, "data": null, "error": { "message": "Solicitação não encontrada", "code": "NOT_FOUND" } }`
+
+#### Scenario: Unauthenticated reject
+- **WHEN** an unauthenticated `POST /registration/:id/reject` request is made
+- **THEN** the system SHALL respond with HTTP 401 and JSON body `{ "status": 401, "data": null, "error": { "message": "Não autorizado", "code": "UNAUTHORIZED" } }`
+
+### Requirement: POST /registration/ mock handler
+
+The system SHALL provide a public mock handler for registration requests.
+
+#### Scenario: Successful registration
+- **WHEN** a `POST /registration` request is made with body `{ "name": "João Silva", "email": "joao@example.com", "password": "123456", "profession": "desenvolvedor", "bio": "Backend developer" }`
+- **THEN** the system SHALL add the request to pending and respond with HTTP 201 and JSON body `{ "status": 201, "data": { "id": "<uuid>" } }`
+
+#### Scenario: Duplicate email
+- **WHEN** a `POST /registration` request is made with an email that already exists in pending
+- **THEN** the system SHALL respond with HTTP 409 and JSON body `{ "status": 409, "data": null, "error": { "message": "Email já cadastrado", "code": "EMAIL_ALREADY_EXISTS" } }`
+
+### Requirement: GET /registration/requests mock handler
+
+The system SHALL return a `ResponsePayload` wrapping an array of pending registration requests with pagination and filtering.
+
+#### Scenario: Returns pending requests with pagination
+- **WHEN** an authenticated `GET /registration/requests?status=PENDING&page=1&perPage=10` request is made
+- **THEN** the system SHALL respond with HTTP 200 and JSON body `{ "status": 200, "data": [ ... User[] ], "meta": { "page": 1, "perPage": 10, "total": 3, "totalPages": 1 } }`
+
+#### Scenario: Unauthenticated request
+- **WHEN** an unauthenticated `GET /registration/requests` request is made
+- **THEN** the system SHALL respond with HTTP 401 and JSON body `{ "status": 401, "data": null, "error": { "message": "Não autorizado", "code": "UNAUTHORIZED" } }`
+
+### Requirement: GET /news/search uses GET method with validation
+
+The news search mock handler SHALL use `GET /news/search` (not POST) and validate the required `q` query parameter.
+
+#### Scenario: Search with query
+- **WHEN** a `GET /news/search?q=uva` request is made
+- **THEN** the system SHALL respond with HTTP 200 and matching results sorted by newest first
+
+#### Scenario: Search with oldest order
+- **WHEN** a `GET /news/search?q=semana-de&order=oldest` request is made
+- **THEN** the system SHALL return results sorted by oldest first
+
+#### Scenario: Missing query parameter
+- **WHEN** a `GET /news/search` request is made without a `q` parameter
+- **THEN** the system SHALL respond with HTTP 400 and JSON body `{ "status": 400, "data": null, "error": { "message": "Parâmetro de busca é obrigatório", "code": "VALIDATION_ERROR" } }`
+
+### Requirement: GET /news supports status filter
+
+The `GET /news` mock handler SHALL support a `status` query parameter.
+
+#### Scenario: Filter published
+- **WHEN** a `GET /news?status=published` request is made
+- **THEN** the system SHALL return only news with `publishedAt` set
+
+#### Scenario: Filter unpublished requires auth
+- **WHEN** a `GET /news?status=unpublished` request is made without auth
+- **THEN** the system SHALL respond with HTTP 401
+
+#### Scenario: Filter unpublished with auth
+- **WHEN** an authenticated `GET /news?status=unpublished` request is made
+- **THEN** the system SHALL return only news without `publishedAt`
+
+### Requirement: Login mock uses correct credentials
+
+The login mock SHALL accept `admin@email.com` / `admin123` for successful authentication.
+
+#### Scenario: Login with correct credentials
+- **WHEN** a `POST /user/login` request is made with `{ "email": "admin@email.com", "password": "admin123" }`
+- **THEN** the system SHALL respond with HTTP 200 and `{ "status": 200, "data": { "accessToken": "<jwt>", "user": <UserProfileDTO> } }`
+
+### Requirement: GET /categories returns categories from state
+
+The `GET /categories` handler SHALL return categories from the mutable in-memory array (not a single fixture).
+
+#### Scenario: Returns all categories
+- **WHEN** a `GET /categories` request is made
+- **THEN** the system SHALL respond with HTTP 200 and `{ "status": 200, "data": [ ... Category[] ] }` containing all categories from state
 
 ## ADDED Requirements
 
@@ -161,3 +245,17 @@ The system SHALL change the `GET /api/categories` handler to return categories f
 - **WHEN** a `GET /api/categories` request is made
 - **THEN** the system SHALL respond with HTTP 200 and a JSON array of `Category` objects
 - **AND** the array SHALL reflect any categories added or removed during the session
+
+### Requirement: Mock fixture data uses author instead of authorName
+
+The mock fixtures in `src/mocks/news/news-fixtures.ts` and `src/mocks/news/news-state.ts` SHALL use `author` instead of `authorName` wherever the field represents a DTO field.
+
+#### Scenario: latestNewsExample uses author
+
+- **WHEN** `latestNewsExample` fixtures are created
+- **THEN** each item SHALL have `author` field instead of `authorName`
+
+#### Scenario: pendingNews uses author
+
+- **WHEN** `pendingNews` state items are created
+- **THEN** each item SHALL have `author` field instead of `authorName`

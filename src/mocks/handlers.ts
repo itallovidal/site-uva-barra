@@ -14,9 +14,11 @@ import { searchNewsHandler } from './news/search-news';
 import { getNewsListingHandler, getNewsListingByCategoryHandler } from './news/get-news-listing';
 import { listUsersHandler } from './user/list-users';
 import { getCollaboratorsHandler } from './collaborators/get-collaborators';
-import { getCollaboratorRequestsHandler } from './collaborators/get-collaborator-requests';
-import { approveCollaboratorHandler } from './collaborators/approve-collaborator';
 import { deleteCollaboratorHandler } from './collaborators/delete-collaborator';
+import { getRegistrationRequestsHandler } from './registration/get-registration-requests';
+import { approveRegistrationHandler } from './registration/approve-registration';
+import { rejectRegistrationHandler } from './registration/reject-registration';
+import { createRegistrationHandler } from './registration/create-registration';
 import { getCategoriesHandler } from './categories/get-categories';
 import { createCategoryHandler } from './categories/create-category';
 import { getCategoryByIdHandler } from './categories/get-category-by-id';
@@ -42,9 +44,11 @@ const handlers = [
   deleteNewsHandler,
   listUsersHandler,
   getCollaboratorsHandler,
-  getCollaboratorRequestsHandler,
-  approveCollaboratorHandler,
   deleteCollaboratorHandler,
+  getRegistrationRequestsHandler,
+  approveRegistrationHandler,
+  rejectRegistrationHandler,
+  createRegistrationHandler,
   getCategoriesHandler,
   createCategoryHandler,
   getCategoryByIdHandler,
