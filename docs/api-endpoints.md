@@ -958,6 +958,288 @@ Registra um email na newsletter.
 }
 ```
 
+**Response 400 (email inválido):**
+
+```json
+{
+  "status": 400,
+  "data": null,
+  "error": {
+    "message": "Email inválido",
+    "code": "VALIDATION_ERROR"
+  }
+}
+```
+
+**Response 409:**
+
+```json
+{
+  "status": 409,
+  "data": null,
+  "error": {
+    "message": "Email já cadastrado",
+    "code": "EMAIL_ALREADY_EXISTS"
+  }
+}
+```
+
+---
+
+### GET /newsletter/email
+
+Lista emails cadastrados na newsletter.
+
+**Auth:** Requer Bearer token
+
+**Query Params:**
+- `page` — Número da página (default: `1`)
+- `perPage` — Itens por página (default: `10`)
+
+**Exemplo:** `GET /newsletter/email?page=1&perPage=10`
+
+**Response 200:**
+
+```json
+{
+  "status": 200,
+  "data": [
+    {
+      "email": "test@example.com",
+      "registeredAt": "2026-06-11T10:00:00.000Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "perPage": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+**Response 401:**
+
+```json
+{
+  "status": 401,
+  "data": null,
+  "error": {
+    "message": "Não autorizado",
+    "code": "UNAUTHORIZED"
+  }
+}
+```
+
+---
+
+### GET /newsletter/email/:email
+
+Busca um email específico cadastrado na newsletter.
+
+**Auth:** Requer Bearer token
+
+**Exemplo:** `GET /newsletter/email/test@example.com`
+
+**Response 200:**
+
+```json
+{
+  "status": 200,
+  "data": {
+    "email": "test@example.com",
+    "registeredAt": "2026-06-11T10:00:00.000Z"
+  }
+}
+```
+
+**Response 401:**
+
+```json
+{
+  "status": 401,
+  "data": null,
+  "error": {
+    "message": "Não autorizado",
+    "code": "UNAUTHORIZED"
+  }
+}
+```
+
+**Response 404:**
+
+```json
+{
+  "status": 404,
+  "data": null,
+  "error": {
+    "message": "Email não encontrado",
+    "code": "NOT_FOUND"
+  }
+}
+```
+
+---
+
+### POST /newsletter/
+
+Cria uma nova newsletter.
+
+**Auth:** Requer Bearer token
+
+**Request Body:**
+
+```json
+{
+  "content": "Conteúdo da newsletter de exemplo"
+}
+```
+
+**Response 201:**
+
+```json
+{
+  "status": 201,
+  "data": {
+    "id": "newsletter-1",
+    "content": "Conteúdo da newsletter de exemplo",
+    "createdAt": "2026-06-11T10:00:00.000Z",
+    "updatedAt": "2026-06-11T10:00:00.000Z"
+  }
+}
+```
+
+**Response 400:**
+
+```json
+{
+  "status": 400,
+  "data": null,
+  "error": {
+    "message": "Conteúdo é obrigatório",
+    "code": "VALIDATION_ERROR"
+  }
+}
+```
+
+**Response 401:**
+
+```json
+{
+  "status": 401,
+  "data": null,
+  "error": {
+    "message": "Não autorizado",
+    "code": "UNAUTHORIZED"
+  }
+}
+```
+
+---
+
+### PUT /newsletter/:id
+
+Atualiza uma newsletter.
+
+**Auth:** Requer Bearer token
+
+**Request Body:**
+
+```json
+{
+  "content": "Conteúdo atualizado da newsletter"
+}
+```
+
+**Response 200:**
+
+```json
+{
+  "status": 200,
+  "data": {
+    "id": "newsletter-1",
+    "content": "Conteúdo atualizado da newsletter",
+    "createdAt": "2026-06-11T10:00:00.000Z",
+    "updatedAt": "2026-06-11T12:00:00.000Z"
+  }
+}
+```
+
+**Response 400:**
+
+```json
+{
+  "status": 400,
+  "data": null,
+  "error": {
+    "message": "Conteúdo é obrigatório",
+    "code": "VALIDATION_ERROR"
+  }
+}
+```
+
+**Response 401:**
+
+```json
+{
+  "status": 401,
+  "data": null,
+  "error": {
+    "message": "Não autorizado",
+    "code": "UNAUTHORIZED"
+  }
+}
+```
+
+**Response 404:**
+
+```json
+{
+  "status": 404,
+  "data": null,
+  "error": {
+    "message": "Newsletter não encontrada",
+    "code": "NOT_FOUND"
+  }
+}
+```
+
+---
+
+### DELETE /newsletter/:id
+
+Deleta uma newsletter.
+
+**Auth:** Requer Bearer token
+
+**Response 204:** (sem body)
+
+**Response 401:**
+
+```json
+{
+  "status": 401,
+  "data": null,
+  "error": {
+    "message": "Não autorizado",
+    "code": "UNAUTHORIZED"
+  }
+}
+```
+
+**Response 404:**
+
+```json
+{
+  "status": 404,
+  "data": null,
+  "error": {
+    "message": "Newsletter não encontrada",
+    "code": "NOT_FOUND"
+  }
+}
+```
+
 ---
 
 ## Categories
