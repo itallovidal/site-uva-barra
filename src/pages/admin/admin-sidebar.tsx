@@ -11,6 +11,7 @@ import {
   SignOutIcon,
   ArrowLeftIcon,
   UserCircleIcon,
+  HouseIcon,
 } from '@phosphor-icons/react';
 import { cn } from '@/components/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
@@ -28,6 +29,12 @@ interface SidebarGroup {
 }
 
 const SIDEBAR_GROUPS: SidebarGroup[] = [
+  // {
+  //   label: 'Geral',
+  //   items: [
+  //     { link: '/admin/dashboard', text: 'Painel Inicial', icon: HouseIcon },
+  //   ],
+  // },
   {
     label: 'Colaboradores',
     items: [

@@ -35,7 +35,7 @@ function HomePage() {
       <NewsletterSection />
 
       {rest.length > 0 && (
-        <section className="flex flex-col gap-4 md:flex-row">
+        <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {rest.map((article) => (
             <div key={article.id} className="flex-1">
               <NewsCard article={article} isVertical />

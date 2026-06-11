@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { NewspaperIcon } from 'lucide-react';
 
 import { AdminNewsCard } from '@/components/admin-news-card';
@@ -18,47 +19,60 @@ import type { AdminNewsCardDTO, News } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
 function NewsListingPage() {
+  const [searchParams] = useSearchParams();
   const [publishedNews, setPublishedNews] = useState<AdminNewsCardDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'published' | 'unpublished'>('published');
+  const [statusFilter, setStatusFilter] = useState<'published' | 'unpublished'>(() => {
+    const statusParam = searchParams.get('status');
+    if (statusParam === 'unpublished') return 'unpublished';
+    return 'published';
+  });
   const [actionError, setActionError] = useState<string | null>(null);
   const [previewNews, setPreviewNews] = useState<AdminNewsCardDTO | null>(null);
   const [previewNewsData, setPreviewNewsData] = useState<News | null>(null);
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
   const [isTogglingPublishId, setIsTogglingPublishId] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [isDeletingId, setIsDeletingId] = useState<string | null>(null);
 
-  useEffect(function loadPublishedNews() {
-    let cancelled = false;
+  useEffect(
+    function loadPublishedNews() {
+      let cancelled = false;
 
-    async function doFetch() {
-      try {
-        const q = searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : '';
-        const token = localStorage.getItem('auth-token');
-        const response = await fetch(`${env.VITE_API_BASE_URL}/news?page=1&perPage=10&status=${statusFilter}${q}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-        });
-        if (!response.ok) throw new Error('Falha ao carregar notícias');
-        const payload = (await response.json()) as ResponsePayload<AdminNewsCardDTO[]>;
-        if (!cancelled) setPublishedNews(payload.data ?? []);
-      } catch (err) {
-        if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
-      } finally {
-        if (!cancelled) setIsLoading(false);
+      async function doFetch() {
+        try {
+          const q = searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : '';
+          const token = localStorage.getItem('auth-token');
+          const response = await fetch(
+            `${env.VITE_API_BASE_URL}/news?page=1&perPage=10&status=${statusFilter}${q}`,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+            }
+          );
+          if (!response.ok) throw new Error('Falha ao carregar notícias');
+          const payload = (await response.json()) as ResponsePayload<AdminNewsCardDTO[]>;
+          if (!cancelled) setPublishedNews(payload.data ?? []);
+        } catch (err) {
+          if (!cancelled) setError(err instanceof Error ? err.message : 'Erro desconhecido');
+        } finally {
+          if (!cancelled) setIsLoading(false);
+        }
       }
-    }
 
-    setIsLoading(true);
-    doFetch();
+      setIsLoading(true);
+      doFetch();
 
-    return function cleanup() {
-      cancelled = true;
-    };
-  }, [searchTerm, statusFilter]);
+      return function cleanup() {
+        cancelled = true;
+      };
+    },
+    [searchTerm, statusFilter]
+  );
 
   const togglePublish = useCallback(async function (id: string, shouldPublish: boolean) {
     const token = localStorage.getItem('auth-token');
@@ -74,7 +88,8 @@ function NewsListingPage() {
           : { status: 'draft', publishedAt: null }
       ),
     });
-    if (!response.ok) throw new Error(shouldPublish ? 'Falha ao publicar notícia' : 'Falha ao despublicar notícia');
+    if (!response.ok)
+      throw new Error(shouldPublish ? 'Falha ao publicar notícia' : 'Falha ao despublicar notícia');
     const payload = (await response.json()) as ResponsePayload<News>;
 
     if (!payload.data) {
@@ -103,6 +118,33 @@ function NewsListingPage() {
     }
   }
 
+  async function handleDelete(id: string) {
+    const token = localStorage.getItem('auth-token');
+    setIsDeletingId(id);
+    setActionError(null);
+
+    try {
+      const response = await fetch(`${env.VITE_API_BASE_URL}/news/${id}`, {
+        method: 'DELETE',
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      });
+      if (!response.ok) throw new Error('Falha ao deletar notícia');
+
+      setDeleteConfirmId(null);
+      setPublishedNews(function removeDeleted(prev) {
+        return prev.filter(function filterArticle(article) {
+          return article.id !== id;
+        });
+      });
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Erro desconhecido');
+    } finally {
+      setIsDeletingId(null);
+    }
+  }
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
@@ -120,10 +162,12 @@ function NewsListingPage() {
     );
   }
 
-  const emptyTitle = statusFilter === 'unpublished' ? 'Sem notícias pendentes.' : 'Sem notícias para mostrar';
-  const emptyDescription = statusFilter === 'unpublished'
-    ? 'Não há notícias que precisam de aprovação.'
-    : 'As notícias publicadas aparecerão aqui.';
+  const emptyTitle =
+    statusFilter === 'unpublished' ? 'Sem notícias pendentes.' : 'Sem notícias para mostrar';
+  const emptyDescription =
+    statusFilter === 'unpublished'
+      ? 'Não há notícias que precisam de aprovação.'
+      : 'As notícias publicadas aparecerão aqui.';
 
   return (
     <div className="space-y-8">
@@ -192,6 +236,15 @@ function NewsListingPage() {
                     isLoading: isTogglingPublishId === article.id,
                     loadingLabel: statusFilter === 'unpublished' ? 'Publicando' : 'Despublicando',
                   },
+                  {
+                    label: 'Deletar',
+                    variant: 'destructive',
+                    onClick: function onClickDelete() {
+                      setDeleteConfirmId(article.id);
+                    },
+                    isLoading: isDeletingId === article.id,
+                    loadingLabel: 'Deletando',
+                  },
                 ]}
               />
             );
@@ -219,42 +272,30 @@ function NewsListingPage() {
             <DialogTitle>Notícia</DialogTitle>
             <DialogDescription>
               {previewNews
-                ? previewNews.category +
-                  (previewNews.author ? ` · ${previewNews.author}` : '')
+                ? previewNews.category + (previewNews.author ? ` · ${previewNews.author}` : '')
                 : ''}
             </DialogDescription>
           </DialogHeader>
 
           {previewNews && (
-            <div className="overflow-y-auto flex-1 px-6 py-4 space-y-5">
-              <h2 className="text-2xl font-semibold leading-tight text-zinc-900">
-                {previewNews.title}
-              </h2>
-
-              <p className="text-sm text-muted-foreground">{previewNews.summary}</p>
-
-              {previewNews.coverImageUrl && (
-                <div className="overflow-hidden rounded-lg border bg-zinc-100">
-                  <img
-                    src={previewNews.coverImageUrl}
-                    alt={previewNews.title}
-                    className="max-h-80 w-full object-cover"
-                  />
-                </div>
-              )}
-
+            <div className="overflow-y-auto flex-1 px-6 py-4">
               {isLoadingPreview ? (
                 <p className="text-sm text-muted-foreground">Carregando conteúdo...</p>
               ) : previewNewsData ? (
-                <NewsArticleRenderer
-                  title={previewNewsData.title}
-                  summary={previewNewsData.summary}
-                  category={previewNewsData.category}
-                  author={previewNewsData.author}
-                  coverImageUrl={previewNewsData.coverImageUrl}
-                  tags={previewNewsData.tags}
-                  content={previewNewsData.content}
-                />
+                <>
+                  <h1 className="mb-4 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl">
+                    {previewNewsData.title}
+                  </h1>
+                  <NewsArticleRenderer
+                    title={previewNewsData.title}
+                    summary={previewNewsData.summary}
+                    category={previewNewsData.category}
+                    author={previewNewsData.author}
+                    coverImageUrl={previewNewsData.coverImageUrl}
+                    tags={previewNewsData.tags}
+                    content={previewNewsData.content}
+                  />
+                </>
               ) : null}
             </div>
           )}
@@ -263,12 +304,50 @@ function NewsListingPage() {
             <Button
               type="button"
               variant="outline"
-                  onClick={function closePreview() {
-                    setPreviewNews(null);
-                    setPreviewNewsData(null);
-                  }}
+              onClick={function closePreview() {
+                setPreviewNews(null);
+                setPreviewNewsData(null);
+              }}
             >
               Fechar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={deleteConfirmId !== null}
+        onOpenChange={function onOpenChange(open) {
+          if (!open) setDeleteConfirmId(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Deletar notícia</DialogTitle>
+            <DialogDescription>
+              Tem certeza que deseja deletar esta notícia? Esta ação não pode ser desfeita.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={function cancelDelete() {
+                setDeleteConfirmId(null);
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              disabled={isDeletingId === deleteConfirmId}
+              onClick={function confirmDelete() {
+                if (deleteConfirmId) void handleDelete(deleteConfirmId);
+              }}
+            >
+              {isDeletingId === deleteConfirmId ? 'Deletando...' : 'Deletar'}
             </Button>
           </DialogFooter>
         </DialogContent>

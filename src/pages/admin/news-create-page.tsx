@@ -32,7 +32,7 @@ function NewsCreatePage() {
       throw new Error('Falha ao criar notícia');
     }
 
-    navigate('/admin/news');
+    navigate('/admin/news?status=unpublished');
   }
 
   return (

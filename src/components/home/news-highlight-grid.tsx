@@ -12,7 +12,7 @@ function NewsHighlightGrid({ highlights }: NewsHighlightGridProps) {
 
   return (
     <div className="space-y-6">
-      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 grid-rows-2">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 grid-rows-2 max-h-[60vh]">
         <div className="lg:row-span-2">
           <NewsHighlightCard highlight={featured} isFeatured />
         </div>
