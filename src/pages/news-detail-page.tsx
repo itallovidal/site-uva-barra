@@ -1,30 +1,14 @@
 import { Link, useParams } from 'react-router-dom';
 import { useNewsById } from '@/hooks/use-news-by-id';
 import { NewsArticleRenderer } from '@/components/news/news-article-renderer';
+import { NewsDetailSkeleton } from '@/components/skeletons';
 
 function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { news, isLoading, error } = useNewsById(id ?? '');
 
   if (isLoading) {
-    return (
-      <div className="mx-auto max-w-3xl px-4 py-12">
-        <div className="animate-pulse space-y-6">
-          <div className="h-64 w-full rounded-xl bg-zinc-200" />
-          <div className="flex gap-2">
-            <div className="h-5 w-16 rounded-full bg-zinc-200" />
-            <div className="h-5 w-20 rounded-full bg-zinc-200" />
-          </div>
-          <div className="h-6 w-32 rounded-full bg-zinc-200" />
-          <div className="h-8 w-3/4 rounded bg-zinc-200" />
-          <div className="space-y-3">
-            <div className="h-4 w-full rounded bg-zinc-200" />
-            <div className="h-4 w-5/6 rounded bg-zinc-200" />
-            <div className="h-4 w-4/6 rounded bg-zinc-200" />
-          </div>
-        </div>
-      </div>
-    );
+    return <NewsDetailSkeleton />;
   }
 
   if (error || !news) {

@@ -14,6 +14,7 @@ import {
 import { AdminNewsCard } from '@/components/admin-news-card';
 import { Button } from '@/components/lib/button';
 import { Textarea } from '@/components/lib/textarea';
+import { NewsPublicationReviewSkeleton } from '@/components/skeletons';
 import { env } from '@/env';
 import type { NewsModerationItemDTO, NewsReviewRequestDTO } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
@@ -183,11 +184,7 @@ function NewsPublicationReviewPage() {
   }
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-24">
-        <p className="text-muted-foreground">Carregando notícias pendentes...</p>
-      </div>
-    );
+    return <NewsPublicationReviewSkeleton />;
   }
 
   if (error) {

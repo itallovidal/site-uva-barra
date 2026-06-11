@@ -15,6 +15,7 @@ import { updateCollaborator } from '@/api/collaborators/update-collaborator';
 import { deleteCollaborator } from '@/api/collaborators/delete-collaborator';
 import type { UserProfileDTO } from '@/domain/entities';
 import type { EditCollaboratorFormData } from '@/schemas/user-schemas';
+import { CollaboratorListSkeleton } from '@/components/skeletons';
 
 function CollaboratorsListPage() {
   const { collaborators, isLoading, error, refetch } = useCollaborators();
@@ -57,11 +58,7 @@ function CollaboratorsListPage() {
   }
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-muted-foreground">Carregando colaboradores...</p>
-      </div>
-    );
+    return <CollaboratorListSkeleton />;
   }
 
   if (error) {

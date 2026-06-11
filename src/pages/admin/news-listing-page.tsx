@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { NewspaperIcon } from 'lucide-react';
 
 import { AdminNewsCard } from '@/components/admin-news-card';
@@ -13,12 +13,14 @@ import {
   DialogTitle,
 } from '@/components/lib/dialog';
 import { NewsArticleRenderer } from '@/components/news/news-article-renderer';
+import { NewsDetailSkeleton, NewsListSkeleton } from '@/components/skeletons';
 import { env } from '@/env';
 import { getNewsById } from '@/api/news/get-news-by-id';
 import type { AdminNewsCardDTO, News } from '@/domain/entities';
 import type { ResponsePayload } from '@/types/api-response-types';
 
 function NewsListingPage() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [publishedNews, setPublishedNews] = useState<AdminNewsCardDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -146,11 +148,7 @@ function NewsListingPage() {
   }
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-24">
-        <p className="text-muted-foreground">Carregando notícias...</p>
-      </div>
-    );
+    return <NewsListSkeleton />;
   }
 
   if (error) {
@@ -237,6 +235,13 @@ function NewsListingPage() {
                     loadingLabel: statusFilter === 'unpublished' ? 'Publicando' : 'Despublicando',
                   },
                   {
+                    label: 'Editar',
+                    variant: 'outline',
+                    onClick: function onClickEdit() {
+                      navigate(`/admin/news/edit/${article.id}`);
+                    },
+                  },
+                  {
                     label: 'Deletar',
                     variant: 'destructive',
                     onClick: function onClickDelete() {
@@ -280,7 +285,9 @@ function NewsListingPage() {
           {previewNews && (
             <div className="overflow-y-auto flex-1 px-6 py-4">
               {isLoadingPreview ? (
-                <p className="text-sm text-muted-foreground">Carregando conteúdo...</p>
+                <div className="py-4">
+                  <NewsDetailSkeleton />
+                </div>
               ) : previewNewsData ? (
                 <>
                   <h1 className="mb-4 text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl">
