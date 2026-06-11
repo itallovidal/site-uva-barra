@@ -16,6 +16,7 @@ import { CollaboratorRegisterPage } from '@/pages/admin/collaborator-register-pa
 import { CollaboratorsRequestsPage } from '@/pages/admin/collaborators-requests-page';
 import { CollaboratorsListPage } from '@/pages/admin/collaborators-list-page';
 import { NewsCreatePage } from '@/pages/admin/news-create-page';
+import { NewsEditPage } from '@/pages/admin/news-edit-page';
 import { NewsPublicationReviewPage } from '@/pages/admin/news-publication-review-page';
 import { NewsListingPage as AdminNewsListingPage } from '@/pages/admin/news-listing-page';
 
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: '/admin/news/create',
         element: <NewsCreatePage />,
+      },
+      {
+        path: '/admin/news/edit/:id',
+        element: <NewsEditPage />,
       },
       {
         path: '/admin/news/approve',
