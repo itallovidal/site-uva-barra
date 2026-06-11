@@ -21,7 +21,6 @@ async function getNewsListing({
     page: String(page),
     perPage: String(perPage),
   });
-  if (typeof status !== 'undefined' && status !== null) params.set('status', status);
 
   let url = `/news`;
   if (category) {

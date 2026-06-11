@@ -26,6 +26,11 @@ import { updateCategoryHandler } from './categories/update-category';
 import { deleteCategoryHandler } from './categories/delete-category';
 import { getTagsHandler } from './categories/get-tags';
 import { newsletterRegisterHandler } from './newsletter/register';
+import { listEmailsHandler } from './newsletter/list-emails';
+import { getEmailHandler } from './newsletter/get-email';
+import { createNewsletterHandler } from './newsletter/create-newsletter';
+import { updateNewsletterHandler } from './newsletter/update-newsletter';
+import { deleteNewsletterHandler } from './newsletter/delete-newsletter';
 
 const handlers = [
   loginHandler,
@@ -57,6 +62,11 @@ const handlers = [
   deleteCategoryHandler,
   getTagsHandler,
   newsletterRegisterHandler,
+  listEmailsHandler,
+  getEmailHandler,
+  createNewsletterHandler,
+  updateNewsletterHandler,
+  deleteNewsletterHandler,
 ];
 
 export { handlers };

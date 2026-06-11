@@ -142,3 +142,23 @@ export interface UserProfileDTO {
   role: UserRoleType;
   bio: string | null;
 }
+
+export interface NewsletterEmail {
+  email: string;
+  registeredAt: string;
+}
+
+export interface Newsletter {
+  id: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateNewsletterDTO {
+  content: string;
+}
+
+export interface UpdateNewsletterDTO {
+  content: string;
+}

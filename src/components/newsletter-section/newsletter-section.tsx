@@ -1,6 +1,8 @@
 import { PaperPlaneRightIcon } from '@phosphor-icons/react';
 import { useState, type FormEvent } from 'react';
 
+import { registerEmail } from '@/api/newsletter';
+
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 function NewsletterSection() {
@@ -19,15 +21,7 @@ function NewsletterSection() {
     setMessage('');
 
     try {
-      const response = await fetch('/newsletter/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao cadastrar. Tente novamente.');
-      }
+      await registerEmail(email);
 
       setStatus('success');
       setMessage('Inscrição realizada com sucesso!');
