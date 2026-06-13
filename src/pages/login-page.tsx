@@ -8,15 +8,27 @@ import { Input } from '@/components/lib/input';
 import { Button } from '@/components/lib/button';
 import { loginSchema } from '@/schemas/user-schemas';
 import { useAuth } from '@/hooks/use-auth';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { RequestLoginDTO } from '@/domain/entities';
 
 function LoginPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { login } = useAuth();
+  const { login, isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const rawRedirect = searchParams.get('redirect') || '/admin';
+  const redirect = rawRedirect.includes('/admin/logout') ? '/admin' : rawRedirect;
+
+  useEffect(
+    function redirectWhenAuthenticated() {
+      if (isAuthenticated && !isAuthLoading) {
+        console.log('Redirecting to:', redirect);
+        navigate(redirect, { replace: true });
+      }
+    },
+    [isAuthenticated, isAuthLoading, navigate, redirect]
+  );
 
   const {
     register,
@@ -32,8 +44,6 @@ function LoginPage() {
 
     try {
       await login(data);
-      const redirect = searchParams.get('redirect') || '/admin';
-      navigate(redirect);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao conectar ao servidor');
     } finally {

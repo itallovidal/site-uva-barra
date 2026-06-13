@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   UsersIcon,
   UserPlusIcon,
@@ -66,7 +66,14 @@ interface AdminSidebarProps {
 }
 
 function AdminSidebar({ className, onItemClick }: AdminSidebarProps) {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate('/entrar');
+    onItemClick?.();
+  }
 
   return (
     <aside className={cn('flex flex-col h-full bg-white', className)}>
@@ -117,14 +124,13 @@ function AdminSidebar({ className, onItemClick }: AdminSidebarProps) {
           <ArrowLeftIcon size={18} />
           Voltar ao site
         </Link>
-        <Link
-          to="/admin/logout"
-          onClick={onItemClick}
-          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors"
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors w-full text-left"
         >
           <SignOutIcon size={18} />
           Logout
-        </Link>
+        </button>
       </div>
     </aside>
   );

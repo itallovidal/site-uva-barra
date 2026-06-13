@@ -105,10 +105,6 @@ const router = createBrowserRouter([
         path: '/admin/newsletter/create',
         element: <PlaceholderPage title="Criação de Newsletter" />,
       },
-      {
-        path: '/admin/logout',
-        element: <PlaceholderPage title="Logout" />,
-      },
     ],
   },
 ]);
