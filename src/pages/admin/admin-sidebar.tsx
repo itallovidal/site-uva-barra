@@ -12,6 +12,8 @@ import {
   ArrowLeftIcon,
   UserCircleIcon,
   HouseIcon,
+  GlobeIcon,
+  EyeSlashIcon,
 } from '@phosphor-icons/react';
 import { cn } from '@/components/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
@@ -47,7 +49,8 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     label: 'Notícias',
     items: [
       { link: '/admin/news/create', text: 'Criação de Notícias', icon: FilePlusIcon },
-      { link: '/admin/news', text: 'Listagem de Notícias', icon: FileTextIcon },
+      { link: '/admin/news?status=published', text: 'Notícias Publicadas', icon: GlobeIcon },
+      { link: '/admin/news?status=unpublished', text: 'Notícias Não Publicadas', icon: EyeSlashIcon },
       // { link: '/admin/news/approve', text: 'Aprovação de Notícias', icon: CheckCircleIcon },
     ],
   },

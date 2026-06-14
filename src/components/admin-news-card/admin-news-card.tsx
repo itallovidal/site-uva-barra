@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
 import { NewsStatus } from '@/domain/constants';
 import type { AdminNewsCardDTO } from '@/domain/entities';
@@ -12,6 +12,7 @@ interface AdminNewsCardAction {
   disabled?: boolean;
   isLoading?: boolean;
   loadingLabel?: string;
+  icon?: ReactNode;
 }
 
 interface AdminNewsCardProps {
@@ -37,13 +38,34 @@ function getStatusLabel(status: AdminNewsCardDTO['status']): string {
 }
 
 function AdminNewsCard({ article, actions }: AdminNewsCardProps) {
+  const viewAction = actions.find((a) => a.label === 'Pré-Visualizar');
+  const otherActions = actions.filter((a) => a.label !== 'Pré-Visualizar');
+  const leftActions = otherActions.filter((a) => a.label !== 'Deletar');
+  const rightActions = otherActions.filter((a) => a.label === 'Deletar');
+
   return (
     <Card className="py-0">
       <CardHeader className="border-b px-6 pb-5 pt-6">
-        <CardTitle className="text-lg leading-snug">{article.title}</CardTitle>
-        <CardDescription>
-          {article.author ? `${article.category} · ${article.author}` : article.category}
-        </CardDescription>
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <CardTitle className="text-lg leading-snug">{article.title}</CardTitle>
+            <CardDescription>
+              {article.author ? `${article.category} · ${article.author}` : article.category}
+            </CardDescription>
+          </div>
+          {viewAction && (
+            <Button
+              variant={viewAction.variant}
+              onClick={viewAction.onClick}
+              disabled={viewAction.disabled || viewAction.isLoading}
+              size="sm"
+              className="shrink-0"
+            >
+              {viewAction.icon}
+              {viewAction.isLoading ? (viewAction.loadingLabel ?? `${viewAction.label}...`) : viewAction.label}
+            </Button>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="space-y-5 px-6 py-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -79,19 +101,39 @@ function AdminNewsCard({ article, actions }: AdminNewsCardProps) {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-3 pt-1">
-          {actions.map(function renderAction(action) {
-            return (
-              <Button
-                key={action.label}
-                variant={action.variant}
-                onClick={action.onClick}
-                disabled={action.disabled || action.isLoading}
-              >
-                {action.isLoading ? (action.loadingLabel ?? `${action.label}...`) : action.label}
-              </Button>
-            );
-          })}
+        <div className="flex items-center justify-between gap-3 pt-1">
+          <div className="flex flex-wrap gap-3">
+            {leftActions.map(function renderAction(action) {
+              return (
+                <Button
+                  key={action.label}
+                  variant={action.variant}
+                  onClick={action.onClick}
+                  disabled={action.disabled || action.isLoading}
+                  size="sm"
+                >
+                  {action.icon}
+                  {action.isLoading ? (action.loadingLabel ?? `${action.label}...`) : action.label}
+                </Button>
+              );
+            })}
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {rightActions.map(function renderAction(action) {
+              return (
+                <Button
+                  key={action.label}
+                  variant={action.variant}
+                  onClick={action.onClick}
+                  disabled={action.disabled || action.isLoading}
+                  size="sm"
+                >
+                  {action.icon}
+                  {action.isLoading ? (action.loadingLabel ?? `${action.label}...`) : action.label}
+                </Button>
+              );
+            })}
+          </div>
         </div>
       </CardContent>
     </Card>

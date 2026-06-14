@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { NewspaperIcon } from 'lucide-react';
+import { EyeIcon, PencilIcon, GlobeIcon, EyeSlashIcon, TrashIcon } from '@phosphor-icons/react';
 
 import { AdminNewsCard } from '@/components/admin-news-card';
 import { Button } from '@/components/lib/button';
@@ -210,6 +211,7 @@ function NewsListingPage() {
                   {
                     label: 'Pré-Visualizar',
                     variant: 'secondary',
+                    icon: <EyeIcon />,
                     onClick: function onClickPreview() {
                       setPreviewNews(article);
                       setIsLoadingPreview(true);
@@ -228,6 +230,7 @@ function NewsListingPage() {
                   {
                     label: statusFilter === 'unpublished' ? 'Publicar' : 'Despublicar',
                     variant: statusFilter === 'unpublished' ? 'default' : 'destructive',
+                    icon: statusFilter === 'unpublished' ? <GlobeIcon /> : <EyeSlashIcon />,
                     onClick: function onClickTogglePublish() {
                       void handleTogglePublish(article.id);
                     },
@@ -237,6 +240,7 @@ function NewsListingPage() {
                   {
                     label: 'Editar',
                     variant: 'outline',
+                    icon: <PencilIcon />,
                     onClick: function onClickEdit() {
                       navigate(`/admin/news/edit/${article.id}`);
                     },
@@ -244,6 +248,7 @@ function NewsListingPage() {
                   {
                     label: 'Deletar',
                     variant: 'destructive',
+                    icon: <TrashIcon />,
                     onClick: function onClickDelete() {
                       setDeleteConfirmId(article.id);
                     },

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { NewsHtmlContent } from '@/components/news/news-html-content';
@@ -46,9 +47,12 @@ function NewsArticleRenderer({
       )}
 
       <div className="mb-3 flex flex-wrap items-center gap-3">
-        <span className="inline-block rounded-full bg-red-600 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-white">
+        <Link
+          to={`/noticias?categoria=${encodeURIComponent(category)}`}
+          className="inline-block rounded-full bg-red-600 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-red-700"
+        >
           {category}
-        </span>
+        </Link>
         {author && (
           <span className="text-sm text-zinc-500">
             Escrito por: <span className="font-medium text-zinc-700">{author}</span>

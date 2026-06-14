@@ -4,9 +4,7 @@ import { useCategories } from '@/hooks/use-categories';
 
 const NAV_LINKS = [
   { text: 'Sobre a UVA', href: '/sobre' },
-  { text: 'Equipe Editorial', href: '/equipe' },
-  { text: 'Fale Conosco', href: '/contato' },
-  { text: 'Notícias', href: '/novidades' },
+  { text: 'Novidades', href: '/novidades' },
 ];
 
 function Footer() {

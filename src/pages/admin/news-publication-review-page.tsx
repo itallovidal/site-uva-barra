@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { EyeIcon, GlobeIcon, ChatCircleTextIcon } from '@phosphor-icons/react';
 
 import {
   Dialog,
@@ -232,12 +233,14 @@ function NewsPublicationReviewPage() {
                 {
                   label: 'Pré-Visualizar',
                   variant: 'secondary',
+                  icon: <EyeIcon />,
                   onClick: function onClickPreview() {
                     openPreviewModal(news);
                   },
                 },
                 {
                   label: 'Publicar',
+                  icon: <GlobeIcon />,
                   onClick: function onClickApprove() {
                     void handleApprove(news.id);
                   },
@@ -247,6 +250,7 @@ function NewsPublicationReviewPage() {
                 {
                   label: 'Precisa de revisão',
                   variant: 'outline',
+                  icon: <ChatCircleTextIcon />,
                   onClick: function onClickReview() {
                     openReviewModal(news);
                   },
