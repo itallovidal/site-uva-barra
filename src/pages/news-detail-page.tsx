@@ -1,11 +1,26 @@
 import { Link, useParams } from 'react-router-dom';
 import { useNewsById } from '@/hooks/use-news-by-id';
+import { useNewsByCategory } from '@/hooks/use-news-by-category';
 import { NewsArticleRenderer } from '@/components/news/news-article-renderer';
+import { NewsCard } from '@/components/news-card/news-card';
 import { NewsDetailSkeleton } from '@/components/skeletons';
+import { Skeleton } from '@/components/lib/skeleton';
 
 function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { news, isLoading, error } = useNewsById(id ?? '');
+
+  const suggestionsResult = useNewsByCategory({
+    category: news?.category ?? '',
+    page: 1,
+    perPage: 4,
+  });
+
+  const suggestions = suggestionsResult.articles
+    .filter((article) => article.id !== news?.id)
+    .slice(0, 3);
+
+  const showSuggestions = news?.category && (suggestionsResult.isLoading || suggestions.length > 0);
 
   if (isLoading) {
     return <NewsDetailSkeleton />;
@@ -42,6 +57,28 @@ function NewsDetailPage() {
         tags={news.tags}
         content={news.content}
       />
+
+      {showSuggestions && (
+        <div className="mt-12">
+          <h2 className="mb-6 text-lg font-bold uppercase tracking-wider text-zinc-900">
+            Leia também
+          </h2>
+
+          {suggestionsResult.isLoading ? (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton key={i} className="h-72 w-full rounded-lg" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {suggestions.map((article) => (
+                <NewsCard key={article.id} article={article} isVertical />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </article>
   );
 }

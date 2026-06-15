@@ -26,6 +26,10 @@ function useNewsByCategory({
   useEffect(
     function fetchByCategory() {
       async function doFetch() {
+        if (!category) {
+          setIsLoading(false);
+          return;
+        }
         setIsLoading(true);
         setError(null);
         try {
