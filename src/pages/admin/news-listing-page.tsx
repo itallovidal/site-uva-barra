@@ -22,7 +22,7 @@ import type { ResponsePayload } from '@/types/api-response-types';
 
 function NewsListingPage() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [publishedNews, setPublishedNews] = useState<AdminNewsCardDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,6 +32,16 @@ function NewsListingPage() {
     if (statusParam === 'unpublished') return 'unpublished';
     return 'published';
   });
+
+  // Sincroniza statusFilter com mudanças na URL (ex: barra lateral)
+  useEffect(
+    function syncStatusFromURL() {
+      const statusParam = searchParams.get('status');
+      const newStatus = statusParam === 'unpublished' ? 'unpublished' : 'published';
+      setStatusFilter(newStatus);
+    },
+    [searchParams]
+  );
   const [actionError, setActionError] = useState<string | null>(null);
   const [previewNews, setPreviewNews] = useState<AdminNewsCardDTO | null>(null);
   const [previewNewsData, setPreviewNewsData] = useState<News | null>(null);
@@ -186,7 +196,10 @@ function NewsListingPage() {
         />
         <select
           value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as 'published' | 'unpublished')}
+          onChange={(e) => {
+            const newStatus = e.target.value as 'published' | 'unpublished';
+            setSearchParams({ status: newStatus });
+          }}
           className="rounded-md border px-3 py-2"
         >
           <option value="published">Publicadas</option>
