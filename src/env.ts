@@ -8,7 +8,7 @@ const envSchema = z.object({
     .string()
     .transform((val) => val === 'true')
     .default(true),
-  VITE_API_BASE_URL: z.string().default(''),
+  VITE_API_BASE_URL: z.string().default('https://api-uva-barra.onrender.com'),
 });
 
 export type Env = z.infer<typeof envSchema>;
