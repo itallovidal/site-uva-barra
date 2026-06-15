@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import { RootLayout } from '@/components/root-layout/root-layout';
 import { HomePage } from '@/pages/home-page';
 import { LoginPage } from '@/pages/login-page';
@@ -20,7 +20,7 @@ import { NewsEditPage } from '@/pages/admin/news-edit-page';
 import { NewsPublicationReviewPage } from '@/pages/admin/news-publication-review-page';
 import { NewsListingPage as AdminNewsListingPage } from '@/pages/admin/news-listing-page';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     element: <RootLayout />,
     children: [
