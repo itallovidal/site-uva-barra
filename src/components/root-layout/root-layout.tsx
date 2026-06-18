@@ -8,7 +8,7 @@ const BRAND = 'Agência UVA Barra';
 
 const NAV_ITEMS = [
   { link: '/', text: 'Novidades', icon: NewspaperIcon },
-  { link: '/noticias?categoria=Radio%20UVA%20Barra', text: 'Rádio UVA', icon: RadioIcon },
+  { link: '/noticias?categoria=R%C3%A1dio%20UVA%20Barra', text: 'Rádio UVA', icon: RadioIcon },
   { link: '/sobre', text: 'Sobre', icon: InfoIcon },
 ];
 

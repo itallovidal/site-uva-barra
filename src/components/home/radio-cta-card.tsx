@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const RADIO_CATEGORY = 'Radio UVA Barra';
+const RADIO_CATEGORY = 'Rádio UVA Barra';
 
 interface RadioCtaCardProps {
   coverUrl?: string;
