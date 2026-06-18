@@ -30,24 +30,11 @@ function NewsArticleRenderer({
 
   return (
     <>
-      <p className="mb-8 text-lg italic text-zinc-600">{summary}</p>
-
-      {tags.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-2">
-          {tags.map(function renderTag(tag) {
-            return (
-              <span
-                key={tag}
-                className="rounded-full border border-zinc-300 px-3 py-0.5 text-xs text-zinc-600"
-              >
-                {tag}
-              </span>
-            );
-          })}
-        </div>
-      )}
+      {/* <p className="mb-8 text-lg italic text-zinc-600">{summary}</p> */}
 
       <div className="mb-3 flex flex-wrap items-center gap-3">
+
+      
         <Link
           to={`/noticias?categoria=${encodeURIComponent(category)}`}
           className="inline-block rounded-full bg-red-600 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-red-700"
@@ -71,6 +58,21 @@ function NewsArticleRenderer({
           }}
         />
       </div>
+
+      {tags.length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {tags.map(function renderTag(tag) {
+            return (
+              <span
+                key={tag}
+                className="rounded-full border border-zinc-300 px-3 py-0.5 text-xs text-zinc-600"
+              >
+                {tag}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {isHtml ? (
         <NewsHtmlContent content={content} />

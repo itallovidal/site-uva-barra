@@ -64,16 +64,15 @@ function HomePage() {
         </section>
       )}
 
-      {square.length > 0 && (
+      {/* {square.length > 0 && (
         <section className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {square.map((article) => (
             <>
-              {/* @ts-ignore */}
               <NewsCard.Square key={article.id} article={article} />
             </>
           ))}
         </section>
-      )}
+      )} */}
     </main>
   );
 }

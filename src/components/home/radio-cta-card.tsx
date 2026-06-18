@@ -22,9 +22,6 @@ function RadioCtaCard({ coverUrl }: RadioCtaCardProps) {
         </div>
       )}
       <div className="flex flex-1 flex-col items-center justify-center gap-2 bg-[linear-gradient(45deg,#005683,#044263)] px-6 py-8 text-center text-white">
-        <span className="text-sm font-bold uppercase tracking-wider text-white/70">
-          Rádio UVA Barra
-        </span>
         <p className="text-sm leading-snug">
           Fique por dentro das notícias mais relevantes com a nossa seleção especial.
         </p>
