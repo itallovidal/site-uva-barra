@@ -2,7 +2,7 @@ import { createHashRouter } from 'react-router-dom';
 import { RootLayout } from '@/components/root-layout/root-layout';
 import { HomePage } from '@/pages/home-page';
 import { LoginPage } from '@/pages/login-page';
-import { SignupPage } from '@/pages/signup-page';
+// import { SignupPage } from '@/pages/signup-page';
 import { NewsCategoryPage } from '@/pages/news-category-page';
 import { NewsDetailPage } from '@/pages/news-detail-page';
 import { NewsListingPage } from '@/pages/news-listing-page';

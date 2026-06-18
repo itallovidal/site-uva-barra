@@ -1,32 +1,32 @@
-import { UserProfession } from '@/domain/constants';
-import type { UserProfileDTO } from '@/domain/entities';
-import { TeamSection } from '@/components/sobre/team-section';
-import { useCollaborators } from '@/hooks/use-collaborators';
+// import { UserProfession } from '@/domain/constants';
+// import type { UserProfileDTO } from '@/domain/entities';
+// import { TeamSection } from '@/components/sobre/team-section';
+// import { useCollaborators } from '@/hooks/use-collaborators';
 
-const professionToCategory: Record<string, string> = {
-  [UserProfession.REDATOR]: 'Redação',
-  [UserProfession.EDITOR_CHEFE]: 'Redação',
-  [UserProfession.DESIGNER]: 'Criação',
-  [UserProfession.SOCIAL_MEDIA]: 'Criação',
-  [UserProfession.OUTRO]: 'Criação',
-  [UserProfession.DESENVOLVEDOR]: 'Desenvolvimento',
-};
+// const professionToCategory: Record<string, string> = {
+//   [UserProfession.REDATOR]: 'Redação',
+//   [UserProfession.EDITOR_CHEFE]: 'Redação',
+//   [UserProfession.DESIGNER]: 'Criação',
+//   [UserProfession.SOCIAL_MEDIA]: 'Criação',
+//   [UserProfession.OUTRO]: 'Criação',
+//   [UserProfession.DESENVOLVEDOR]: 'Desenvolvimento',
+// };
 
-const categoryOrder = ['Redação', 'Criação', 'Desenvolvimento'];
+// const categoryOrder = ['Redação', 'Criação', 'Desenvolvimento'];
 
-function groupByCategory(members: UserProfileDTO[]): Map<string, UserProfileDTO[]> {
-  const groups = new Map<string, UserProfileDTO[]>();
+// function groupByCategory(members: UserProfileDTO[]): Map<string, UserProfileDTO[]> {
+//   const groups = new Map<string, UserProfileDTO[]>();
 
-  for (const member of members) {
-    const category = professionToCategory[member.profession] ?? 'Outros';
-    if (!groups.has(category)) {
-      groups.set(category, []);
-    }
-    groups.get(category)!.push(member);
-  }
+//   for (const member of members) {
+//     const category = professionToCategory[member.profession] ?? 'Outros';
+//     if (!groups.has(category)) {
+//       groups.set(category, []);
+//     }
+//     groups.get(category)!.push(member);
+//   }
 
-  return groups;
-}
+//   return groups;
+// }
 
 function SobrePage() {
   // const { collaborators, isLoading, error } = useCollaborators();

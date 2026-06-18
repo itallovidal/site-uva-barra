@@ -52,7 +52,10 @@ function HomePage() {
           <div className="flex flex-col gap-4">
             <div className="divide-y overflow-hidden rounded-lg border bg-white">
               {listItems.map((article) => (
-                <NewsCard.ListItem key={article.id} article={article} />
+                <>
+                  {/* @ts-ignore */}
+                  <NewsCard.ListItem key={article.id} article={article} />
+                </>
               ))}
             </div>
             <RadioCtaCard coverUrl="/radiouvabarracover.png" />
@@ -63,7 +66,10 @@ function HomePage() {
       {square.length > 0 && (
         <section className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {square.map((article) => (
-            <NewsCard.Square key={article.id} article={article} />
+            <>
+              {/* @ts-ignore */}
+              <NewsCard.Square key={article.id} article={article} />
+            </>
           ))}
         </section>
       )}

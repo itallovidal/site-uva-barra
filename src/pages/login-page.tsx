@@ -8,7 +8,7 @@ import { Input } from '@/components/lib/input';
 import { Button } from '@/components/lib/button';
 import { loginSchema } from '@/schemas/user-schemas';
 import { useAuth } from '@/hooks/use-auth';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import type { RequestLoginDTO } from '@/domain/entities';
 
 function LoginPage() {

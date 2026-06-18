@@ -2,16 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   UsersIcon,
   UserPlusIcon,
-  ClipboardTextIcon,
   FilePlusIcon,
-  FileTextIcon,
-  CheckCircleIcon,
-  EnvelopeSimpleIcon,
-  EnvelopeIcon,
   SignOutIcon,
   ArrowLeftIcon,
   UserCircleIcon,
-  HouseIcon,
   GlobeIcon,
   EyeSlashIcon,
 } from '@phosphor-icons/react';

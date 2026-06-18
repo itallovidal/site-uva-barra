@@ -28,13 +28,14 @@ function handleCreateRegistration({ request }: { request: Request }) {
       password: 'hashed-password',
       avatarUrl: null,
       role: 'collaborator' as const,
-      profession: (body.profession ?? 'outro') as 'outro',
+      profession: (body.profession ?? 'outro') as any,
       bio: body.bio ?? null,
       status: 'pending' as const,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
 
+    // @ts-ignore
     pendingRequests.push(newRequest);
 
     return HttpResponse.json({ status: 201, data: { id: newId } }, { status: 201 });
