@@ -1,12 +1,12 @@
 import { useNewsHighlights } from '../hooks/use-news-highlights';
-import { NewsHighlightGrid } from '../components/home/news-highlight-grid';
+import { NewsHighlightGrid, RadioCtaCard } from '../components/home';
 import { NewsletterSection } from '../components/newsletter-section';
 import { NewsCard } from '@/components/news-card/news-card';
 import { NewsHighlightGridSkeleton, NewsCardSkeleton } from '@/components/skeletons';
 
 function HomePage() {
   const { highlights, isLoading, error } = useNewsHighlights({
-    perPage: 15,
+    perPage: 30,
   });
 
   if (isLoading) {
@@ -32,35 +32,41 @@ function HomePage() {
     );
   }
 
-  console.log('Destaques carregados:', highlights);
-
   const mainArticles = highlights.slice(0, 7);
-  const rest = highlights.slice(7);
+  const horizontals = highlights.slice(7, 13);
+  const square = highlights.slice(13, 21);
+  const listItems = highlights.slice(21, 27);
 
   return (
     <main className="lg:max-w-7xl mx-auto px-4 py-6 space-y-10">
       <NewsHighlightGrid highlights={mainArticles} />
       <NewsletterSection />
 
-      {rest.length > 0 && (
-        <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {rest.map((article) => (
-            <div key={article.id} className="flex-1">
-              <NewsCard article={article} isVertical />
+      {horizontals.length > 0 && (
+        <section className="grid grid-cols-1 gap-4 lg:grid-cols-[2fr_1fr]">
+          <div className="flex flex-col gap-4">
+            {horizontals.map((article) => (
+              <NewsCard key={article.id} article={article} />
+            ))}
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="divide-y overflow-hidden rounded-lg border bg-white">
+              {listItems.map((article) => (
+                <NewsCard.ListItem key={article.id} article={article} />
+              ))}
             </div>
-          ))}
+            <RadioCtaCard coverUrl="/radiouvabarracover.png" />
+          </div>
         </section>
       )}
 
-      {rest.length === 0 && (
-        <p className="text-neutral-500">Nenhuma notícia adicional encontrada.</p>
+      {square.length > 0 && (
+        <section className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {square.map((article) => (
+            <NewsCard.Square key={article.id} article={article} />
+          ))}
+        </section>
       )}
-
-      {/* <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {Object.keys(categoryMap).map((category) => (
-          <CategorySection key={category} category={category} limit={1} />
-        ))}
-      </div> */}
     </main>
   );
 }
