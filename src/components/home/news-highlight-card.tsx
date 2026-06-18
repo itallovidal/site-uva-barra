@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '@/env';
 import type { NewsPreviewDTO } from '../../domain/entities';
 
 interface NewsHighlightCardProps {
@@ -16,7 +17,7 @@ function NewsHighlightCard({
 }: NewsHighlightCardProps) {
   const { coverImageUrl, category, title, summary } = highlight;
 
-  const cover = coverImageUrl.length > 3 ? coverImageUrl : '/agencia-uva-fallback.jpg';
+  const cover = coverImageUrl.length > 3 ? coverImageUrl : `${BASE_URL}agencia-uva-fallback.jpg`;
 
   return (
     <Link

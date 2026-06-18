@@ -11,6 +11,8 @@ const envSchema = z.object({
   VITE_API_BASE_URL: z.string().default('https://api-uva-barra.onrender.com'),
 });
 
+export const BASE_URL = import.meta.env.BASE_URL;
+
 export type Env = z.infer<typeof envSchema>;
 
 export function validateEnv(env: unknown): Env {

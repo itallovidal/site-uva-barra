@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '@/env';
 import type { ReactNode } from 'react';
 import type { NewsPreviewDTO } from '../../domain/entities';
 import { timeAgo } from '../../utils/time-ago';
@@ -26,7 +27,7 @@ function NewsCardRoot({ article, children, className }: NewsCardRootProps) {
   const cover =
     article.coverImageUrl.length > 3
       ? article.coverImageUrl
-      : '/agencia-uva-fallback.jpg';
+      : `${BASE_URL}agencia-uva-fallback.jpg`;
 
   return (
     <NewsCardCtx.Provider value={{ article: { ...article, coverImageUrl: cover } }}>

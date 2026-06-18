@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { BASE_URL } from '@/env';
 import { NewsHtmlContent } from '@/components/news/news-html-content';
 
-const FALLBACK_IMAGE = '/agencia-uva-fallback.jpg';
+const FALLBACK_IMAGE = `${BASE_URL}agencia-uva-fallback.jpg`;
 
 interface NewsArticleRendererProps {
   title: string;

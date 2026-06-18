@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/env';
 import { useNewsHighlights } from '../hooks/use-news-highlights';
 import { NewsHighlightGrid, RadioCtaCard } from '../components/home';
 import { NewsletterSection } from '../components/newsletter-section';
@@ -58,7 +59,7 @@ function HomePage() {
                 </>
               ))}
             </div>
-            <RadioCtaCard coverUrl="/radiouvabarracover.png" />
+            <RadioCtaCard coverUrl={`${BASE_URL}radiouvabarracover.png`} />
           </div>
         </section>
       )}
