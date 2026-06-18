@@ -73,6 +73,35 @@ function SobrePage() {
           </p>
         </section>
 
+        <section className="space-y-4 text-zinc-700">
+          <h2 className="text-2xl font-bold text-zinc-900">Contato</h2>
+          <div className="space-y-2 leading-relaxed">
+            <p>
+              <strong>E-mail:</strong>{' '}
+              <a href="mailto:agenciauvabarra@gmail.com" className="text-red-600 hover:underline">
+                agenciauvabarra@gmail.com
+              </a>
+            </p>
+            <p>
+              <strong>Telefone:</strong> (21) 3431-0883
+            </p>
+            <p>
+              <strong>Endereço:</strong> Av. General Felicissimo Cardoso n° 500 – Bloco B, 2º andar
+              – Barra da Tijuca/RJ.
+            </p>
+            <div>
+              <strong>Horário de funcionamento:</strong>
+              <ul className="mt-1 list-inside list-disc space-y-0.5">
+                <li>Segunda-feira: 12h às 18h</li>
+                <li>Terça-feira: 12h às 18h</li>
+                <li>Quarta-feira: 12h às 18h</li>
+                <li>Quinta-feira: 12h às 18h</li>
+                <li>Sexta-feira: 12h às 18h</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         {/* <section className="space-y-8">
           <h1 className="text-3xl font-bold text-zinc-900">Colaboradores</h1>
 

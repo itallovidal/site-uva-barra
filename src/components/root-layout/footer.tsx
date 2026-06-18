@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { InstagramLogoIcon, LinkedinLogoIcon } from '@phosphor-icons/react';
+import { InstagramLogoIcon } from '@phosphor-icons/react';
 import { useCategories } from '@/hooks/use-categories';
 
 const NAV_LINKS = [
   { text: 'Sobre a UVA', href: '/sobre' },
-  { text: 'Novidades', href: '/novidades' },
+  { text: 'Novidades', href: '/' },
 ];
 
 function Footer() {
@@ -64,7 +64,7 @@ function Footer() {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/agenciauvabarra/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white transition-colors hover:text-foreground"
@@ -72,15 +72,7 @@ function Footer() {
             >
               <InstagramLogoIcon size={20} weight="fill" />
             </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white transition-colors hover:text-foreground"
-              aria-label="LinkedIn"
-            >
-              <LinkedinLogoIcon size={20} weight="fill" />
-            </a>
+
           </div>
         </div>
       </div>
