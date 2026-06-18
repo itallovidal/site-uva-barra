@@ -1,54 +1,36 @@
-// import { UserProfession } from '@/domain/constants';
-// import type { UserProfileDTO } from '@/domain/entities';
-// import { TeamSection } from '@/components/sobre/team-section';
-// import { useCollaborators } from '@/hooks/use-collaborators';
-
-// const professionToCategory: Record<string, string> = {
-//   [UserProfession.REDATOR]: 'Redação',
-//   [UserProfession.EDITOR_CHEFE]: 'Redação',
-//   [UserProfession.DESIGNER]: 'Criação',
-//   [UserProfession.SOCIAL_MEDIA]: 'Criação',
-//   [UserProfession.OUTRO]: 'Criação',
-//   [UserProfession.DESENVOLVEDOR]: 'Desenvolvimento',
-// };
-
-// const categoryOrder = ['Redação', 'Criação', 'Desenvolvimento'];
-
-// function groupByCategory(members: UserProfileDTO[]): Map<string, UserProfileDTO[]> {
-//   const groups = new Map<string, UserProfileDTO[]>();
-
-//   for (const member of members) {
-//     const category = professionToCategory[member.profession] ?? 'Outros';
-//     if (!groups.has(category)) {
-//       groups.set(category, []);
-//     }
-//     groups.get(category)!.push(member);
-//   }
-
-//   return groups;
-// }
+import { BASE_URL } from '@/env';
+import { Slider } from '@/components/image-slider/slider';
 
 function SobrePage() {
-  // const { collaborators, isLoading, error } = useCollaborators();
-
-  // const grouped = groupByCategory(collaborators);
-
   return (
     <div className="min-h-screen bg-zinc-50">
-      <section
-        className="relative flex h-[40vh] w-full items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=1920&q=80')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50" />
-        {/* <h1 className="relative text-3xl font-bold text-white md:text-4xl lg:text-5xl">
-          Agência UVA Barra
-        </h1> */}
-      </section>
-
       <main className="mx-auto max-w-7xl space-y-8 px-4 py-8 ">
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-zinc-900">Galeria</h2>
+          <Slider>
+            <img
+              src={`${BASE_URL}uva/uva-1.jpg`}
+              alt="Foto UVA 1"
+              className="h-full w-full object-cover"
+            />
+            <img
+              src={`${BASE_URL}uva/uva-2.jpg`}
+              alt="Foto UVA 2"
+              className="h-full w-full object-cover"
+            />
+            <img
+              src={`${BASE_URL}uva/uva-3.jpg`}
+              alt="Foto UVA 3"
+              className="h-full w-full object-cover"
+            />
+            <img
+              src={`${BASE_URL}uva/uva-4.jpg`}
+              alt="Foto UVA 4"
+              className="h-full w-full object-cover"
+            />
+          </Slider>
+        </section>
+
         <section className="space-y-4 text-justify leading-relaxed text-zinc-700">
           <p>
             A Agência UVA Barra é uma agência experimental de notícias da Universidade Veiga de
