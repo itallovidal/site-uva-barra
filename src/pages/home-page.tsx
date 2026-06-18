@@ -35,7 +35,7 @@ function HomePage() {
 
   const mainArticles = highlights.slice(0, 7);
   const horizontals = highlights.slice(7, 13);
-  const square = highlights.slice(13, 21);
+  // const square = highlights.slice(13, 21);
   const listItems = highlights.slice(21, 27);
 
   return (

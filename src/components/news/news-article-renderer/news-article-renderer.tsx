@@ -18,7 +18,7 @@ interface NewsArticleRendererProps {
 
 function NewsArticleRenderer({
   title,
-  summary,
+  summary: _summary,
   category,
   author,
   coverImageUrl,
