@@ -59,21 +59,6 @@ function NewsArticleRenderer({
         />
       </div>
 
-      {tags.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-2">
-          {tags.map(function renderTag(tag) {
-            return (
-              <span
-                key={tag}
-                className="rounded-full border border-zinc-300 px-3 py-0.5 text-xs text-zinc-600"
-              >
-                {tag}
-              </span>
-            );
-          })}
-        </div>
-      )}
-
       {isHtml ? (
         <NewsHtmlContent content={content} />
       ) : (
@@ -113,6 +98,21 @@ function NewsArticleRenderer({
           ].join(' ')}
         >
           <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+        </div>
+      )}
+
+      {tags.length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {tags.map(function renderTag(tag) {
+            return (
+              <span
+                key={tag}
+                className="rounded-full border border-zinc-300 px-3 py-0.5 text-xs text-zinc-600"
+              >
+                {tag}
+              </span>
+            );
+          })}
         </div>
       )}
     </>
