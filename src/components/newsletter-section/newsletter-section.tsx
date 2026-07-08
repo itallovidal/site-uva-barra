@@ -1,34 +1,37 @@
 import { PaperPlaneRightIcon } from '@phosphor-icons/react';
 import { useState, type FormEvent } from 'react';
+import { toast } from 'sonner';
 
 import { registerEmail } from '@/api/newsletter';
+import { newsletterRegisterSchema } from '@/schemas/newsletter-schemas';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 function NewsletterSection() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
-  const [message, setMessage] = useState('');
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!email) {
+    const parsed = newsletterRegisterSchema.safeParse({ email });
+
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0].message);
       return;
     }
 
     setStatus('loading');
-    setMessage('');
 
     try {
       await registerEmail(email);
 
       setStatus('success');
-      setMessage('Inscrição realizada com sucesso!');
+      toast.success('Inscrição realizada com sucesso!');
       setEmail('');
-    } catch {
+    } catch (error) {
       setStatus('error');
-      setMessage('Erro ao cadastrar. Tente novamente.');
+      toast.error(error instanceof Error ? error.message : 'Erro ao cadastrar. Tente novamente.');
     }
   }
 
@@ -67,11 +70,7 @@ function NewsletterSection() {
           </button>
         </form>
 
-        {message && (
-          <p className={`mt-3 text-sm ${status === 'success' ? 'text-green-200' : 'text-red-200'}`}>
-            {message}
-          </p>
-        )}
+
       </div>
     </section>
   );

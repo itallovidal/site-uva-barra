@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { NavBar } from '@/components/nav-bar';
+import { Toaster } from '@/components/lib/sonner';
 import { Footer } from './footer';
 import { NewspaperIcon, InfoIcon, RadioIcon } from '@phosphor-icons/react';
 
@@ -24,6 +25,7 @@ function RootLayout() {
       <NavBar brand={BRAND} navItems={NAV_ITEMS} />
       <Outlet />
       <Footer />
+      <Toaster />
     </>
   );
 }
