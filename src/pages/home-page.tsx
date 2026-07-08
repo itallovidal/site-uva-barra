@@ -1,6 +1,6 @@
 import { BASE_URL } from '@/env';
 import { useNewsHighlights } from '../hooks/use-news-highlights';
-import { NewsHighlightGrid, RadioCtaCard } from '../components/home';
+import { NewsHighlightGrid, InstagramCtaCard, RadioCtaCard } from '../components/home';
 import { NewsletterSection } from '../components/newsletter-section';
 import { NewsCard } from '@/components/news-card/news-card';
 import { NewsHighlightGridSkeleton, NewsCardSkeleton } from '@/components/skeletons';
@@ -60,6 +60,7 @@ function HomePage() {
               ))}
             </div>
             <RadioCtaCard coverUrl={`${BASE_URL}radiouvabarracover.png`} />
+            <InstagramCtaCard />
           </div>
         </section>
       )}
