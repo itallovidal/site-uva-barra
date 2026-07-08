@@ -29,7 +29,7 @@ function Footer() {
                 <li key={link.text}>
                   <Link
                     to={link.href}
-                    className="text-white text-sm transition-colors hover:text-foreground"
+                    className="text-white text-sm transition-colors hover:text-red-400"
                   >
                     {link.text}
                   </Link>
@@ -45,7 +45,7 @@ function Footer() {
                 <li key={category.id}>
                   <Link
                     to={`/noticias?categoria=${encodeURIComponent(category.name)}`}
-                    className="text-white text-sm transition-colors hover:text-foreground"
+                    className="text-white text-sm transition-colors hover:text-red-400"
                   >
                     {category.name}
                   </Link>
@@ -67,7 +67,7 @@ function Footer() {
               href="https://www.instagram.com/agenciauvabarra/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white transition-colors hover:text-foreground"
+              className="text-white transition-colors hover:text-red-400"
               aria-label="Instagram"
             >
               <InstagramLogoIcon size={20} weight="fill" />
